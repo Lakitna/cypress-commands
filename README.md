@@ -1,5 +1,7 @@
 # Cypress commands
 
+[![npm version](https://badge.fury.io/js/cypress-commands.svg)](https://badge.fury.io/js/cypress-commands)
+
 A collection of high-quality Cypress commands to improve your life*.
 
 This repository is not maintained by the Cypress developers. This means we can choose to ignore certain parts of their vision. That being said, their vision is excellent and we should not deviate from it very much.

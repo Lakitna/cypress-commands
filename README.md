@@ -42,9 +42,16 @@ Contributors are always welcome! I really don't care if you are a beginner or an
 
 ## Running tests
 
-Clone the repository and execute the following
+First clone the repository and install the dependencies.
+
+### GLI mode
 
 ```shell
-npm install
 npm start
+```
+
+### CLI mode
+
+```shell
+npm test
 ```

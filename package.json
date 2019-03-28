@@ -4,10 +4,11 @@
   "description": "A collection of Cypress commands to extend and compliment the default commands",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run",
+    "test": "start-server-and-test start:server http://localhost:1337 run:cypress",
     "start": "start-server-and-test start:server http://localhost:1337 start:cypress",
     "start:server": "http-server ./app -p 1337",
     "start:cypress": "cypress open",
+    "run:cypress": "cypress run",
     "lint": "eslint ./"
   },
   "keywords": [

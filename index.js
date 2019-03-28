@@ -1,1 +1,1 @@
-require('lib/index');
+require('./lib/index');

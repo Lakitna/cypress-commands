@@ -13,4 +13,4 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-require('../../lib/index');
+require('../../index');

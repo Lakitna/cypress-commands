@@ -46,7 +46,7 @@ Contributors are always welcome! I really don't care if you are a beginner or an
 
 First clone the repository and install the dependencies.
 
-### GLI mode
+### GUI mode
 
 ```shell
 npm start

@@ -1,0 +1,30 @@
+{
+  "name": "cypress-commands",
+  "version": "0.0.0",
+  "description": "A collection of Cypress commands to extend and compliment the default commands",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run",
+    "start": "start-server-and-test start:server http://localhost:1337 start:cypress",
+    "start:server": "http-server ./app -p 1337",
+    "start:cypress": "cypress open",
+    "lint": "eslint ./"
+  },
+  "keywords": [
+    "Cypress",
+    "command"
+  ],
+  "author": "Lakitna",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^3.2.0",
+    "esdoc": "^1.1.0",
+    "eslint": "^5.15.3",
+    "eslint-config-google": "^0.12.0",
+    "eslint-plugin-cypress": "^2.2.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-sonarjs": "^0.3.0",
+    "http-server": "^0.11.1",
+    "start-server-and-test": "^1.7.12"
+  }
+}

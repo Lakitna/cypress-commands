@@ -17,11 +17,6 @@ describe('The added command `text`', function() {
         $(doc.body).empty().html(body);
     });
 
-    it('fails', function() {
-        cy.get('.counter')
-            .text({ whitespace: 1 });
-    });
-
     it('returns text from an element', function() {
         cy.get('div')
             .first()

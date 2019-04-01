@@ -6,6 +6,8 @@ This is a command that does not exist as a default command.
 
 Enables you to get the text contents of the subject yielded from the previous command.
 
+`.text()` allows you to be more specific than you can be with `.contains()` or `.should('contain')`.
+
 > **Note:** When using `.text()` you should be aware about how Cypress [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability.html#Only-the-last-command-is-retried).
 
 ## Syntax
@@ -46,6 +48,7 @@ Option | Default | Description
 ## Yields
 
 * `.text()` yields the text inside the subject.
+* `.text()` yields an array of the texts inside multiple subjects.
 
 ## Examples
 
@@ -112,8 +115,7 @@ cy.get('div').text({ whitespace: 'keep-newline' });
 #### Do not simplify whitespace
 
 ```javascript
-// TODO: Check yielded value
-// yields "Extravagant \xa0 \n Eagle"
+// yields "Extravagant \xa0\n  Eagle"
 cy.get('div').text({ whitespace: 'keep' });
 ```
 
@@ -162,52 +164,28 @@ cy.get('.grandmother').text({ depth: 1 });
 To infinity and beyond!
 
 ```javascript
-// TODO: Check order of yield
 // yields "Grandma Gazelle Mother Meerkat Father Fox Son Scorpion"
 cy.get('.grandmother').text({ depth: Infinity });
 ```
-
-
-<!-- TODO from this point -->
-
-## Notes
-
-### Differences
-
-What’s the difference between `.then()` and `.should()`/`.and()`?
-
-Using `.then()` simply allows you to use the yielded subject in a callback function and should be used when you need to manipulate some values or do some actions.
-
-When using a callback function with `.should()`, `.and()` or `.then({ retry: true })`, on the other hand, there is special logic to rerun the callback function until no assertions throw within it. You should be careful of side affects in a `.should()` or `.and()` callback function that you would not want performed multiple times.
 
 ## Rules
 
 ### Requirements
 
-- `.then()` requires being chained off a previous command.
+* `.text()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions
 
-- `.then()` will only run assertions you've chained once, and will not retry (unless you use the `retry` option).
+* `.text()` will automatically retry itself until assertions you've chained all pass.
 
 ### Timeouts
 
-- `.then()` can time out waiting for a promise you've returned to resolve.
-- `.then()` can time out waiting for a chained assertion to pass. (when using the `retry` option)
+* `.text()` can time out waiting for a chained assertion to pass.
 
 ## Command Log
 
-- `.then()` only logs in the Command Log if
-  - the option `log` is set to `true`
-  - the option `retry` is set to `true` and the option `log` is not set
+`.text()` will output to the command log.
 
 ## See also
 
-- [`.and()`](https://docs.cypress.io/api/commands/and.html)
-- [`.each()`](https://docs.cypress.io/api/commands/each.html)
-- [`.invoke()`](https://docs.cypress.io/api/commands/invoke.html)
-- [`.its()`](https://docs.cypress.io/api/commands/its.html)
-- [`.should()`](https://docs.cypress.io/api/commands/should.html)
-- [`.spread()`](https://docs.cypress.io/api/commands/spread.html)
-- [Guide: Using Closures to compare values](https://docs.cypress.io/guides/core-concepts/variables-and-aliases.html#Closures)
-- [Guide: Chains of Commands](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress.html#Chains-of-Commands)
+* [`.contains()`](https://docs.cypress.io/api/commands/contains.html)

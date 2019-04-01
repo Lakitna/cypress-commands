@@ -1,25 +1,18 @@
 # then
 
-This command has been extended with
-
-- The option `retry`
-- The option `log`
-
-See [original documentation](https://docs.cypress.io/api/commands/then.html)
+This is a command that does not exist as a default command.
 
 ----
 
-Enables you to work with the subject yielded from the previous command.
+Enables you to get the text contents of the subject yielded from the previous command.
 
-> **Note:** `.then()` assumes you are already familiar with core concepts such as [closures](https://docs.cypress.io/guides/core-concepts/variables-and-aliases.html#Closures).
-
-> **Note:** Prefer ['`.should()` with callback](https://docs.cypress.io/api/commands/should.html#Function) over `.then()` for assertions as they are automatically rerun until no assertions throw within it but be aware of [differences](https://docs.cypress.io/api/commands/should.html#Differences).
+> **Note:** When using `.text()` you should be aware about how Cypress [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability.html#Only-the-last-command-is-retried).
 
 ## Syntax
 
 ```javascript
-.then(callbackFn)
-.then(options, callbackFn)
+.text()
+.text(options)
 ```
 
 ## Usage
@@ -27,27 +20,36 @@ Enables you to work with the subject yielded from the previous command.
 ### :heavy_check_mark: Correct Usage
 
 ```javascript
-cy.get('.nav').then(($nav) => {})  // Yields .nav as first arg
-cy.location().then((loc) => {})   // Yields location object as first arg
+cy.get('nav').text()  // Yields the text inside `nav`
+```
+
+### :x: Incorrect Usage
+
+```javascript
+cy.text()  // Errors, cannot be chained off 'cy'
+cy.location().text()  // Errors, 'location' does not yield DOM element
 ```
 
 ## Arguments
 
 **> options** ***(Object)***
 
-Pass in an options object to change the default behavior of `.then()`.
+Pass in an options object to change the default behavior of `.text()`.
 
 Option | Default | Description
 --- | --- | ---
-`timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.then()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)
-`retry` | `false` | Retry itself until assertions you've chained all pass
+`timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.text()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)
 `log` | `false` | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)
-
-**> callbackFn** ***(Function)***
-
-Pass a function that takes the previously yielded subject as its first argument.
+`whitespace` | `normalize` | Replace complex whitespace with a single regular space.<br> Accepted values: `normalize`, `keep-newline` & `keep`
+`depth` | `0` | Include the text contents of child elements upto `n` levels
 
 ## Yields
+
+`.text()` is based on the identically named jQuery function. This means that it will yield the text inside an element.
+
+The biggest difference is that by using the command you can easily control whitespace and getting text from child elements.
+
+<!-- TODO: -->
 
 `.then()` is modeled identically to the way Promises work in JavaScript. Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
 

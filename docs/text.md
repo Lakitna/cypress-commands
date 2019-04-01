@@ -45,123 +45,130 @@ Option | Default | Description
 
 ## Yields
 
-`.text()` is based on the identically named jQuery function. This means that it will yield the text inside an element.
-
-The biggest difference is that by using the command you can easily control whitespace and getting text from child elements.
-
-<!-- TODO: -->
-
-`.then()` is modeled identically to the way Promises work in JavaScript. Whatever is returned from the callback function becomes the new subject and will flow into the next command (with the exception of `undefined`).
-
-When `undefined` is returned by the callback function, the subject will not be modified and will instead carry over to the next command.
-
-Just like Promises, you can return any compatible "thenable" (anything that has a `.then()` interface) and Cypress will wait for that to resolve before continuing forward through the chain of commands.
+* `.text()` yields the text inside the subject.
 
 ## Examples
 
-> We have several more examples in our [Core Concepts Guide](https://docs.cypress.io/guides/core-concepts/variables-and-aliases.html) which go into the various ways you can use `.then()` to store, compare, and debug values.
+### No Args
 
-### DOM element
+#### Get the text of a div
 
-#### The element `button` is yielded
-
-```javascript
-cy.get('button').then(($btn) => {
-  const cls = $btn.class()
-
-  cy.wrap($btn).click().should('not.have.class', cls)
-})
+```html
+<div>Teriffic Tiger</div>
 ```
 
-### Change subject
-
-#### The subject is changed by returning
-
 ```javascript
-cy.wrap(null).then(() => {
-  return { id: 123 }
-})
-.then((obj) => {
-  // subject is now the obj {id: 123}
-  expect(obj.id).to.eq(123) // true
-})
+// yields "Teriffic Tiger"
+cy.get('div').text();
 ```
 
-#### Returning `null` or `undefined` will not modify the yielded subject
+#### Get the text of multiple divs
 
-```javascript
-cy.get('form')
-.then(($form) => {
-  console.log('form is:', $form)
-  // undefined is returned here, but $form will be
-  // yielded to allow for continued chaining
-})
-.find('input').then(($input) => {
-  // we have our $input element here since
-  // our form element was yielded and we called
-  // .find('input') on it
-})
+```html
+<div>Catastrophic Cat</div>
+<div>Dramatic Dog</div>
+<div>Amazing Ant</div>
 ```
 
-### Promises
-
-Cypress waits for Promises to resolve before continuing
-
-#### Example using Q
-
 ```javascript
-cy.get('button').click().then(($button) => {
-  const p = Q.defer()
-
-  setTimeout(() => {
-    p.resolve()
-  }, 1000)
-
-  return p.promise
-})
+// yields [
+//   "Catastrophic Cat",
+//   "Dramatic Dog",
+//   "Amazing Ant"
+// ]
+cy.get('div').text();
 ```
 
-#### Example using bluebird
+### Whitespace handling
 
-```javascript
-cy.get('button').click().then(($button) => {
-  return Promise.delay(1000)
-})
+By default all whitespace will be simplified.
+
+```html
+<div> Extravagant &nbsp;
+  Eagle            </div>
 ```
 
-#### Example using jQuery deferred's
+#### Simplify whitespace by default
 
 ```javascript
-cy.get('button').click().then(($button) => {
-  const df = $.Deferred()
-
-  setTimeout(() => {
-    df.resolve()
-  }, 1000)
-
-  return df
-})
+// yields "Extravagant Eagle"
+cy.get('div').text();
 ```
 
-### Retryability
-
-The default Cypress command has been extended to allow you to retry a function until chained assertions pass. Use this sparsely. If you find yourself using this all the time you are probably doing it wrong. In most cases there are more suitable commands to get what you need.
+The default value of `whitespace` is `normalize` so the following yields the same.
 
 ```javascript
-cy.get('form')
-.then({ retry: true }, ($form) => {
-  // We have acces to the jQuery object describing the form
-  // here. We can now do some operations on it without using
-  // Cypress commands, while we maintain retryability.
-
-  // Note that this function might be executed multiple
-  // times. Keep it light and make sure you know what
-  // you're doing.
-
-  return 'foo';
-})
-.should('equal', 'foo');
+// yields "Extravagant Eagle"
+cy.get('div').text({ whitespace: 'normalize' });
 ```
+
+#### Simplify whitespace but keep new line characters
+
+```javascript
+// yields "Extravagant\nEagle"
+cy.get('div').text({ whitespace: 'keep-newline' });
+```
+
+#### Do not simplify whitespace
+
+```javascript
+// TODO: Check yielded value
+// yields "Extravagant \xa0 \n Eagle"
+cy.get('div').text({ whitespace: 'keep' });
+```
+
+### Depth of elements
+
+By default only the text of the subject itself will be yielded. Use this option to also get the text of underlying elements.
+
+```html
+<div class="grandmother">
+  Grandma Gazelle
+  <div>
+    Mother Meerkat
+      <div>
+        Son Scorpion
+      </div>
+  </div>
+  <div>
+    Father Fox
+  </div>
+</div>
+```
+
+#### Only the subject by default
+
+```javascript
+// yields "Grandma Gazelle"
+cy.get('.grandmother').text()
+```
+
+The default value of `depth` is `0` so the following yields the same.
+
+```javascript
+// yields "Grandma Gazelle"
+cy.get('.grandmother').text({ depth: 0 });
+```
+
+#### Include the direct children
+
+```javascript
+// yields "Grandma Gazelle Mother Meerkat Father Fox"
+cy.get('.grandmother').text({ depth: 1 });
+```
+
+#### Remove all depth limitations
+
+To infinity and beyond!
+
+```javascript
+// TODO: Check order of yield
+// yields "Grandma Gazelle Mother Meerkat Father Fox Son Scorpion"
+cy.get('.grandmother').text({ depth: Infinity });
+```
+
+
+<!-- TODO from this point -->
 
 ## Notes
 

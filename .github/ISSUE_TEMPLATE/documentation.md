@@ -7,6 +7,12 @@ assignees: ''
 
 ---
 
+# Changes should be made to
+
+- [ ] General documentation (ex. README.md)
+- [ ] Command documentation (ex. docs/then.md)
+- [ ] Command type definitions / Intellisense
+
 # Describe the improvement
 Which file and which part should be changed?
 

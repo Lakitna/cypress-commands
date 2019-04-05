@@ -1,3 +1,8 @@
+---
+name: Default PR template
+
+---
+
 Closes #
 
 - [ ] Tests

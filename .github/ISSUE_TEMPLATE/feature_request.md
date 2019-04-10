@@ -7,6 +7,13 @@ assignees: ''
 
 ---
 
+# Type of feature
+
+- [ ] Add a new command
+- [ ] Extend a default Cypress command
+- [ ] Change a Cypress-commands command
+- [ ] Other
+
 # What do you want to accomplish?
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 

@@ -1,6 +1,6 @@
 {
   "name": "cypress-commands",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A collection of Cypress commands to extend and compliment the default commands",
   "repository": "https://github.com/Lakitna/cypress-commands",
   "main": "index.js",
@@ -19,8 +19,8 @@
   "author": "Lakitna",
   "license": "MIT",
   "devDependencies": {
+    "acorn": "^6.1.1",
     "cypress": "^3.2.0",
-    "esdoc": "^1.1.0",
     "eslint": "^5.15.3",
     "eslint-config-google": "^0.12.0",
     "eslint-plugin-cypress": "^2.2.1",
@@ -28,5 +28,6 @@
     "eslint-plugin-sonarjs": "^0.3.0",
     "http-server": "^0.11.1",
     "start-server-and-test": "^1.7.12"
-  }
+  },
+  "dependencies": {}
 }

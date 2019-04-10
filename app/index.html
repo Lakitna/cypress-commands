@@ -4,17 +4,48 @@
     <title>jQuery 3.2.1 Fixture</title>
     <script type="text/javascript" src="lib/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="index.js"></script>
+    <style>
+      .indent {
+        padding-left: .4em;
+        margin: .3em 0 0 .1em;
+        border-left: 1px solid black;
+      }
+    </style>
   </head>
   <body>
-    <span id="foo">foo<span>
+    <span id="foo">foo</span>
     <div>div</div>
     <input />
     <button>button</button>
+    <div class="counter">0</div>
     <ul id="list">
     </ul>
     <a href="#">a</a>
-    <div>
-      Nested Find
+    <div class="whitespace">
+      div
+      containing&nbsp; &nbsp; &#x9; some<br> complex&Tab;whitespace
+    </div>
+    <hr>
+    <div class="parent indent">
+      parent div
+      <div class="child indent">
+        child div
+        <div class="grandchild indent">
+          grandchild div
+          <div class="great-grandchild indent">
+            great-grandchild div
+            <div class="great-great-grandchild indent">
+              great-great-grandchild div
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="secondchild indent">
+        secondchild div
+        <div class="secondgrandchild indent">
+          secondgrandchild div
+        </div>
+      </div>
     </div>
   </body>
 </html>

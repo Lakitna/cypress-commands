@@ -2,15 +2,11 @@
 
 [![npm version](https://badge.fury.io/js/cypress-commands.svg)](https://badge.fury.io/js/cypress-commands)
 
-A collection of high-quality Cypress commands to improve your life*.
+A collection of high-quality Cypress commands to compliment and extend the defaults.
 
-This repository is not maintained by the Cypress developers. This means we can choose to ignore certain parts of their vision. That being said, their vision is excellent and we should not deviate from it very much.
-
-The goal of these commands is to give you better tools for specific situations and use cases.
+This repository is not maintained by the Cypress developers. This means we can choose to ignore parts of their vision.
 
 Documentation is a cornerstone of Cypress, the commands in this repository will try to keep these documentation standards.
-
-\* These commands won't make your life better if you don't already know the powers and limitations of the default commands. It would only add clutter and you'll probably not be able to differentiate between all the options.
 
 ## Installation
 
@@ -39,7 +35,7 @@ Import typescript definitions by adding them to your `tsconfig.json`. Add the cy
 
 ## Extended commands
 
-These commands have been extended to be able to more than originally intended. For these commands, all tests that exist in the Cypress repository are copied into this repository to make sure the default behaviour stays identical unless we want it changed.
+These commands have been extended to be able to do more than originally intended. For these commands, all tests that exist in the Cypress repository are copied to make sure the default behaviour stays identical unless we want it changed.
 
 * [`.then()`](./docs/then.md)
 
@@ -47,7 +43,7 @@ These commands have been extended to be able to more than originally intended. F
 
 These commands do not exist in Cypress by default.
 
-* None yet, though there are some coming.
+* [`.text()`](./docs/text.md)
 
 ## Contributing
 

@@ -24,7 +24,7 @@ Enables you to work with the subject yielded from the previous command.
 
 ## Usage
 
-### :white_check_mark: Correct Usage
+### :heavy_check_mark: Correct Usage
 
 ```javascript
 cy.get('.nav').then(($nav) => {})  // Yields .nav as first arg

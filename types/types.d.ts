@@ -1,1 +1,2 @@
 import "./then";
+import "./text";

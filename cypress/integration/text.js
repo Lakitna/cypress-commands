@@ -84,15 +84,15 @@ describe('The added command `text`', function() {
     });
 
     describe('The option `whitespace`', function() {
-        it('`normalize` is the default value', function() {
+        it('`simplify` is the default value', function() {
             cy.get('div.whitespace')
                 .text()
                 .should('equal', 'div containing some complex whitespace');
         });
 
-        it('`normalize` simplifies all whitespace', function() {
+        it('`simplify` simplifies all whitespace', function() {
             cy.get('div.whitespace')
-                .text({ whitespace: 'normalize' })
+                .text({ whitespace: 'simplify' })
                 .should('equal', 'div containing some complex whitespace');
         });
 
@@ -185,7 +185,7 @@ describe('The added command `text`', function() {
                 expect(lastLog.get('error')).to.eq(err);
                 expect(err.message)
                     .to.include('Bad value for the option "whitespace" of the command "text"')
-                    .and.include('["normalize","keep","keep-newline"]');
+                    .and.include('["simplify","keep","keep-newline"]');
                 done();
             });
 

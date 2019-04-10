@@ -42,7 +42,7 @@ Option | Default | Description
 --- | --- | ---
 `timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.text()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)
 `log` | `false` | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)
-`whitespace` | `normalize` | Replace complex whitespace with a single regular space.<br> Accepted values: `normalize`, `keep-newline` & `keep`
+`whitespace` | `simplify` | Replace complex whitespace with a single regular space.<br> Accepted values: `simplify`, `keep-newline` & `keep`
 `depth` | `0` | Include the text contents of child elements upto `n` levels
 
 ## Yields
@@ -98,11 +98,11 @@ By default all whitespace will be simplified.
 cy.get('div').text();
 ```
 
-The default value of `whitespace` is `normalize` so the following yields the same.
+The default value of `whitespace` is `simplify` so the following yields the same.
 
 ```javascript
 // yields "Extravagant Eagle"
-cy.get('div').text({ whitespace: 'normalize' });
+cy.get('div').text({ whitespace: 'simplify' });
 ```
 
 #### Simplify whitespace but keep new line characters

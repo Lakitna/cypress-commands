@@ -20,7 +20,6 @@
   "license": "MIT",
   "devDependencies": {
     "cypress": "^3.2.0",
-    "esdoc": "^1.1.0",
     "eslint": "^5.15.3",
     "eslint-config-google": "^0.12.0",
     "eslint-plugin-cypress": "^2.2.1",

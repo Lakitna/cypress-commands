@@ -19,6 +19,7 @@
   "author": "Lakitna",
   "license": "MIT",
   "devDependencies": {
+    "acorn": "^6.1.1",
     "cypress": "^3.2.0",
     "eslint": "^5.15.3",
     "eslint-config-google": "^0.12.0",
@@ -27,5 +28,6 @@
     "eslint-plugin-sonarjs": "^0.3.0",
     "http-server": "^0.11.1",
     "start-server-and-test": "^1.7.12"
-  }
+  },
+  "dependencies": {}
 }

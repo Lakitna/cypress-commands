@@ -22,6 +22,17 @@ Add the following line to `cypress/support/index.js`.
 require('cypress-commands');
 ```
 
+### Type definitions
+
+Import typescript definitions by adding them to your `tsconfig.json`. Add the cypress-commands types before the Cypress types so intellisense will prefer the cypress-commands versions.
+
+```json
+"types": [
+    "cypress-commands",
+    "cypress"
+]
+```
+
 ## Extended commands
 
 These commands have been extended to be able to do more than originally intended. For these commands, all tests that exist in the Cypress repository are copied to make sure the default behaviour stays identical unless we want it changed.

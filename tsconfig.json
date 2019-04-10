@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "lib": ["es2015", "dom"],
+    "allowJs": true,
+    "types": [
+      "cypress",
+      "./types"
+    ]
+  },
+  "include": [
+    "cypress/**/*.js",
+    "lib/**/*.js"
+  ]
+}

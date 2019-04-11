@@ -124,15 +124,15 @@ cy.get('div').text({ whitespace: 'keep' });
 By default only the text of the subject itself will be yielded. Use this option to also get the text of underlying elements.
 
 ```html
-<div class="grandmother">
+<div class="grandparent">
   Grandma Gazelle
-  <div>
+  <div class="parent">
     Mother Meerkat
-      <div>
-        Son Scorpion
-      </div>
+    <div class="child">
+      Son Scorpion
+    </div>
   </div>
-  <div>
+  <div class="parent">
     Father Fox
   </div>
 </div>
@@ -142,21 +142,39 @@ By default only the text of the subject itself will be yielded. Use this option 
 
 ```javascript
 // yields "Grandma Gazelle"
-cy.get('.grandmother').text()
+cy.get('.grandparent')
+  .text();
 ```
 
 The default value of `depth` is `0` so the following yields the same.
 
 ```javascript
 // yields "Grandma Gazelle"
-cy.get('.grandmother').text({ depth: 0 });
+cy.get('.grandparent')
+  .text({ depth: 0 });
 ```
 
 #### Include the direct children
 
+The text of the child elements are concatenated and yielded as a single string with a space as delimiter.
+
 ```javascript
 // yields "Grandma Gazelle Mother Meerkat Father Fox"
-cy.get('.grandmother').text({ depth: 1 });
+cy.get('.grandparent')
+  .text({ depth: 1 });
+```
+
+#### Multiple elements with depth
+
+Selecting multiple elements will yield an array of concatenated strings.
+
+```javascript
+// yields [
+//   "Mother Meerkat Son Scorpion",
+//   "Father Fox"
+// ]
+cy.get('.parent')
+  .text({ depth: 1 });
 ```
 
 #### Remove all depth limitations
@@ -165,7 +183,19 @@ To infinity and beyond!
 
 ```javascript
 // yields "Grandma Gazelle Mother Meerkat Father Fox Son Scorpion"
-cy.get('.grandmother').text({ depth: Infinity });
+cy.get('.grandparent')
+  .text({ depth: Infinity });
+```
+
+## Notes
+
+### Form elements
+
+`.text()` also gets text from form elements like `input` and `textarea`.
+
+```javascript
+cy.get('input')
+  .text();
 ```
 
 ## Rules

@@ -1,6 +1,6 @@
 {
   "name": "cypress-commands",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A collection of Cypress commands to extend and compliment the default commands",
   "repository": "https://github.com/Lakitna/cypress-commands",
   "main": "index.js",

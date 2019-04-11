@@ -17,15 +17,33 @@ describe('The added command `text`', function() {
         $(doc.body).empty().html(body);
     });
 
-    it('returns text from an element', function() {
+    it('yields text from a generic DOM element', function() {
         cy.get('div')
             .first()
             .text()
             .should('equal', 'div');
     });
 
-    it('retries', function() {
+    it('yields the value of a button element', function() {
+        cy.get('button')
+            .text()
+            .should('equal', 'Some button');
+    });
+
+    it('yields the value of a textarea element', function() {
+        cy.get('textarea')
+            .text()
+            .should('equal', 'A filled textarea');
+    });
+
+    it('retries the value of a generic DOM element', function() {
         cy.get('.counter')
+            .text()
+            .should('equal', '5');
+    });
+
+    it('retries the value of an input element', function() {
+        cy.get('input')
             .text()
             .should('equal', '5');
     });
@@ -80,6 +98,12 @@ describe('The added command `text`', function() {
                 .text({ depth: Infinity })
                 .should('equal', 'parent div child div secondchild div grandchild div '
                     + 'secondgrandchild div great-grandchild div great-great-grandchild div');
+        });
+
+        it('gets all values of form elements', function() {
+            cy.get('form')
+                .text({ depth: 1 })
+                .should('equal', '5 A filled textarea Some button');
         });
     });
 

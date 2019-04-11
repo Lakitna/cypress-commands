@@ -4,9 +4,16 @@ setInterval(() => {
         $('#list').append('<li>li ' + count + '</li>');
     }
 
-    const elem = $('.counter');
-    const val = +elem.text();
-    if (val < 5) {
-        elem.text(val + 1);
-    }
+    const elems = [
+        $('.counter'),
+        $('input'),
+    ];
+
+    elems.forEach((elem) => {
+        const val = +elem.text();
+        if (val < 5) {
+            elem.text(val + 1);
+            elem.val(val + 1);
+        }
+    });
 }, 100);

@@ -38,7 +38,9 @@ It would also be appreciated very much if you write the changes you would like t
 
 ## Writing documentation
 
-* Generic documentation
+Aside from documentation like this document there are some specific forms to describe the commands themselves.
+
+*Note* A command will not be added without being referenced in `README.md`.
 
 ### Command documentation
 
@@ -62,7 +64,7 @@ The TL;DR version is:
 
 > You cannot push code to repositories that you don’t own or have sufficient permission to. So instead, you make your own copy of the repository by “forking” it. [...] the next step is to create a branch. [...] Then we'll create a pull request.
 
-Please follow the pull request template where applicable.
+Please follow the pull request template as much as possible.
 
 ### Branch names
 
@@ -72,4 +74,6 @@ Please name your branch kind of logically. Preferably after the issue you're fix
 
 Here again, please make sure if makes some sense.
 
+## Questions?
 
+The only communication channel we have at the moment is this repository, so if you have any questions the best way do ask them is by opening an issue.

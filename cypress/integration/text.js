@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 
 const $ = Cypress.$;
+const COMMAND_TIMEOUT = 4000;
 
 describe('The added command `text`', function() {
     let body;
@@ -13,6 +14,8 @@ describe('The added command `text`', function() {
     });
 
     beforeEach(function() {
+        Cypress.config('defaultCommandTimeout', COMMAND_TIMEOUT);
+
         const doc = cy.state('document');
         $(doc.body).empty().html(body);
     });

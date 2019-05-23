@@ -47,7 +47,7 @@ describe('The added command `text`', function() {
                     expect(__logs.length).to.eq(2);
                     expect(lastLog.get('error')).to.eq(err);
                     expect(err.message)
-                        .to.include('Expected element to have attribute: \'id\', '
+                        .to.include('Expected element to have attribute \'id\', '
                             + 'but never found it.');
                     done();
                 });
@@ -67,7 +67,7 @@ describe('The added command `text`', function() {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(3);
                     expect(err.message)
-                        .to.include('Expected element to have attribute: \'id\', '
+                        .to.include('Expected element to have attribute \'id\', '
                             + 'but never found it.');
                     done();
                 });
@@ -114,17 +114,6 @@ describe('The added command `text`', function() {
                 .should('have.lengthOf', 2)
                 .should('deep.equal', ['child', 'child']);
         });
-
-        it('only yields the values of elements with the attribute', function() {
-            cy.get('.parent div')
-                .attribute('data-relation')
-                .should('be.lengthOf', 3)
-                .and('deep.equal', [
-                    'child',
-                    'grandchild',
-                    'child',
-                ]);
-        });
     });
 
     describe('options', function() {
@@ -164,6 +153,101 @@ describe('The added command `text`', function() {
                     expect(lastLog.get().name).to.equal('get');
                 })
                 .should('equal', 'whitespace');
+        });
+
+        describe('strict', function() {
+            it('thows when not all subjects have the attribute', function(done) {
+                cy.on('fail', (err) => {
+                    expect(__logs.length).to.eq(2);
+                    expect(err.message)
+                        .to.include('Expected all 4 elements to have attribute '
+                            + '\'data-relation\', but never found it on 1 elements.');
+                    done();
+                });
+
+                cy.get('.parent > div > div, .parent > div')
+                    .attribute('data-relation'); // strict: true is default
+            });
+
+            it('does not throw when not all subjects have the attribute '
+                    + 'and `strict: false`', function() {
+                cy.get('.parent div')
+                    .attribute('data-relation', { strict: false });
+            });
+
+            it('only yields the values of elements with the attribute when'
+                    + '`strict: false`', function() {
+                cy.get('.parent div')
+                    .attribute('data-relation', { strict: false })
+                    .should('be.lengthOf', 3)
+                    .and('deep.equal', [
+                        'child',
+                        'grandchild',
+                        'child',
+                    ]);
+            });
+
+            context('Upcoming assertions', function() {
+                describe('should exist', function() {
+                    it('throws when not all subjects have the attribute', function(done) {
+                        cy.on('fail', (err) => {
+                            expect(__logs.length).to.eq(3);
+                            expect(err.message)
+                                .to.include('Expected all 4 elements to have attribute '
+                                    + '\'data-relation\', but never found it on 1 elements.');
+                            done();
+                        });
+
+                        cy.get('.parent > div > div, .parent > div', { strict: true })
+                            .attribute('data-relation')
+                            .should('exist');
+                    });
+
+                    it('does not throw when all subjects have the attribute', function() {
+                        cy.get('.parent > div')
+                            .attribute('data-relation', { strict: true })
+                            .should('exist');
+                    });
+                });
+
+                describe('should not exist', function() {
+                    it('does not throw when none of the subjects have attribute', function() {
+                        cy.get('.parent > div > div, .parent > div')
+                            .attribute('data-nonExistent', { strict: true })
+                            .should('not.exist');
+                    });
+
+                    it('throws when some of the subjects have attribute', function(done) {
+                        cy.on('fail', (err) => {
+                            expect(__logs.length).to.eq(3);
+                            expect(err.message)
+                                .to.include('Expected all 4 elements to not have attribute '
+                                    + '\'data-relation\', but it was continuously found on 3 '
+                                    + 'elements.');
+                            done();
+                        });
+
+                        cy.get('.parent > div > div, .parent > div')
+                            .attribute('data-relation', { strict: true })
+                            .should('not.exist');
+                    });
+
+                    it('throws when some of the subjects have attribute and `log: false`', function(done) {
+                        cy.on('fail', (err) => {
+                            expect(__logs.length).to.eq(2);
+                            expect(err.message)
+                                .to.include('Expected all 4 elements to not have attribute '
+                                    + '\'data-relation\', but it was continuously found on 3 '
+                                    + 'elements.');
+                            done();
+                        });
+
+                        cy.get('.parent > div > div, .parent > div')
+                            .attribute('data-relation', { strict: true, log: false })
+                            .should('not.exist');
+                    });
+                });
+            });
         });
     });
 });

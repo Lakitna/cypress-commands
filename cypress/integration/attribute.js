@@ -21,6 +21,11 @@ describe('The added command `text`', function() {
             .should('be.empty');
     });
 
+    it('retries', function() {
+        cy.get('form input')
+            .attribute('data-attr')
+            .should('equal', '5');
+    });
 
     describe('handles implicit assertions correctly', function() {
         let __logs;

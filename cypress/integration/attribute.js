@@ -232,7 +232,8 @@ describe('The added command `text`', function() {
                             .should('not.exist');
                     });
 
-                    it('throws when some of the subjects have attribute and `log: false`', function(done) {
+                    it('throws when some of the subjects have attribute and '
+                            + '`log: false`', function(done) {
                         cy.on('fail', (err) => {
                             expect(__logs.length).to.eq(2);
                             expect(err.message)

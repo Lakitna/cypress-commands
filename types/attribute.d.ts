@@ -7,6 +7,7 @@ declare namespace Cypress {
          */
         attribute(attribute: string, options?: {
             log?: boolean;
+            strict?: boolean;
         }): Chainable<Subject>
 
         /**
@@ -16,6 +17,7 @@ declare namespace Cypress {
          */
         attribute(options: {
             log?: boolean;
+            strict?: boolean;
         }, attribute: string): Chainable<Subject>
     }
 }

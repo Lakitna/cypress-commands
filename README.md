@@ -44,6 +44,7 @@ These commands have been extended to be able to do more than originally intended
 
 These commands do not exist in Cypress by default.
 
+* [`.attribute()`](./docs/attribute.md)
 * [`.text()`](./docs/text.md)
 
 ## Contributing

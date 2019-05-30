@@ -20,7 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "acorn": "^6.1.1",
-    "cypress": "~3.2.0",
+    "cypress": "~3.3.1",
     "eslint": "^5.15.3",
     "eslint-config-google": "^0.12.0",
     "eslint-plugin-cypress": "^2.2.1",

@@ -20,15 +20,24 @@ describe('Overwritten command request', function() {
             });
 
             this.expectOptionsToBe = function(opts) {
+                _.defaults(opts, {
+                    failOnStatusCode: true,
+                    retryOnNetworkFailure: true,
+                    retryOnStatusCodeFailure: false,
+                    gzip: true,
+                    followRedirect: true,
+                    timeout: RESPONSE_TIMEOUT,
+                    method: 'GET',
+                });
+
                 const options = backend.firstCall.args[1];
 
                 _.each(options, function(value, key) {
-                    expect(options[key])
-                        .to.deep.eq(opts[key], `failed on property: (${key})`);
+                    expect(options[key]).to.deep.eq(opts[key], `failed on property: (${key})`);
                 });
+
                 _.each(opts, function(value, key) {
-                    expect(opts[key])
-                        .to.deep.eq(options[key], `failed on property: (${key})`);
+                    expect(opts[key]).to.deep.eq(options[key], `failed on property: (${key})`);
                 });
             };
         });

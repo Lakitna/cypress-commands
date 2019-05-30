@@ -1,7 +1,7 @@
 setInterval(() => {
     const count = $('#list li').length;
     if (count < 5) {
-        $('#list').append('<li>li ' + count + '</li>');
+        $('#list').append(`<li>li ${count}</li>`);
     }
 
     const elems = [
@@ -14,6 +14,7 @@ setInterval(() => {
         if (val < 5) {
             elem.text(val + 1);
             elem.val(val + 1);
+            elem.attr('data-attr', val + 1);
         }
     });
 }, 100);

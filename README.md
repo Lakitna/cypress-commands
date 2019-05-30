@@ -37,12 +37,14 @@ Import typescript definitions by adding them to your `tsconfig.json`. Add the cy
 
 These commands have been extended to be able to do more than originally intended. For these commands, all tests that exist in the Cypress repository are copied to make sure the default behaviour stays identical unless we want it changed.
 
+* [`.request()`](./docs/request.md)
 * [`.then()`](./docs/then.md)
 
 ## Added commands
 
 These commands do not exist in Cypress by default.
 
+* [`.attribute()`](./docs/attribute.md)
 * [`.text()`](./docs/text.md)
 
 ## Contributing

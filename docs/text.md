@@ -1,4 +1,4 @@
-# then
+# text
 
 This is a command that does not exist as a default command.
 

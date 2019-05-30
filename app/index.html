@@ -31,21 +31,21 @@
       containing&nbsp; &nbsp; &#x9; some<br> complex&Tab;whitespace
     </div>
     <hr>
-    <div class="parent indent">
+    <div class="parent indent" data-relation="parent" data-foo>
       parent div
-      <div class="child indent">
+      <div class="child indent" data-relation="child">
         child div
-        <div class="grandchild indent">
+        <div class="grandchild indent" data-relation="grandchild">
           grandchild div
           <div class="great-grandchild indent">
             great-grandchild div
-            <div class="great-great-grandchild indent">
+            <div class="great-great-grandchild indent" data-foo='bar' data-foo='foo'>
               great-great-grandchild div
             </div>
           </div>
         </div>
       </div>
-      <div class="secondchild indent">
+      <div class="secondchild indent" data-relation="child">
         secondchild div
         <div class="secondgrandchild indent">
           secondgrandchild div

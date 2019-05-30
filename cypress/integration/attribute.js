@@ -161,7 +161,7 @@ describe('The added command `text`', function() {
         });
 
         describe('strict', function() {
-            it('thows when not all subjects have the attribute', function(done) {
+            it('throws when not all subjects have the attribute', function(done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
                     expect(err.message)
@@ -171,7 +171,7 @@ describe('The added command `text`', function() {
                 });
 
                 cy.get('.parent > div > div, .parent > div')
-                    .attribute('data-relation'); // strict: true is default
+                    .attribute('data-relation', {}); // strict: true is default
             });
 
             it('does not throw when not all subjects have the attribute '
@@ -203,8 +203,8 @@ describe('The added command `text`', function() {
                             done();
                         });
 
-                        cy.get('.parent > div > div, .parent > div', { strict: true })
-                            .attribute('data-relation')
+                        cy.get('.parent > div > div, .parent > div')
+                            .attribute('data-relation', { strict: true })
                             .should('exist');
                     });
 
@@ -237,6 +237,10 @@ describe('The added command `text`', function() {
                             .should('not.exist');
                     });
 
+                    /**
+                     * Initial support for negating existence in strict mode depended on Cypress'
+                     * logging framework. This resulted in unexpected behaviour when `log: false`.
+                     */
                     it('throws when some of the subjects have attribute and '
                             + '`log: false`', function(done) {
                         cy.on('fail', (err) => {
@@ -251,6 +255,28 @@ describe('The added command `text`', function() {
                         cy.get('.parent > div > div, .parent > div')
                             .attribute('data-relation', { strict: true, log: false })
                             .should('not.exist');
+                    });
+
+                    /**
+                     * Bug with checking if the upcoming assertions negate existence
+                     */
+                    it('throws when in the second call to attribute some of '
+                            + 'the subjects have attribute', function(done) {
+                        cy.on('fail', (err) => {
+                            expect(__logs.length).to.eq(6);
+                            expect(err.message)
+                                .to.include('Expected all 4 elements to have attribute '
+                                + '\'data-relation\', but never found it on 1 elements');
+                            done();
+                        });
+
+                        cy.get('.parent > div > div, .parent > div')
+                            .attribute('data-rel', { strict: true })
+                            .should('not.exist');
+
+                        cy.get('.parent > div > div, .parent > div')
+                            .attribute('data-relation', { strict: true })
+                            .should('exist');
                     });
                 });
             });

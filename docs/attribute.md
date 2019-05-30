@@ -44,7 +44,7 @@ Option | Default | Description
 --- | --- | ---
 `timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.attribute()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)
 `log` | `false` | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)
-`strict` | `true` | Enforce that all subjects have the requested attribute
+`strict` | `true` | Implicitly assert that all subjects have the requested attribute
 
 ## Yields
 
@@ -88,7 +88,7 @@ Strict mode comes into play when using `.attribute()` with multiple subjects. By
 <a href="#">Everlasting eel</a>
 ```
 
-#### Strict mode enabled
+#### Strict mode `true`
 
 Throws an error, because some subjects don't have the `target` attribute.
 
@@ -107,7 +107,7 @@ Yields two values because both subjects have the `href` attribute.
 cy.get('a').attribute('href');
 ```
 
-#### Strict mode disabled
+#### Strict mode `false`
 
 Does not throw an error because it is possible to yield a value, even if not all subjects have a `target` attribute. Any subject that does not have the `target` attribute is simply ignored.
 

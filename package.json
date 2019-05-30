@@ -16,6 +16,12 @@
     "Cypress",
     "command"
   ],
+  "files": [
+    "index.*",
+    "types",
+    "docs",
+    "lib"
+  ],
   "author": "Lakitna",
   "license": "MIT",
   "devDependencies": {

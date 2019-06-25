@@ -13,14 +13,18 @@
     "test": "npm run test:source",
     "test:source": "start-server-and-test start:server http://localhost:1337 run:cypress",
     "test:bundle": "start-server-and-test start:server http://localhost:1337 run:cypress:bundle",
-    "start": "start-server-and-test start:server http://localhost:1337 start:cypress",
-    "start:server": "http-server ./app -p 1337",
-    "start:cypress": "npm run start:cypress:source",
-    "start:cypress:source": "cypress open --config supportFile=cypress/support/source.js",
-    "start:cypress:bundle": "cypress open --config supportFile=cypress/support/bundle.js",
     "run:cypress": "npm run run:cypress:source",
     "run:cypress:source": "cypress run --config supportFile=cypress/support/source.js",
     "run:cypress:bundle": "cypress run --config supportFile=cypress/support/bundle.js",
+
+    "start": "npm run start:source",
+    "start:server": "http-server ./app -p 1337",
+    "start:source": "start-server-and-test start:server http://localhost:1337 start:cypress",
+    "start:bundle": "start-server-and-test start:server http://localhost:1337 start:cypress:bundle",
+    "start:cypress": "npm run start:cypress:source",
+    "start:cypress:source": "cypress open --config supportFile=cypress/support/source.js",
+    "start:cypress:bundle": "cypress open --config supportFile=cypress/support/bundle.js",
+
     "lint": "eslint ./",
     "bundle": "rollup -c",
     "prepublishOnly": "npm run lint && npm run bundle && npm run test:bundle"

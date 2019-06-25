@@ -1,7 +1,7 @@
 const _ = Cypress._;
 const $ = Cypress.$;
 
-const OptionValidator = require('./utils/optionValidator');
+import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('text');
 
 /**

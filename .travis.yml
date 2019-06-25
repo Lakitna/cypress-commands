@@ -1,8 +1,22 @@
 language: node_js
 node_js:
-  - "7"
   - "8"
   - "10"
+  - "12"
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
+cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
+  npm: true
+  directories:
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
 script:
   - npm run lint
-  - npm test
+  - npm run test:source
+  - npm run bundle
+  - npm run test:bundle

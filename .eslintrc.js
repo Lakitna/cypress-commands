@@ -9,6 +9,7 @@ module.exports = {
         "plugin:cypress/recommended",
     ],
     "parserOptions": {
+        "sourceType": "module",
         "ecmaVersion": 8
     },
     "env": {
@@ -49,6 +50,7 @@ module.exports = {
         "files": ["cypress/integration/**/*"],
         "rules": {
             "sonarjs/no-identical-functions": "warn",
+            "no-invalid-this": "warn"
         },
     }],
 };

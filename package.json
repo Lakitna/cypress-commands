@@ -2,36 +2,62 @@
   "name": "cypress-commands",
   "version": "0.2.0",
   "description": "A collection of Cypress commands to extend and compliment the default commands",
-  "repository": "https://github.com/Lakitna/cypress-commands",
-  "main": "index.js",
+  "license": "MIT",
+  "main": "dist/cypress-commands.js",
+  "module": "dist/cypress-commands.mjs",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "start-server-and-test start:server http://localhost:1337 run:cypress",
-    "start": "start-server-and-test start:server http://localhost:1337 start:cypress",
+    "test": "npm run test:source",
+    "test:source": "start-server-and-test start:server http://localhost:1337 run:cypress",
+    "test:bundle": "start-server-and-test start:server http://localhost:1337 run:cypress:bundle",
+    "run:cypress": "npm run run:cypress:source",
+    "run:cypress:source": "cypress run --config supportFile=cypress/support/source.js",
+    "run:cypress:bundle": "cypress run --config supportFile=cypress/support/bundle.js",
+
+    "start": "npm run start:source",
     "start:server": "http-server ./app -p 1337",
-    "start:cypress": "cypress open",
-    "run:cypress": "cypress run",
-    "lint": "eslint ./"
+    "start:source": "start-server-and-test start:server http://localhost:1337 start:cypress",
+    "start:bundle": "start-server-and-test start:server http://localhost:1337 start:cypress:bundle",
+    "start:cypress": "npm run start:cypress:source",
+    "start:cypress:source": "cypress open --config supportFile=cypress/support/source.js",
+    "start:cypress:bundle": "cypress open --config supportFile=cypress/support/bundle.js",
+
+    "lint": "eslint ./",
+    "bundle": "rollup -c",
+    "prepublishOnly": "npm run lint && npm run bundle && npm run test:bundle"
+  },
+  "author": {
+    "name": "Sander van Beek"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lakitna/cypress-commands"
+  },
+  "bugs": {
+    "url": "https://github.com/Lakitna/cypress-commands/issues"
   },
   "keywords": [
     "Cypress",
     "command"
   ],
-  "files": [
-    "index.*",
-    "types",
-    "docs",
-    "lib"
-  ],
-  "author": "Lakitna",
-  "license": "MIT",
   "devDependencies": {
     "cypress": "~3.3.1",
-    "eslint": "^5.16.0",
+    "eslint": "^6.0.1",
     "eslint-config-google": "^0.13.0",
     "eslint-plugin-cypress": "^2.2.1",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-sonarjs": "^0.3.0",
-    "http-server": "^0.11.1",
-    "start-server-and-test": "^1.9.1"
-  }
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-sonarjs": "^0.4.0",
+    "http-server": "^0.9.0",
+    "rollup": "^1.16.2",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-copy": "^3.0.0",
+    "rollup-plugin-delete": "^1.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "start-server-and-test": "^1.9.1",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {}
 }

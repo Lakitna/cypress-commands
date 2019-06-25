@@ -1,11 +1,11 @@
-const errMsg = require('./errorMessages');
+import { notInProduction } from './errorMessages';
 
 /**
  * By marking the current command we can retrieve it later in any
  * context, including retried context.
  * @param {string} commandName
  */
-exports.markCurrentCommand = function markCurrentCommand(commandName) {
+export function markCurrentCommand(commandName) {
     const queue = Cypress.cy.queue;
     const currentCommand = queue
         .filter({ name: commandName })
@@ -14,7 +14,7 @@ exports.markCurrentCommand = function markCurrentCommand(commandName) {
 
     // The mark
     currentCommand.attributes.invoked = true;
-};
+}
 
 
 /**
@@ -22,7 +22,7 @@ exports.markCurrentCommand = function markCurrentCommand(commandName) {
  * assertions that negate existence.
  * @return {boolean}
  */
-exports.upcomingAssertionNegatesExistence = function upcomingAssertionNegatesExistence() {
+export function upcomingAssertionNegatesExistence() {
     const currentCommand = getLastMarkedCommand();
     if (!currentCommand) {
         return false;
@@ -38,7 +38,7 @@ exports.upcomingAssertionNegatesExistence = function upcomingAssertionNegatesExi
         }
         return false;
     });
-};
+}
 
 
 /**
@@ -53,7 +53,7 @@ function getLastMarkedCommand() {
     if (cmd === undefined) {
         console.error(`Could not find any marked commands in the queue. `
             + `Did you forget to mark the command during its invokation?`
-            + `\n\n${errMsg.not_in_prod}`);
+            + `\n\n${notInProduction}`);
 
         return false;
     }

@@ -1,10 +1,11 @@
 const _ = Cypress._;
 const $ = Cypress.$;
 
-const commandQueue = require('./utils/commandQueue');
-const errMsg = require('./utils/errorMessages').command.attribute;
+import { markCurrentCommand, upcomingAssertionNegatesExistence } from './utils/commandQueue';
+import { command } from './utils/errorMessages';
+const errMsg = command.attribute;
 
-const OptionValidator = require('./utils/optionValidator');
+import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('attribute');
 
 /**
@@ -50,7 +51,7 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
     }
 
     // Mark this newly invoked command in the command queue to be able to find it later.
-    commandQueue.markCurrentCommand('attribute');
+    markCurrentCommand('attribute');
 
     /**
      * @param {Array.<string>|string} result
@@ -82,7 +83,7 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
 
         let result = attr;
         if (options.strict && attr.length && subject.length > attr.length) {
-            const negate = commandQueue.upcomingAssertionNegatesExistence();
+            const negate = upcomingAssertionNegatesExistence();
 
             if (!negate) {
                 result = $([]);

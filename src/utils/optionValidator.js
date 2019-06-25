@@ -1,13 +1,12 @@
 const _ = Cypress._;
 
-const CommandError = require('./commandError');
-
-const repoUrl = require('../../package.json').repository;
+import CommandError from './commandError';
+import { repository } from '../../package.json';
 
 /**
  * Validate user set options
  */
-class OptionValidator {
+export default class OptionValidator {
     /**
      * @param {string} commandName
      */
@@ -21,7 +20,7 @@ class OptionValidator {
          * Url to the full documentation of the command
          * @type {string}
          */
-        this.docUrl = `${repoUrl}/blob/master/docs/${commandName}.md`;
+        this.docUrl = `${repository.url}/blob/master/docs/${commandName}.md`;
     }
 
     /**
@@ -71,5 +70,3 @@ class OptionValidator {
         }
     }
 }
-
-module.exports = OptionValidator;

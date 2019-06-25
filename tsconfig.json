@@ -9,6 +9,6 @@
   },
   "include": [
     "cypress/**/*.js",
-    "lib/**/*.js"
+    "src/**/*.js"
   ]
 }

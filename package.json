@@ -23,6 +23,7 @@
     "run:cypress:bundle": "cypress run --config supportFile=cypress/support/bundle.js",
     "lint": "eslint ./",
     "bundle": "rollup -c",
+    "ci": "npm run lint && npm run test:source && npm run bundle && npm run test:bundle",
     "prepublishOnly": "npm run lint && npm run bundle && npm run test:bundle"
   },
   "author": {

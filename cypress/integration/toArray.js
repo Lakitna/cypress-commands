@@ -1,4 +1,3 @@
-const $ = Cypress.$;
 const COMMAND_TIMEOUT = 4000;
 
 describe('The added command `toArray`', function() {
@@ -35,9 +34,9 @@ describe('The added command `toArray`', function() {
 
     context('In isolation', function() {
         it('does not cast an Array', function() {
-            cy.wrap(['foo', 'bar'])
+            cy.wrap(['lorum', 'ipsum'])
                 .toArray()
-                .should('deep.equal', ['foo', 'bar']);
+                .should('deep.equal', ['lorum', 'ipsum']);
         });
 
         it('casts a string', function() {
@@ -53,7 +52,7 @@ describe('The added command `toArray`', function() {
         });
 
         it('casts an object', function() {
-            cy.wrap({foo: 123})
+            cy.wrap({ foo: 123 })
                 .toArray()
                 .should('deep.equal', [{ foo: 123 }]);
         });

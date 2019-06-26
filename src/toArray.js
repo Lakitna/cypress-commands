@@ -1,5 +1,4 @@
 const _ = Cypress._;
-const $ = Cypress.$;
 
 import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('toArray');

@@ -5,8 +5,8 @@ import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('toArray');
 
 /**
- * Wrap a given subject in an Array
- * Will do nothing if the subject is array-like
+ * Wrap the subject in an Array.
+ * Will do nothing if the subject is array-like.
  *
  * @example
  * cy.wrap(123).toArray();

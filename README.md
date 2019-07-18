@@ -46,6 +46,7 @@ These commands do not exist in Cypress by default.
 
 * [`.attribute()`](./docs/attribute.md)
 * [`.text()`](./docs/text.md)
+* [`.toArray()`](./docs/toArray.md)
 
 ## Contributing
 

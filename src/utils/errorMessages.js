@@ -51,5 +51,5 @@ export const command = {
         expected: (expected) => {
             return `Expected one of [${expected.join(', ')}]`;
         },
-    }
+    },
 };

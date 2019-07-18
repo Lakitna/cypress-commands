@@ -1,5 +1,4 @@
 const _ = Cypress._;
-const $ = Cypress.$;
 
 import { command } from './utils/errorMessages';
 const errMsg = command.to;
@@ -75,7 +74,7 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
                 onRetry: castSubject,
             });
         }
-        catch(err) {
+        catch (err) {
             options.error = err;
             return cy.retry(castSubject, options, options._log);
         }
@@ -96,8 +95,6 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
  */
 function castNumber(subject) {
     if (_.isArrayLikeObject(subject)) {
-
-
         const casted = subject.map((val) => {
             if (_.isArrayLikeObject(val)) {
                 throw new Error(errMsg.cantCast('a nested array', 'number'));

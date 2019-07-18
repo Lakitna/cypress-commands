@@ -34,4 +34,22 @@ export const command = {
             },
         },
     },
+    to: {
+        cantCast: (description, target) => {
+            let message = `Can't cast ${description}`;
+            if (target) {
+                message += ` to type ${target}`;
+            }
+            return `${message}.`;
+        },
+        cantCastType: (type, target) => {
+            return command.to.cantCast(`subject of type ${type}`, target);
+        },
+        cantCastVal: (val, target) => {
+            return command.to.cantCast(`'${val}'`, target);
+        },
+        expected: (expected) => {
+            return `Expected one of [${expected.join(', ')}]`;
+        },
+    }
 };

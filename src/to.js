@@ -8,15 +8,8 @@ const validator = new OptionValidator('to');
 
 
 const types = {
-    array: (subject) => {
-        return _.isArrayLikeObject(subject) ? subject : [subject];
-    },
-    string: (subject) => {
-        if (_.isArrayLikeObject(subject) || _.isObject(subject)) {
-            return JSON.stringify(subject);
-        }
-        return `${subject}`;
-    },
+    array: castArray,
+    string: castString,
     number: castNumber,
 };
 
@@ -26,7 +19,7 @@ const types = {
  * @param {boolean} [options.log=true]
  *   Log the command to the Cypress command log
  *
- * @yields {any[]}
+ * @yields {any}
  * @since 0.3.0
  */
 Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) => {
@@ -76,13 +69,15 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
         }
         catch (err) {
             options.error = err;
+
+            // Retry if the casting function threw an error
             return cy.retry(castSubject, options, options._log);
         }
     }
 
     return castSubject()
         .then((result) => {
-            // The upcoming assertion passed, finish up the log
+            // Everything passed, finish up the log
             consoleProps.Yielded = result;
             return result;
         });
@@ -91,10 +86,35 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
 
 /**
  * @param {any|any[]} subject
+ * @return {any[]}
+ */
+function castArray(subject) {
+    if (_.isArrayLikeObject(subject)) {
+        return subject;
+    }
+    return [subject];
+}
+
+
+/**
+ * @param {any|any[]} subject
+ * @return {string}
+ */
+function castString(subject) {
+    if (_.isArrayLikeObject(subject) || _.isObject(subject)) {
+        return JSON.stringify(subject);
+    }
+    return `${subject}`;
+}
+
+
+/**
+ * @param {any|any[]} subject
  * @return {number|number[]}
  */
 function castNumber(subject) {
     if (_.isArrayLikeObject(subject)) {
+        // Try to cast all items in the array to a number
         const casted = subject.map((val) => {
             if (_.isArrayLikeObject(val)) {
                 throw new Error(errMsg.cantCast('a nested array', 'number'));
@@ -103,6 +123,8 @@ function castNumber(subject) {
         });
 
         if (casted.includes(NaN)) {
+            // Some values in the array could not be casted. Build an error
+            // detailing on which values the casting failed.
             const uncastable = subject
                 .map((val, i) => {
                     if (_.isNaN(casted[i])) {

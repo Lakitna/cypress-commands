@@ -101,7 +101,10 @@ function castArray(subject) {
  * @return {string}
  */
 function castString(subject) {
-    if (_.isArrayLikeObject(subject) || _.isObject(subject)) {
+    if (_.isArrayLikeObject(subject)) {
+        return subject.map(castString);
+    }
+    if (_.isObject(subject)) {
         return JSON.stringify(subject);
     }
     return `${subject}`;
@@ -114,31 +117,7 @@ function castString(subject) {
  */
 function castNumber(subject) {
     if (_.isArrayLikeObject(subject)) {
-        // Try to cast all items in the array to a number
-        const casted = subject.map((val) => {
-            if (_.isArrayLikeObject(val)) {
-                throw new Error(errMsg.cantCast('a nested array', 'number'));
-            }
-            return Number(val);
-        });
-
-        if (casted.includes(NaN)) {
-            // Some values in the array could not be casted. Build an error
-            // detailing on which values the casting failed.
-            const uncastable = subject
-                .map((val, i) => {
-                    if (_.isNaN(casted[i])) {
-                        return `[${i}]: ${errMsg.cantCastVal(val, 'number')}`;
-                    }
-                    return undefined;
-                })
-                .filter((val) => val !== undefined);
-
-            throw new Error(`${errMsg.cantCast('all items in the subject', 'number')}\n\n`
-                + `${uncastable.join('\n')}`);
-        }
-
-        return casted;
+        return subject.map(castNumber);
     }
     else if (_.isObject(subject)) {
         throw new Error(errMsg.cantCastType('object', 'number'));

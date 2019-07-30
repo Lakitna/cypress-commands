@@ -117,10 +117,10 @@ describe('The added command `to`', function() {
                     .should('equal', 'foo bar baz');
             });
 
-            it('casts an array to JSON', function() {
-                cy.wrap(['foo', 'bar', 'baz'])
+            it('casts all items in an array', function() {
+                cy.wrap([ 132, 7, { foo: 'bar' } ])
                     .to('string')
-                    .should('equal', '["foo","bar","baz"]');
+                    .should('deep.equal', [ '132', '7', '{"foo":"bar"}' ]);
             });
 
             it('casts an object to JSON', function() {
@@ -190,25 +190,11 @@ describe('The added command `to`', function() {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
                     expect(err.message)
-                        .to.include(`Can't cast all items in the subject to type number`)
-                        .to.include(`[0]: Can't cast 'foo' to type number`)
-                        .to.include(`[3]: Can't cast 'a125' to type number`);
+                        .to.include(`Can't cast 'foo' to type number`);
                     done();
                 });
 
                 cy.wrap(['foo', '1234', '009', 'a125'])
-                    .to('number');
-            });
-
-            it('throws on a multidimentional array', function(done) {
-                cy.on('fail', (err) => {
-                    expect(__logs.length).to.eq(2);
-                    expect(err.message)
-                        .to.include(`Can't cast a nested array to type number.`);
-                    done();
-                });
-
-                cy.wrap([[123, '123'], '9340'])
                     .to('number');
             });
         });

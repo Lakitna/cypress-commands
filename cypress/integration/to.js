@@ -118,9 +118,9 @@ describe('The added command `to`', function() {
             });
 
             it('casts all items in an array', function() {
-                cy.wrap([ 132, 7, { foo: 'bar' } ])
+                cy.wrap([132, 7, { foo: 'bar' }])
                     .to('string')
-                    .should('deep.equal', [ '132', '7', '{"foo":"bar"}' ]);
+                    .should('deep.equal', ['132', '7', '{"foo":"bar"}']);
             });
 
             it('casts an object to JSON', function() {

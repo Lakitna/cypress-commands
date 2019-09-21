@@ -2,7 +2,7 @@
 
 const COMMAND_TIMEOUT = 4000;
 
-describe('The added command `text`', function() {
+describe('The added command `attribute`', function() {
     before(function() {
         cy.visit('/');
     });

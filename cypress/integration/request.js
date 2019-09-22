@@ -82,5 +82,47 @@ describe('Overwritten command request', function() {
                         });
                     });
             });
+
+        it('prefixes with baseUrl when origin url is empty and the requestBaseUrl is null',
+            function() {
+                cy.stub(cy, 'getRemoteLocation')
+                    .withArgs('origin')
+                    .returns('');
+
+                Cypress.config('requestBaseUrl', null);
+                Cypress.config('baseUrl', 'http://localhost:8080/app');
+
+                cy.request('/foo/bar?cat=1')
+                    .then(() => {
+                        this.expectOptionsToBe({
+                            url: 'http://localhost:8080/app/foo/bar?cat=1',
+                            method: 'GET',
+                            gzip: true,
+                            followRedirect: true,
+                            timeout: RESPONSE_TIMEOUT,
+                        });
+                    });
+            });
+
+        it('prefixes with baseUrl when origin url is empty and the requestBaseUrl is undefined',
+            function() {
+                cy.stub(cy, 'getRemoteLocation')
+                    .withArgs('origin')
+                    .returns('');
+
+                Cypress.config('requestBaseUrl', undefined);
+                Cypress.config('baseUrl', 'http://localhost:8080/app');
+
+                cy.request('/foo/bar?cat=1')
+                    .then(() => {
+                        this.expectOptionsToBe({
+                            url: 'http://localhost:8080/app/foo/bar?cat=1',
+                            method: 'GET',
+                            gzip: true,
+                            followRedirect: true,
+                            timeout: RESPONSE_TIMEOUT,
+                        });
+                    });
+            });
     });
 });

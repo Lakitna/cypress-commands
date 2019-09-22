@@ -30,6 +30,7 @@ cy.wrap('Underwhelming Uakari').to('array'); // Yields ['Underwhelming Uakari']
 
 ```javascript
 cy.to('string'); // Errors, cannot be chained off 'cy'
+cy.wrap('Dangerous dog').to('number'); // Errors, can't string be casted to number
 ```
 
 ## Arguments
@@ -71,7 +72,7 @@ cy.wrap('042').to('array');
 
 ### Casting an object to a string
 
-This uses `JSON.stringify`.
+Uses `JSON.stringify`.
 
 ```javascript
 // yields '{"foo":"bar"}'
@@ -98,7 +99,7 @@ cy.wrap([ 'foo' ]).to('array');
 
 ### Ensuring iterability
 
-Some commands, like `.text()`, yield a string when there is only a single subject, but an array when there are multiple subjects. Use `.to('array')` to ensure you can loop over the results of `.text()` without the risk of an error.
+Some commands, like `.text()`, yield a string when there is only a single subject, but an array when there are multiple subjects. You can use `.to('array')` to ensure you can loop over the results of `.text()` without the risk of an error.
 
 ```javascript
 cy.get('.maybeOneElement')

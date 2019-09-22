@@ -40,6 +40,7 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
     }
 
     if (!_.keys(types).includes(type)) {
+        // We don't know the given type, so we can't cast to it
         throw new Error(`${errMsg.cantCast('subject', type)} ${errMsg.expected(_.keys(types))}`);
     }
 
@@ -68,9 +69,8 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
             });
         }
         catch (err) {
+            // The casting function threw an error, let's try again
             options.error = err;
-
-            // Retry if the casting function threw an error
             return cy.retry(castSubject, options, options._log);
         }
     }

@@ -51,8 +51,8 @@ module.exports = {
         "files": ["cypress/integration/**/*"],
         "rules": {
             "sonarjs/no-identical-functions": "warn",
-            "sonarjs/no-duplicate-string": "warn",
-            "no-invalid-this": "warn"
+            "sonarjs/no-duplicate-string": ["warn", 5],
+            "no-invalid-this": "warn",
         },
     }],
 };

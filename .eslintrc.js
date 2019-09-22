@@ -37,7 +37,8 @@ module.exports = {
             "error",
             "stroustrup",
         ],
-        "object-curly-spacing": ["error", "always"]
+        "object-curly-spacing": ["error", "always"],
+        "operator-linebreak": ["error", "before"],
     },
     "overrides": [{
         "files": ["lib/**/*"],

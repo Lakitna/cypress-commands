@@ -1,9 +1,9 @@
 import { repository } from '../../package.json';
 
 
-export const notInProduction =
-    `This message should never show if you're a user of cypress-commands. `
-    + `If it does, please open an issue at ${repository.url}.`;
+export const notInProduction = `This message should never show `
+    + `if you're a user of cypress-commands. If it does, please open `
+    + `an issue at ${repository.url}.`;
 
 export const command = {
     attribute: {

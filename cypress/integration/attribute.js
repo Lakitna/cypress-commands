@@ -281,5 +281,31 @@ describe('The added command `attribute`', function() {
                 });
             });
         });
+
+        describe.only('whitespace', function() {
+            it('`simplify` is the default value', function() {
+                cy.get('div.whitespace')
+                    .attribute('data-complex')
+                    .should('equal', 'some very complex whitespace');
+            });
+
+            it('`simplify` simplifies all whitespace', function() {
+                cy.get('div.whitespace')
+                    .attribute('data-complex')
+                    .should('equal', 'some very complex whitespace');
+            });
+
+            it('`keep-newline` simplifies all whitespace except newlines', function() {
+                cy.get('div.whitespace')
+                    .attribute('data-complex', { whitespace: 'keep-newline' })
+                    .should('equal', 'some very\ncomplex whitespace');
+            });
+
+            it('`keep` does not change whitespace at all', function() {
+                cy.get('div.whitespace')
+                    .attribute('data-complex', { whitespace: 'keep' })
+                    .should('equal', ' some    \t very\n      complex\twhitespace');
+            });
+        });
     });
 });

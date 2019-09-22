@@ -51,7 +51,7 @@ module.exports = {
         "rules": {
             "sonarjs/no-identical-functions": "warn",
             "sonarjs/no-duplicate-string": ["warn", 5],
-            "no-invalid-this": "warn",
+            "no-invalid-this": "off",
         },
     }],
 };

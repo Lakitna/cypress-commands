@@ -70,7 +70,7 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
      */
     function resolveAttribute() {
         let attr = subject.map((i, element) => {
-            return $(element).attr(attribute)
+            return $(element).attr(attribute);
         });
 
         if (attr.length === 1) {

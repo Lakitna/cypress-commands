@@ -8,7 +8,7 @@ export default function whitespace(mode) {
             return input
                 .replace(/\s+/g, ' ')
                 .trim();
-        }
+        };
     }
 
     if (mode === 'keep-newline') {
@@ -18,7 +18,7 @@ export default function whitespace(mode) {
                 .replace(/^[^\S\n]/g, '')
                 .replace(/[^\S\n]$/g, '')
                 .replace(/[^\S\n]*\n[^\S\n]*/g, '\n');
-        }
+        };
     }
 
     return (input) => input;

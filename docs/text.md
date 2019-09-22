@@ -115,7 +115,7 @@ cy.get('div').text({ whitespace: 'keep-newline' });
 #### Do not simplify whitespace
 
 ```javascript
-// yields "Extravagant \xa0\n  Eagle"
+// yields "Extravagant  \n  Eagle"
 cy.get('div').text({ whitespace: 'keep' });
 ```
 

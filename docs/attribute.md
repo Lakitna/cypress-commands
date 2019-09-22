@@ -44,6 +44,7 @@ Option | Default | Description
 --- | --- | ---
 `timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.attribute()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)
 `log` | `false` | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)
+`whitespace` | `simplify` | Replace complex whitespace with a single regular space.<br> Accepted values: `simplify`, `keep-newline` & `keep`
 `strict` | `true` | Implicitly assert that all subjects have the requested attribute
 
 ## Yields
@@ -77,6 +78,43 @@ cy.get('img').attribute('alt');
 //     "submit"
 // ]
 cy.get('input').attribute('type');
+```
+
+### Whitespace handling
+
+By default all whitespace will be simplified.
+
+```html
+<div data-attribute=" Extravagant &nbsp;
+  Eagle            "></div>
+```
+
+#### Simplify whitespace by default
+
+```javascript
+// yields "Extravagant Eagle"
+cy.get('div').attribute('data-attribute');
+```
+
+The default value of `whitespace` is `simplify` so the following yields the same.
+
+```javascript
+// yields "Extravagant Eagle"
+cy.get('div').attribute('data-attribute', { whitespace: 'simplify' });
+```
+
+#### Simplify whitespace but keep new line characters
+
+```javascript
+// yields "Extravagant\nEagle"
+cy.get('div').attribute('data-attribute', { whitespace: 'keep-newline' });
+```
+
+#### Do not simplify whitespace
+
+```javascript
+// yields " Extravagant  \n  Eagle            "
+cy.get('div').attribute('data-attribute', { whitespace: 'keep' });
 ```
 
 ### Strict mode

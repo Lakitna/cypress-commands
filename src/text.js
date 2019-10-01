@@ -1,6 +1,7 @@
 const _ = Cypress._;
 const $ = Cypress.$;
 
+import whitespace from './utils/whitespace';
 import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('text');
 
@@ -33,6 +34,7 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
         depth: 0,
     });
 
+    options._whitespace = whitespace(options.whitespace);
 
     const consoleProps = {
         'Applied to': $(element),
@@ -46,21 +48,6 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
             message: '',
             consoleProps: () => consoleProps,
         });
-    }
-
-
-    options._whitespace = (v) => v;
-    if (options.whitespace == 'simplify') {
-        options._whitespace = (v) => {
-            return v.replace(/\s+/g, ' ');
-        };
-    }
-    else if (options.whitespace == 'keep-newline') {
-        options._whitespace = (v) => {
-            return v
-                .replace(/[^\S\n]+/g, ' ')
-                .replace(/[^\S\n]*\n[^\S\n]*/g, '\n');
-        };
     }
 
 

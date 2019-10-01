@@ -5,6 +5,7 @@ import { markCurrentCommand, upcomingAssertionNegatesExistence } from './utils/c
 import { command } from './utils/errorMessages';
 const errMsg = command.attribute;
 
+import whitespace from './utils/whitespace';
 import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('attribute');
 
@@ -31,12 +32,15 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
 
     // Handle options
     validator.check('log', options.log, [true, false]);
+    validator.check('whitespace', options.whitespace, ['simplify', 'keep', 'keep-newline']);
     validator.check('strict', options.strict, [true, false]);
     _.defaults(options, {
         log: true,
         strict: true,
+        whitespace: 'keep',
     });
 
+    options._whitespace = whitespace(options.whitespace);
 
     const consoleProps = {
         'Applied to': subject,
@@ -65,16 +69,18 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
      * @return {Promise}
      */
     function resolveAttribute() {
-        let attr = subject.map((i, elem) => {
-            return $(elem).attr(attribute);
+        let attr = subject.map((i, element) => {
+            return $(element).attr(attribute);
         });
 
         if (attr.length === 1) {
-            attr = attr.get(0);
+            attr = options._whitespace(attr.get(0));
         }
         else if (attr.length > 1) {
             // Deconstruct jQuery object to normal array
-            attr = attr.toArray();
+            attr = attr
+                .toArray()
+                .map(options._whitespace);
         }
 
         if (options.log) {

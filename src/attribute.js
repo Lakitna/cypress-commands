@@ -37,7 +37,7 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
     _.defaults(options, {
         log: true,
         strict: true,
-        whitespace: 'simplify',
+        whitespace: 'keep',
     });
 
     options._whitespace = whitespace(options.whitespace);

@@ -11,7 +11,7 @@
 
   RESPONSE_TIMEOUT = 22222;
 
-  describe.only("src/cy/commands/request", function() {
+  describe("src/cy/commands/request", function() {
     return context("#request", function() {
       beforeEach(function() {
         Cypress.config("requestBaseUrl", '');

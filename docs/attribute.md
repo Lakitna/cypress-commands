@@ -44,7 +44,7 @@ Option | Default | Description
 --- | --- | ---
 `timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.attribute()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)
 `log` | `false` | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)
-`whitespace` | `simplify` | Replace complex whitespace with a single regular space.<br> Accepted values: `simplify`, `keep-newline` & `keep`
+`whitespace` | `keep` | Replace complex whitespace with a single regular space.<br> Accepted values: `simplify`, `keep-newline` & `keep`
 `strict` | `true` | Implicitly assert that all subjects have the requested attribute
 
 ## Yields

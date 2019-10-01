@@ -282,16 +282,16 @@ describe('The added command `attribute`', function() {
             });
         });
 
-        describe.only('whitespace', function() {
-            it('`simplify` is the default value', function() {
+        describe('whitespace', function() {
+            it('`keep` is the default value', function() {
                 cy.get('div.whitespace')
                     .attribute('data-complex')
-                    .should('equal', 'some very complex whitespace');
+                    .should('equal', ' some    \t very\n      complex\twhitespace');
             });
 
             it('`simplify` simplifies all whitespace', function() {
                 cy.get('div.whitespace')
-                    .attribute('data-complex')
+                    .attribute('data-complex', { whitespace: 'simplify' })
                     .should('equal', 'some very complex whitespace');
             });
 

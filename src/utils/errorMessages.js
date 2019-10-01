@@ -1,9 +1,9 @@
 import { repository } from '../../package.json';
 
 
-export const notInProduction =
-    `This message should never show if you're a user of cypress-commands. `
-    + `If it does, please open an issue at ${repository.url}.`;
+export const notInProduction = `This message should never show `
+    + `if you're a user of cypress-commands. If it does, please open `
+    + `an issue at ${repository.url}.`;
 
 export const command = {
     attribute: {
@@ -32,6 +32,24 @@ export const command = {
                         + `${inputCount - outputCount} elements.`;
                 },
             },
+        },
+    },
+    to: {
+        cantCast: (description, target) => {
+            let message = `Can't cast ${description}`;
+            if (target) {
+                message += ` to type ${target}`;
+            }
+            return `${message}.`;
+        },
+        cantCastType: (type, target) => {
+            return command.to.cantCast(`subject of type ${type}`, target);
+        },
+        cantCastVal: (val, target) => {
+            return command.to.cantCast(`'${val}'`, target);
+        },
+        expected: (expected) => {
+            return `Expected one of [${expected.join(', ')}]`;
         },
     },
 };

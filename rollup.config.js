@@ -65,7 +65,6 @@ const config = [
     //     plugins: [
     //         // Bundle types (.d.ts)
     //         dts(),
-
     //     ],
     // },
 ];

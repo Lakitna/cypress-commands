@@ -9,6 +9,7 @@ module.exports = {
         "plugin:cypress/recommended",
     ],
     "parserOptions": {
+        "sourceType": "module",
         "ecmaVersion": 8
     },
     "env": {
@@ -36,7 +37,8 @@ module.exports = {
             "error",
             "stroustrup",
         ],
-        "object-curly-spacing": ["error", "always"]
+        "object-curly-spacing": ["error", "always"],
+        "operator-linebreak": ["error", "before"],
     },
     "overrides": [{
         "files": ["lib/**/*"],
@@ -49,6 +51,8 @@ module.exports = {
         "files": ["cypress/integration/**/*"],
         "rules": {
             "sonarjs/no-identical-functions": "warn",
+            "sonarjs/no-duplicate-string": ["warn", 5],
+            "no-invalid-this": "off",
         },
     }],
 };

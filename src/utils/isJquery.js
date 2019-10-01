@@ -5,7 +5,7 @@ const _ = Cypress._;
  * @param {*} value
  * @return {boolean}
  */
-module.exports = function isJquery(value) {
+export default function isJquery(value) {
     if (_.isUndefined(value) || _.isNull(value)) {
         return false;
     }

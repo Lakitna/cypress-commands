@@ -2,7 +2,7 @@
 
 const COMMAND_TIMEOUT = 4000;
 
-describe('The added command `text`', function() {
+describe('The added command `attribute`', function() {
     before(function() {
         cy.visit('/');
     });
@@ -279,6 +279,32 @@ describe('The added command `text`', function() {
                             .should('exist');
                     });
                 });
+            });
+        });
+
+        describe('whitespace', function() {
+            it('`keep` is the default value', function() {
+                cy.get('div.whitespace')
+                    .attribute('data-complex')
+                    .should('equal', ' some    \t very\n      complex\twhitespace');
+            });
+
+            it('`simplify` simplifies all whitespace', function() {
+                cy.get('div.whitespace')
+                    .attribute('data-complex', { whitespace: 'simplify' })
+                    .should('equal', 'some very complex whitespace');
+            });
+
+            it('`keep-newline` simplifies all whitespace except newlines', function() {
+                cy.get('div.whitespace')
+                    .attribute('data-complex', { whitespace: 'keep-newline' })
+                    .should('equal', 'some very\ncomplex whitespace');
+            });
+
+            it('`keep` does not change whitespace at all', function() {
+                cy.get('div.whitespace')
+                    .attribute('data-complex', { whitespace: 'keep' })
+                    .should('equal', ' some    \t very\n      complex\twhitespace');
             });
         });
     });

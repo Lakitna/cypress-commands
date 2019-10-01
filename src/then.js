@@ -1,8 +1,8 @@
 const _ = Cypress._;
 const $ = Cypress.$;
 
-const isJquery = require('./utils/isJquery');
-const OptionValidator = require('./utils/optionValidator');
+import isJquery from './utils/isJquery';
+import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('then');
 
 /**

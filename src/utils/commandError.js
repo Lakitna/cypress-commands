@@ -3,7 +3,7 @@ const _ = Cypress._;
 /**
  * Error namespace for command related issues
  */
-class CommandError extends Error {
+export default class CommandError extends Error {
     /**
      * @param {string} message The error message
      */
@@ -17,5 +17,3 @@ class CommandError extends Error {
         this.name = `CommandError`;
     }
 }
-
-module.exports = CommandError;

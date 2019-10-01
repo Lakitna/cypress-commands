@@ -1,10 +1,12 @@
 const _ = Cypress._;
 const $ = Cypress.$;
 
-const commandQueue = require('./utils/commandQueue');
-const errMsg = require('./utils/errorMessages').command.attribute;
+import { markCurrentCommand, upcomingAssertionNegatesExistence } from './utils/commandQueue';
+import { command } from './utils/errorMessages';
+const errMsg = command.attribute;
 
-const OptionValidator = require('./utils/optionValidator');
+import whitespace from './utils/whitespace';
+import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('attribute');
 
 /**
@@ -30,12 +32,15 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
 
     // Handle options
     validator.check('log', options.log, [true, false]);
+    validator.check('whitespace', options.whitespace, ['simplify', 'keep', 'keep-newline']);
     validator.check('strict', options.strict, [true, false]);
     _.defaults(options, {
         log: true,
         strict: true,
+        whitespace: 'keep',
     });
 
+    options._whitespace = whitespace(options.whitespace);
 
     const consoleProps = {
         'Applied to': subject,
@@ -50,7 +55,7 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
     }
 
     // Mark this newly invoked command in the command queue to be able to find it later.
-    commandQueue.markCurrentCommand('attribute');
+    markCurrentCommand('attribute');
 
     /**
      * @param {Array.<string>|string} result
@@ -64,16 +69,18 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
      * @return {Promise}
      */
     function resolveAttribute() {
-        let attr = subject.map((i, elem) => {
-            return $(elem).attr(attribute);
+        let attr = subject.map((i, element) => {
+            return $(element).attr(attribute);
         });
 
         if (attr.length === 1) {
-            attr = attr.get(0);
+            attr = options._whitespace(attr.get(0));
         }
         else if (attr.length > 1) {
             // Deconstruct jQuery object to normal array
-            attr = attr.toArray();
+            attr = attr
+                .toArray()
+                .map(options._whitespace);
         }
 
         if (options.log) {
@@ -82,7 +89,7 @@ Cypress.Commands.add('attribute', { prevSubject: 'element' }, (subject, attribut
 
         let result = attr;
         if (options.strict && attr.length && subject.length > attr.length) {
-            const negate = commandQueue.upcomingAssertionNegatesExistence();
+            const negate = upcomingAssertionNegatesExistence();
 
             if (!negate) {
                 result = $([]);

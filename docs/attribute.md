@@ -82,14 +82,14 @@ cy.get('input').attribute('type');
 
 ### Whitespace handling
 
-By default all whitespace will be simplified.
+By default all whitespace will be kept intact.
 
 ```html
 <div data-attribute=" Extravagant &nbsp;
   Eagle            "></div>
 ```
 
-#### Simplify whitespace by default
+#### Simplify whitespace
 
 ```javascript
 // yields "Extravagant Eagle"
@@ -110,7 +110,7 @@ cy.get('div').attribute('data-attribute', { whitespace: 'simplify' });
 cy.get('div').attribute('data-attribute', { whitespace: 'keep-newline' });
 ```
 
-#### Do not simplify whitespace
+#### Do not simplify whitespace (default)
 
 ```javascript
 // yields " Extravagant  \n  Eagle            "

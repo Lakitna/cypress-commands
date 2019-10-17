@@ -1,4 +1,4 @@
-import { join } from 'path';
+import path from 'path';
 const _ = Cypress._;
 
 const methods = [
@@ -83,7 +83,7 @@ function parseUrl(url) {
             const protocol = split[0] + '://';
             const baseUrl = split[1];
 
-            url = protocol + join(baseUrl, url);
+            url = protocol + path.join(baseUrl, url);
         }
     }
     return url;

@@ -1,6 +1,6 @@
 {
   "name": "cypress-commands",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A collection of Cypress commands to extend and compliment the default commands",
   "license": "MIT",
   "main": "dist/cypress-commands.js",

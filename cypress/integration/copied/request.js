@@ -702,7 +702,7 @@
             expect(this.logs.length).to.eq(1);
             expect(lastLog.get("error")).to.eq(err);
             expect(lastLog.get("state")).to.eq("failed");
-            expect(err.message).to.eq("cy.request() must be provided a fully qualified url - one that begins with 'http'. By default cy.request() will use either the current window's origin or the 'baseUrl' in cypress.json. Neither of those values were present.");
+            expect(err.message).to.eq("cy.request() must be provided a fully qualified url - one that begins with 'http'. By default cy.request() will use either the current window's origin or the 'baseUrl' in 'cypress.json'. Neither of those values were present.");
             return done();
           });
           return cy.request("/foo/bar");

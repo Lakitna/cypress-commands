@@ -94,6 +94,7 @@ describe('The added command `to`', function() {
 
     context('String', function() {
         describe('In isolation', function() {
+            /* eslint-disable-next-line sonarjs/no-unused-collection */
             let __logs;
 
             beforeEach(function() {

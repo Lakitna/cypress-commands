@@ -71,9 +71,7 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
     function resolveText() {
         let text = [];
         element.each((_, elem) => {
-            text.push(
-                getTextOfElement($(elem), options.depth)
-            );
+            text.push(getTextOfElement($(elem), options.depth));
         });
 
         text = text.map(options._whitespace);

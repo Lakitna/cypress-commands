@@ -41,7 +41,7 @@ describe('The overwritten command `then`', function() {
             cy.timeout(50);
 
             cy.then({ timeout: 150 }, function() {
-                Promise.delay(100);
+                return Promise.delay(100);
             });
         });
 

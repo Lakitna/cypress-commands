@@ -50,23 +50,6 @@ const config = [
             'path',
         ],
     },
-
-
-    /**
-     * Not bundling type definitions because the way we need to do it is
-     * not (yet?) supported by rollup-plugin-dts. Instead we're copying
-     * all type definition files to the dist folder using rollup-plugin-copy
-     */
-    // {
-    //     input: './types/index.d.ts',
-    //     output: [
-    //         { file: pkg.types, format: 'es' }
-    //     ],
-    //     plugins: [
-    //         // Bundle types (.d.ts)
-    //         dts(),
-    //     ],
-    // },
 ];
 
 module.exports = config;

@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/cypress-commands.svg)](https://badge.fury.io/js/cypress-commands)
 
-A collection of high-quality Cypress commands to compliment and extend the defaults.
+A collection of high-quality Cypress commands to complement and extend the defaults.
 
 This repository is not maintained by the Cypress developers. This means we can choose to ignore parts of their vision.
 

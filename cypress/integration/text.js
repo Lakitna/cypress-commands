@@ -137,7 +137,7 @@ describe('The added command `text`', function() {
 
                     expect(lines[0]).to.equal('div');
                     expect(lines[1].trim())
-                        .to.equal('containing\xa0 \xa0 \t some complex\twhitespace');
+                        .to.equal('cont\u200Baining\xa0 \xa0 \t some complex\twhite\u200Bspace');
                 });
         });
     });

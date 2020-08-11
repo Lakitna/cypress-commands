@@ -105,25 +105,31 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
  * @return {string}
  */
 function getTextOfElement(element, depth) {
-    let ret = element
+    const zeroWidthSpace = '\u200B';
+
+    let text = '';
+    element
         .contents()
         .filter((_, content) => {
-            // Only keep the text nodes
-            return content.nodeType === Node.TEXT_NODE;
+            return content.nodeType === Node.TEXT_NODE
+                || (content.nodeType === Node.ELEMENT_NODE && content.nodeName === 'WBR');
         })
-        .map((_, content) => {
-            // Get the text from the nodes
-            return content.data.trim();
+        .each((_, content) => {
+            if (content.nodeType === Node.ELEMENT_NODE && content.nodeName === 'WBR') {
+                return text += zeroWidthSpace;
+            }
+            if (text.endsWith(zeroWidthSpace)) {
+                return text += content.data.trim();
+            }
+            text += ' ' + content.data.trim();
         })
-        .toArray()
-        .join(' ');
 
     if (depth > 0) {
         const children = element.children();
         if (children.length) {
-            ret += ' ' + getTextOfElement(children, --depth);
+            text += ' ' + getTextOfElement(children, --depth);
         }
     }
 
-    return ret.trim();
+    return text.trim();
 }

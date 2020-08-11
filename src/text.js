@@ -118,11 +118,11 @@ function getTextOfElement(element, depth) {
             if (content.nodeType === Node.ELEMENT_NODE && content.nodeName === 'WBR') {
                 return text += zeroWidthSpace;
             }
-            if (text.endsWith(zeroWidthSpace)) {
-                return text += content.data.trim();
+            if (!text.endsWith(zeroWidthSpace)) {
+                text += ' ';
             }
-            text += ' ' + content.data.trim();
-        })
+            text += content.data.trim();
+        });
 
     if (depth > 0) {
         const children = element.children();

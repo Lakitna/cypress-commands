@@ -26,6 +26,17 @@ describe('Whitespace options for commands yielding strings', function() {
             expect(this.ws('\t \r \n\xa0   Lorum ipsum dolor sit amet'))
                 .to.equal('Lorum ipsum dolor sit amet');
         });
+
+        it('removes zero-width whitespace', function() {
+            expect(this.ws('Lorum\u200Bipsum dol\uFEFFor sit amet'))
+                .to.equal('Lorumipsum dolor sit amet');
+
+            expect(this.ws('Lorum\u200Cips\uFEFFum dolor sit amet'))
+                .to.equal('Lorumipsum dolor sit amet');
+
+            expect(this.ws('Lorum\u200Dipsum dolor sit am\uFEFFet'))
+                .to.equal('Lorumipsum dolor sit amet');
+        });
     });
 
     context('mode = `keep-newline`', function() {
@@ -60,6 +71,17 @@ describe('Whitespace options for commands yielding strings', function() {
 
             expect(this.ws('\nLorum ipsum dolor sit amet'))
                 .to.equal('\nLorum ipsum dolor sit amet');
+        });
+
+        it('removes zero-width whitespace', function() {
+            expect(this.ws('Lorum\u200Bipsum dol\uFEFFor sit amet'))
+                .to.equal('Lorumipsum dolor sit amet');
+
+            expect(this.ws('Lorum\u200Cips\uFEFFum dolor sit amet'))
+                .to.equal('Lorumipsum dolor sit amet');
+
+            expect(this.ws('Lorum\u200Dipsum dolor sit am\uFEFFet'))
+                .to.equal('Lorumipsum dolor sit amet');
         });
     });
 

@@ -181,7 +181,7 @@ describe('The added command `text`', function() {
                 expect(__logs.length).to.eq(2);
                 expect(lastLog.get('error')).to.eq(err);
                 expect(err.message)
-                    .to.include('cy.text() failed because it requires a DOM element.');
+                    .to.include('`cy.text()` failed because it requires a DOM element.');
                 done();
             });
 

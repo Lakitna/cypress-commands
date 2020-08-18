@@ -65,7 +65,7 @@ describe('The added command `text`', function() {
                 .should((texts) => {
                     expect(texts).to.be.lengthOf(2);
                     expect(texts[0]).to.equal('child div');
-                    expect(texts[1]).to.equal('secondchild div');
+                    expect(texts[1]).to.equal('second-child div');
                 });
         });
     });
@@ -74,33 +74,63 @@ describe('The added command `text`', function() {
         it('`0` is the default value', function() {
             cy.get('div.parent')
                 .text()
-                .should('equal', 'parent div');
+                .should('equal', [
+                    'parent div top',
+                    'parent div middle',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('`0` results in only the contents of the element itself', function() {
             cy.get('div.parent')
                 .text({ depth: 0 })
-                .should('equal', 'parent div');
+                .should('equal', [
+                    'parent div top',
+                    'parent div middle',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('`1` results in the contents of the element and its direct children', function() {
             cy.get('div.parent')
                 .text({ depth: 1 })
-                .should('equal', 'parent div child div secondchild div');
+                .should('equal', [
+                    'parent div top',
+                    'child div',
+                    'parent div middle',
+                    'second-child div',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('`2` results in the contents of the element and its direct children', function() {
             cy.get('div.parent')
                 .text({ depth: 2 })
-                .should('equal', 'parent div child div grandchild div secondchild div '
-                    + 'secondgrandchild div');
+                .should('equal', [
+                    'parent div top',
+                    'child div',
+                    'grandchild div',
+                    'parent div middle',
+                    'second-child div',
+                    'second-grand-child div',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('`Infinity` results in the contents of the element and all its children', function() {
             cy.get('div.parent')
                 .text({ depth: Infinity })
-                .should('equal', 'parent div child div grandchild div great-grandchild div '
-                    + 'great-great-grandchild div secondchild div secondgrandchild div');
+                .should('equal', [
+                    'parent div top',
+                    'child div',
+                    'grandchild div',
+                    'great-grandchild div',
+                    'great-great-grandchild div',
+                    'parent div middle',
+                    'second-child div',
+                    'second-grand-child div',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('gets all values of form elements', function() {

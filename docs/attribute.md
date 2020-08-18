@@ -93,13 +93,6 @@ By default all whitespace will be kept intact.
 
 ```javascript
 // yields "Extravagant Eagle"
-cy.get('div').attribute('data-attribute');
-```
-
-The default value of `whitespace` is `simplify` so the following yields the same.
-
-```javascript
-// yields "Extravagant Eagle"
 cy.get('div').attribute('data-attribute', { whitespace: 'simplify' });
 ```
 
@@ -111,6 +104,13 @@ cy.get('div').attribute('data-attribute', { whitespace: 'keep-newline' });
 ```
 
 #### Do not simplify whitespace (default)
+
+```javascript
+// yields " Extravagant  \n  Eagle            "
+cy.get('div').attribute('data-attribute');
+```
+
+The default value of `whitespace` is `keep` so the following yields the same.
 
 ```javascript
 // yields " Extravagant  \n  Eagle            "

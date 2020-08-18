@@ -71,7 +71,7 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
     function resolveText() {
         let text = [];
         element.each((_, elem) => {
-            text.push(getTextOfElement($(elem), options.depth));
+            text.push(getTextOfElement($(elem), options.depth).trim());
         });
 
         text = text.map(options._whitespace);
@@ -107,29 +107,28 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
 function getTextOfElement(element, depth) {
     const zeroWidthSpace = '\u200B';
 
+    const TAG_REPLACEMENT = {
+        'WBR': zeroWidthSpace,
+        'BR': ' ',
+    };
+
     let text = '';
     element
         .contents()
-        .filter((_, content) => {
-            return content.nodeType === Node.TEXT_NODE
-                || (content.nodeType === Node.ELEMENT_NODE && content.nodeName === 'WBR');
-        })
-        .each((_, content) => {
-            if (content.nodeType === Node.ELEMENT_NODE && content.nodeName === 'WBR') {
-                return text += zeroWidthSpace;
+        .each((i, content) => {
+            if (content.nodeType === Node.TEXT_NODE) {
+                return text += content.data;
             }
-            if (!text.endsWith(zeroWidthSpace)) {
-                text += ' ';
+            if (content.nodeType === Node.ELEMENT_NODE) {
+                if (_.has(TAG_REPLACEMENT, content.nodeName)) {
+                    return text += TAG_REPLACEMENT[content.nodeName];
+                }
+
+                if (depth > 0) {
+                    return text += getTextOfElement($(content), depth - 1);
+                }
             }
-            text += content.data.trim();
         });
 
-    if (depth > 0) {
-        const children = element.children();
-        if (children.length) {
-            text += ' ' + getTextOfElement(children, --depth);
-        }
-    }
-
-    return text.trim();
+    return text;
 }

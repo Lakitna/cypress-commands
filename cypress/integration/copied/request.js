@@ -5,12 +5,12 @@ const { _, Promise } = Cypress
 
 const RESPONSE_TIMEOUT = 22222
 
-// Tests copied from develop branch of cypress@4.9.0
+// Tests copied from develop branch of cypress@4.12.1
 describe('src/cy/commands/request', function() {
   context('#request', {
     responseTimeout: RESPONSE_TIMEOUT,
-  }, () => {
-    beforeEach(() => {
+  }, function() {
+    beforeEach(function() {
       cy.stub(Cypress, 'backend').callThrough()
     })
 
@@ -518,7 +518,7 @@ describe('src/cy/commands/request', function() {
     })
 
     describe('timeout', function() {
-      beforeEach(() => {
+      beforeEach(function() {
         Cypress.backend
         .withArgs('http:request')
         .resolves({ isOkStatusCode: true, status: 200 })
@@ -526,10 +526,10 @@ describe('src/cy/commands/request', function() {
 
       it('sets timeout to Cypress.config(responseTimeout)', {
         responseTimeout: 2500,
-      }, () => {
+      }, function() {
         const timeout = cy.spy(Promise.prototype, 'timeout')
 
-        cy.request('http://www.foo.com').then(() => {
+        cy.request('http://www.foo.com').then(function() {
           expect(timeout).to.be.calledWith(2500)
         })
       })
@@ -537,7 +537,7 @@ describe('src/cy/commands/request', function() {
       it('can override timeout', function() {
         const timeout = cy.spy(Promise.prototype, 'timeout')
 
-        cy.request({ url: 'http://www.foo.com', timeout: 1000 }).then(() => {
+        cy.request({ url: 'http://www.foo.com', timeout: 1000 }).then(function() {
           expect(timeout).to.be.calledWith(1000)
         })
       })
@@ -547,7 +547,7 @@ describe('src/cy/commands/request', function() {
 
         cy.spy(cy, 'clearTimeout')
 
-        cy.request('http://www.foo.com').then(() => {
+        cy.request('http://www.foo.com').then(function() {
           expect(cy.clearTimeout).to.be.calledWith('http:request')
 
           // restores the timeout afterwards
@@ -558,33 +558,32 @@ describe('src/cy/commands/request', function() {
 
     describe('.log', function() {
       beforeEach(function () {
+        this.lastLog = undefined;
         cy.on('log:added', (attrs, log) => {
           if (attrs.name === 'request') {
             this.lastLog = log
           }
         })
-
-        return null
       })
 
       it('can turn off logging', function() {
         Cypress.backend
-        .withArgs('http:request')
-        .resolves({ isOkStatusCode: true, status: 200 })
+          .withArgs('http:request')
+          .resolves({ isOkStatusCode: true, status: 200 })
 
         cy.request({
           url: 'http://localhost:8080',
           log: false,
         })
-        .then(function () {
+        .then(() => {
           expect(this.lastLog).to.be.undefined
         })
       })
 
-      it('logs immediately before resolving', (done) => {
+      it('logs immediately before resolving', function(done) {
         Cypress.backend
-        .withArgs('http:request')
-        .resolves({ isOkStatusCode: true, status: 200 })
+          .withArgs('http:request')
+          .resolves({ isOkStatusCode: true, status: 200 })
 
         cy.on('log:added', (attrs, log) => {
           if (log.get('name') === 'request') {
@@ -600,8 +599,8 @@ describe('src/cy/commands/request', function() {
 
       it('snapshots after clicking', function() {
         Cypress.backend
-        .withArgs('http:request')
-        .resolves({ isOkStatusCode: true, status: 200 })
+          .withArgs('http:request')
+          .resolves({ isOkStatusCode: true, status: 200 })
 
         cy.request('http://localhost:8080').then(() => {
           const { lastLog } = this
@@ -623,19 +622,19 @@ describe('src/cy/commands/request', function() {
         }
 
         Cypress.backend
-        .withArgs('http:request')
-        .resolves({
-          duration: 10,
-          status: 201,
-          isOkStatusCode: true,
-          body: { id: 123 },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          requestHeaders: { 'x-token': 'ab123' },
-          requestBody: { first: 'brian' },
-          allRequestResponses: [allRequestResponse],
-        })
+          .withArgs('http:request')
+          .resolves({
+            duration: 10,
+            status: 201,
+            isOkStatusCode: true,
+            body: { id: 123 },
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            requestHeaders: { 'x-token': 'ab123' },
+            requestBody: { first: 'brian' },
+            allRequestResponses: [allRequestResponse],
+          });
 
         cy.request({
           url: 'http://localhost:8080/foo',
@@ -760,7 +759,7 @@ describe('src/cy/commands/request', function() {
 
     describe('errors', {
       defaultCommandTimeout: 50,
-    }, () => {
+    }, function() {
       beforeEach(function () {
         this.logs = []
 
@@ -792,7 +791,7 @@ describe('src/cy/commands/request', function() {
 
       it('throws when url is not FQDN', {
         baseUrl: '',
-        requestBaseUrl: '',
+        requestBaseUrl: null,
       }, function (done) {
         cy.stub(cy, 'getRemoteLocation').withArgs('origin').returns('')
 
@@ -813,7 +812,7 @@ describe('src/cy/commands/request', function() {
 
       it('throws when url is not FQDN, notes that configFile is disabled', {
         baseUrl: '',
-        requestBaseUrl: '',
+        requestBaseUrl: null,
         configFile: false,
       }, function (done) {
         cy.stub(cy, 'getRemoteLocation').withArgs('origin').returns('')
@@ -834,7 +833,7 @@ describe('src/cy/commands/request', function() {
 
       it('throws when url is not FQDN, notes that configFile is non-default', {
         baseUrl: '',
-        requestBaseUrl: '',
+        requestBaseUrl: null,
         configFile: 'foo.json',
       }, function (done) {
         cy.stub(cy, 'getRemoteLocation').withArgs('origin').returns('')
@@ -985,7 +984,7 @@ describe('src/cy/commands/request', function() {
         })
       })
 
-      it('throws when failOnStatusCode is false and retryOnStatusCodeFailure is true', (done) => {
+      it('throws when failOnStatusCode is false and retryOnStatusCodeFailure is true', function(done) {
         cy.on('fail', (err) => {
           expect(err.message).to.contain('`cy.request()` was invoked with `{ failOnStatusCode: false, retryOnStatusCodeFailure: true }`.')
           expect(err.docsUrl).to.eq('https://on.cypress.io/request')
@@ -1077,9 +1076,9 @@ describe('src/cy/commands/request', function() {
       })
 
       // https://github.com/cypress-io/cypress/issues/4346
-      it.skip('throws on network failure when nested', (done) => {
+      it('throws on network failure when nested', function(done) {
         cy.request('http://localhost:3500/dump-method')
-        .then(() => {
+        .then(function() {
           cy.request('http://0.0.0.0:12345')
         })
 
@@ -1215,7 +1214,7 @@ describe('src/cy/commands/request', function() {
       })
 
       // https://github.com/cypress-io/cypress/issues/5274
-      it('dont throw UNESCAPED_CHARACTERS error for url with ’ character in pathname', (done) => {
+      it('dont throw UNESCAPED_CHARACTERS error for url with ’ character in pathname', function(done) {
         cy.on('fail', (err) => {
           expect(err.message).to.contain('`cy.request()` failed trying to load:')
           expect(err.message).to.not.contain('ERR_UNESCAPED_CHARACTERS')
@@ -1226,7 +1225,7 @@ describe('src/cy/commands/request', function() {
         cy.request('http://localhost:1234/’')
       })
 
-      it('dont throw UNESCAPED_CHARACTERS error for url with % character in pathname', (done) => {
+      it('dont throw UNESCAPED_CHARACTERS error for url with % character in pathname', function(done) {
         cy.on('fail', (err) => {
           expect(err.message).to.contain('`cy.request()` failed trying to load:')
           expect(err.message).to.not.contain('ERR_UNESCAPED_CHARACTERS')
@@ -1237,7 +1236,7 @@ describe('src/cy/commands/request', function() {
         cy.request('http://localhost:1234/%')
       })
 
-      it('dont throw UNESCAPED_CHARACTERS error for url with ’ escaped in pathname', (done) => {
+      it('dont throw UNESCAPED_CHARACTERS error for url with ’ escaped in pathname', function(done) {
         cy.on('fail', (err) => {
           expect(err.message).to.contain('`cy.request()` failed trying to load:')
           expect(err.message).to.not.contain('ERR_UNESCAPED_CHARACTERS')
@@ -1248,7 +1247,7 @@ describe('src/cy/commands/request', function() {
         cy.request(encodeURI('http://localhost:1234/’'))
       })
 
-      it('dont throw UNESCAPED_CHARACTERS error for url with Unicode in pathname from BMP to Astral Plane', (done) => {
+      it('dont throw UNESCAPED_CHARACTERS error for url with Unicode in pathname from BMP to Astral Plane', function(done) {
         cy.on('fail', (err) => {
           expect(err.message).to.contain('`cy.request()` failed trying to load:')
           expect(err.message).to.not.contain('ERR_UNESCAPED_CHARACTERS')
@@ -1259,7 +1258,7 @@ describe('src/cy/commands/request', function() {
         cy.request('http://localhost:1234/😀')
       })
 
-      it('dont throw UNESCAPED_CHARACTERS error for url with any Unicode escaped character in pathname', (done) => {
+      it('dont throw UNESCAPED_CHARACTERS error for url with any Unicode escaped character in pathname', function(done) {
         cy.on('fail', (err) => {
           expect(err.message).to.contain('`cy.request()` failed trying to load:')
           expect(err.message).to.not.contain('ERR_UNESCAPED_CHARACTERS')
@@ -1271,7 +1270,7 @@ describe('src/cy/commands/request', function() {
       })
 
       context('displays error', function() {
-        it('displays method and url in error', (done) => {
+        it('displays method and url in error', function(done) {
           const error = new Error('request failed')
 
           error.backend = true

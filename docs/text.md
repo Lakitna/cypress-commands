@@ -182,7 +182,7 @@ cy.get('.parent')
 To infinity and beyond!
 
 ```javascript
-// yields "Grandma Gazelle Mother Meerkat Father Fox Son Scorpion"
+// yields "Grandma Gazelle Mother Meerkat Son Scorpion Father Fox"
 cy.get('.grandparent')
   .text({ depth: Infinity });
 ```

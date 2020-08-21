@@ -29,11 +29,14 @@
     <div class="whitespace" data-complex=" some&nbsp; &nbsp; &#x9; very
       complex&Tab;whitespace">
       div
-      containing&nbsp; &nbsp; &#x9; some<br> complex&Tab;whitespace
+      cont&ZeroWidthSpace;aining&nbsp; &nbsp; &#x9; some<br> complex&Tab;white<wbr>space
+    </div>
+    <div class="formatted">
+      S<i>om</i>e text <b>with </b>inline <span>for<abbr>mat</abbr>ting<br>applied to it.</span>
     </div>
     <hr>
     <div class="parent indent" data-relation="parent" data-foo>
-      parent div
+      parent div top
       <div class="child indent" data-relation="child">
         child div
         <div class="grandchild indent" data-relation="grandchild">
@@ -46,12 +49,14 @@
           </div>
         </div>
       </div>
-      <div class="secondchild indent" data-relation="child">
-        secondchild div
-        <div class="secondgrandchild indent">
-          secondgrandchild div
+      parent div middle
+      <div class="second-child indent" data-relation="child">
+        second-child div
+        <div class="second-grand-child indent">
+          second-grand-child div
         </div>
       </div>
+      parent div bottom
     </div>
   </body>
 </html>

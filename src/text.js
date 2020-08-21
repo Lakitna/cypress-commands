@@ -71,7 +71,7 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
     function resolveText() {
         let text = [];
         element.each((_, elem) => {
-            text.push(getTextOfElement($(elem), options.depth));
+            text.push(getTextOfElement($(elem), options.depth).trim());
         });
 
         text = text.map(options._whitespace);
@@ -105,25 +105,28 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
  * @return {string}
  */
 function getTextOfElement(element, depth) {
-    let ret = element
+    const TAG_REPLACEMENT = {
+        'WBR': '\u200B',
+        'BR': ' ',
+    };
+
+    let text = '';
+    element
         .contents()
-        .filter((_, content) => {
-            // Only keep the text nodes
-            return content.nodeType === Node.TEXT_NODE;
-        })
-        .map((_, content) => {
-            // Get the text from the nodes
-            return content.data.trim();
-        })
-        .toArray()
-        .join(' ');
+        .each((i, content) => {
+            if (content.nodeType === Node.TEXT_NODE) {
+                return text += content.data;
+            }
+            if (content.nodeType === Node.ELEMENT_NODE) {
+                if (_.has(TAG_REPLACEMENT, content.nodeName)) {
+                    return text += TAG_REPLACEMENT[content.nodeName];
+                }
 
-    if (depth > 0) {
-        const children = element.children();
-        if (children.length) {
-            ret += ' ' + getTextOfElement(children, --depth);
-        }
-    }
+                if (depth > 0) {
+                    return text += getTextOfElement($(content), depth - 1);
+                }
+            }
+        });
 
-    return ret.trim();
+    return text;
 }

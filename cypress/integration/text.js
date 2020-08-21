@@ -65,7 +65,7 @@ describe('The added command `text`', function() {
                 .should((texts) => {
                     expect(texts).to.be.lengthOf(2);
                     expect(texts[0]).to.equal('child div');
-                    expect(texts[1]).to.equal('secondchild div');
+                    expect(texts[1]).to.equal('second-child div');
                 });
         });
     });
@@ -74,33 +74,63 @@ describe('The added command `text`', function() {
         it('`0` is the default value', function() {
             cy.get('div.parent')
                 .text()
-                .should('equal', 'parent div');
+                .should('equal', [
+                    'parent div top',
+                    'parent div middle',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('`0` results in only the contents of the element itself', function() {
             cy.get('div.parent')
                 .text({ depth: 0 })
-                .should('equal', 'parent div');
+                .should('equal', [
+                    'parent div top',
+                    'parent div middle',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('`1` results in the contents of the element and its direct children', function() {
             cy.get('div.parent')
                 .text({ depth: 1 })
-                .should('equal', 'parent div child div secondchild div');
+                .should('equal', [
+                    'parent div top',
+                    'child div',
+                    'parent div middle',
+                    'second-child div',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('`2` results in the contents of the element and its direct children', function() {
             cy.get('div.parent')
                 .text({ depth: 2 })
-                .should('equal', 'parent div child div secondchild div grandchild div '
-                    + 'secondgrandchild div');
+                .should('equal', [
+                    'parent div top',
+                    'child div',
+                    'grandchild div',
+                    'parent div middle',
+                    'second-child div',
+                    'second-grand-child div',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('`Infinity` results in the contents of the element and all its children', function() {
             cy.get('div.parent')
                 .text({ depth: Infinity })
-                .should('equal', 'parent div child div secondchild div grandchild div '
-                    + 'secondgrandchild div great-grandchild div great-great-grandchild div');
+                .should('equal', [
+                    'parent div top',
+                    'child div',
+                    'grandchild div',
+                    'great-grandchild div',
+                    'great-great-grandchild div',
+                    'parent div middle',
+                    'second-child div',
+                    'second-grand-child div',
+                    'parent div bottom',
+                ].join(' '));
         });
 
         it('gets all values of form elements', function() {
@@ -115,18 +145,30 @@ describe('The added command `text`', function() {
             cy.get('div.whitespace')
                 .text()
                 .should('equal', 'div containing some complex whitespace');
+
+            cy.get('div.formatted')
+                .text({ depth: 9 })
+                .should('equal', 'Some text with inline formatting applied to it.');
         });
 
         it('`simplify` simplifies all whitespace', function() {
             cy.get('div.whitespace')
                 .text({ whitespace: 'simplify' })
                 .should('equal', 'div containing some complex whitespace');
+
+            cy.get('div.formatted')
+                .text({ depth: 9, whitespace: 'simplify' })
+                .should('equal', 'Some text with inline formatting applied to it.');
         });
 
         it('`keep-newline` simplifies all whitespace except newlines', function() {
             cy.get('div.whitespace')
                 .text({ whitespace: 'keep-newline' })
                 .should('equal', 'div\ncontaining some complex whitespace');
+
+            cy.get('div.formatted')
+                .text({ depth: 9, whitespace: 'keep-newline' })
+                .should('equal', 'Some text with inline formatting applied to it.');
         });
 
         it('`keep` does not change whitespace at all', function() {
@@ -137,7 +179,14 @@ describe('The added command `text`', function() {
 
                     expect(lines[0]).to.equal('div');
                     expect(lines[1].trim())
-                        .to.equal('containing\xa0 \xa0 \t some complex\twhitespace');
+                        .to.equal('cont\u200Baining\xa0 \xa0 \t some  complex\twhite\u200Bspace');
+                });
+
+            cy.get('div.formatted')
+                .text({ depth: 9, whitespace: 'keep' })
+                .should((text) => {
+                    expect(text.trim())
+                        .to.equal('Some text with inline formatting applied to it.');
                 });
         });
     });

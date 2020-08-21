@@ -105,10 +105,8 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
  * @return {string}
  */
 function getTextOfElement(element, depth) {
-    const zeroWidthSpace = '\u200B';
-
     const TAG_REPLACEMENT = {
-        'WBR': zeroWidthSpace,
+        'WBR': '\u200B',
         'BR': ' ',
     };
 

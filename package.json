@@ -45,12 +45,14 @@
     "to"
   ],
   "devDependencies": {
-    "cypress": "^4.2.0",
+    "chai-string": "^1.5.0",
+    "cypress": "^5.0.0",
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-cypress": "^2.10.3",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-sonarjs": "^0.5.0",
+    "request": "^2.88.2",
     "rollup": "^2.2.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.3.0",

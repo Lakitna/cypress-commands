@@ -40,10 +40,10 @@ Cypress.Commands.overwrite('request', (originalCommand, ...args) => {
     if (_.isObject(args[0])) {
         _.extend(options, args[0]);
     }
-    else if (args.length == 1) {
+    else if (args.length === 1) {
         options.url = args[0];
     }
-    else if (args.length == 2) {
+    else if (args.length === 2) {
         if (methods.includes(args[0].toUpperCase())) {
             options.method = args[0];
             options.url = args[1];
@@ -53,7 +53,7 @@ Cypress.Commands.overwrite('request', (originalCommand, ...args) => {
             options.body = args[1];
         }
     }
-    else if (args.length == 3) {
+    else if (args.length === 3) {
         options.method = args[0];
         options.url = args[1];
         options.body = args[2];

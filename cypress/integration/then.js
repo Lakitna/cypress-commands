@@ -186,7 +186,7 @@ describe('The overwritten command `then`', function() {
 
                     expect(__logs.length).to.eq(1);
                     expect(lastLog.get('error')).to.eq(err);
-                    expect(err.message).to.include('cy.then() timed out after waiting \'150ms\'.');
+                    expect(err.message).to.include('`cy.then()` timed out after waiting `150ms`.');
                     done();
                 });
 
@@ -202,7 +202,7 @@ describe('The overwritten command `then`', function() {
                     expect(__logs.length).to.eq(1);
                     expect(lastLog.get('error')).to.eq(err);
                     expect(err.message).to.include(
-                        'cy.then() failed because you are mixing up async and sync code.');
+                        '`cy.then()` failed because you are mixing up async and sync code.');
                     done();
                 });
 

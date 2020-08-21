@@ -28,6 +28,7 @@ describe('Overwritten command request', function() {
                     followRedirect: true,
                     timeout: RESPONSE_TIMEOUT,
                     method: 'GET',
+                    encoding: 'utf8',
                 });
 
                 const options = backend.firstCall.args[1];

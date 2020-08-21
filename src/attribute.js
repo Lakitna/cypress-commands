@@ -146,4 +146,6 @@ function onFail(err, subject, attribute, result) {
 
         err.displayMessage += '\n\n' + errMsg.disable_strict;
     }
+
+    err.message = err.displayMessage;
 }

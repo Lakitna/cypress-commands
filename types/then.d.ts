@@ -1,5 +1,7 @@
+/// <reference types="cypress" />
+
 declare namespace Cypress {
-    interface Chainable<Subject = any> {
+    interface Chainable<Subject> {
         /**
          * Enables you to work with the subject yielded from the previous command.
          *
@@ -79,19 +81,5 @@ declare namespace Cypress {
             fn: (this: ObjectLike, currentSubject: Subject) => void,
             options: Partial<Timeoutable & Loggable & Retryable>
         ): Chainable<Subject>;
-    }
-
-    /**
-     * Options that controls if the command can will be retried when it fails.
-     *
-     * A command should only be retryable when the command does not retry by default.
-     */
-    interface Retryable {
-        /**
-         * Retry the command when it fails
-         *
-         * @default false
-         */
-        retry: boolean;
     }
 }

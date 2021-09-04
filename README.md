@@ -8,6 +8,12 @@ This repository is not maintained by the Cypress developers. This means we can c
 
 Documentation is a cornerstone of Cypress, the commands in this repository will try to keep these documentation standards.
 
+## Cypress version
+
+`cypress-commands@2` requires version 8.3.0 or higher.
+
+For previous versions of Cypress, use `cypress-commands@1` instead.
+
 ## Installation
 
 Install the module.
@@ -50,7 +56,7 @@ These commands do not exist in Cypress by default.
 
 ## Contributing
 
-Contributors are always welcome! I really don't care if you are a beginner or an expert, all help is welcome.
+Contributors are always welcome! I don't care if you are a beginner or an expert, all help is welcome.
 
 ## Running tests
 

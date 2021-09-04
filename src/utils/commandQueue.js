@@ -8,8 +8,10 @@ import { notInProduction } from './errorMessages';
 export function markCurrentCommand(commandName) {
     const queue = Cypress.cy.queue;
     const currentCommand = queue
-        .filter({ name: commandName })
-        .filter((command) => !command.get('invoked'))
+        .get()
+        .filter((command) => {
+            return command.get('name') === commandName && !command.get('invoked');
+        })
         .shift();
 
     // The mark

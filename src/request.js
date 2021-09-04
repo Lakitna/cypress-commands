@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'path-browserify';
 const _ = Cypress._;
 
 const methods = [

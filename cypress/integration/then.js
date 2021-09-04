@@ -4,48 +4,44 @@
 const $ = Cypress.$;
 const Promise = Cypress.Promise;
 
-
-describe('The overwritten command `then`', function() {
+describe('The overwritten command `then`', function () {
     let body;
 
-    before(function() {
-        cy.visit('/')
-            .then((win) => {
-                body = win.document.body.outerHTML;
-            });
+    before(function () {
+        cy.visit('/').then((win) => {
+            body = win.document.body.outerHTML;
+        });
     });
 
-    describe('Tests copied from Cypress repo', function() {
-        beforeEach(function() {
+    describe('Tests copied from Cypress repo', function () {
+        beforeEach(function () {
             const doc = cy.state('document');
             $(doc.body).empty().html(body);
         });
 
-        it('converts raw DOM elements', function() {
+        it('converts raw DOM elements', function () {
             const div = cy.$$('div:first').get(0);
 
-            cy.wrap(div)
-                .then(($div) => {
-                    expect($div.get(0)).to.eq(div);
-                });
+            cy.wrap(div).then(($div) => {
+                expect($div.get(0)).to.eq(div);
+            });
         });
 
-        it('does not insert a mocha callback', function() {
-            cy.noop()
-                .then(() => {
-                    expect(cy.queue.length).to.eq(2);
-                });
+        it('does not insert a mocha callback', function () {
+            cy.noop().then(() => {
+                expect(cy.queue.length).to.eq(2);
+            });
         });
 
-        it('passes timeout option to then', function() {
+        it('passes timeout option to then', function () {
             cy.timeout(50);
 
-            cy.then({ timeout: 150 }, function() {
+            cy.then({ timeout: 150 }, function () {
                 return Promise.delay(100);
             });
         });
 
-        it('can resolve nested thens', function() {
+        it('can resolve nested thens', function () {
             cy.get('div:first').then(() => {
                 cy.get('div:first').then(() => {
                     cy.get('div:first');
@@ -53,49 +49,45 @@ describe('The overwritten command `then`', function() {
             });
         });
 
-        it('can resolve cypress commands inside of a promise', function() {
+        it('can resolve cypress commands inside of a promise', function () {
             let _then = false;
 
             cy.wrap(null)
                 .then(() => {
-                    return Promise.delay(10)
-                        .then(() => {
-                            cy.then(() => {
-                                _then = true;
-                            });
+                    return Promise.delay(10).then(() => {
+                        cy.then(() => {
+                            _then = true;
                         });
+                    });
                 })
                 .then(() => {
                     expect(_then).to.be.true;
                 });
         });
 
-        it('can resolve chained cypress commands inside of a promise', function() {
+        it('can resolve chained cypress commands inside of a promise', function () {
             let _then = false;
 
             cy.wrap(null)
                 .then(() => {
-                    return Promise.delay(10)
-                        .then(() => {
-                            cy.get('div:first')
-                                .then(() => {
-                                    _then = true;
-                                });
+                    return Promise.delay(10).then(() => {
+                        cy.get('div:first').then(() => {
+                            _then = true;
                         });
+                    });
                 })
                 .then(() => {
                     expect(_then).to.be.true;
                 });
         });
 
-        it('can resolve cypress instance inside of a promise', function() {
+        it('can resolve cypress instance inside of a promise', function () {
             cy.then(() => {
-                Promise.delay(10)
-                    .then(() => cy);
+                Promise.delay(10).then(() => cy);
             });
         });
 
-        it('passes values to the next command', function() {
+        it('passes values to the next command', function () {
             cy.wrap({ foo: 'bar' })
                 .then((obj) => obj.foo)
                 .then((val) => {
@@ -103,18 +95,17 @@ describe('The overwritten command `then`', function() {
                 });
         });
 
-        it('does not throw when returning thenables with cy command', function() {
-            cy.wrap({ foo: 'bar' })
-                .then((obj) => {
-                    return new Promise((resolve) => {
-                        cy.wait(10);
+        it('does not throw when returning thenables with cy command', function () {
+            cy.wrap({ foo: 'bar' }).then((obj) => {
+                return new Promise((resolve) => {
+                    cy.wait(10);
 
-                        resolve(obj.foo);
-                    });
+                    resolve(obj.foo);
                 });
+            });
         });
 
-        it('should pass the eventual resolved thenable value downstream', function() {
+        it('should pass the eventual resolved thenable value downstream', function () {
             cy.wrap({ foo: 'bar' })
                 .then((obj) => {
                     cy.wait(10)
@@ -130,10 +121,11 @@ describe('The overwritten command `then`', function() {
                 });
         });
 
-        it('should not pass the eventual resolve thenable value downstream because '
-                +'thens are not connected', function() {
-            cy.wrap({ foo: 'bar' })
-                .then((obj) => {
+        it(
+            'should not pass the eventual resolve thenable value downstream because ' +
+                'thens are not connected',
+            function () {
+                cy.wrap({ foo: 'bar' }).then((obj) => {
                     cy.wait(10)
                         .then(() => obj.foo)
                         .then((value) => {
@@ -142,12 +134,13 @@ describe('The overwritten command `then`', function() {
                             return value;
                         });
                 });
-            cy.then((val) => {
-                expect(val).to.be.undefined;
-            });
-        });
+                cy.then((val) => {
+                    expect(val).to.be.undefined;
+                });
+            }
+        );
 
-        it('passes the existing subject if ret is undefined', function() {
+        it('passes the existing subject if ret is undefined', function () {
             cy.wrap({ foo: 'bar' })
                 .then(() => undefined)
                 .then((obj) => {
@@ -155,7 +148,7 @@ describe('The overwritten command `then`', function() {
                 });
         });
 
-        it('sets the subject to null when given null', function() {
+        it('sets the subject to null when given null', function () {
             cy.wrap({ foo: 'bar' })
                 .then(() => null)
                 .then((obj) => {
@@ -163,11 +156,11 @@ describe('The overwritten command `then`', function() {
                 });
         });
 
-        describe('errors', function() {
+        describe('errors', function () {
             let __logs;
             let __lastLog;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 Cypress.config('defaultCommandTimeout', 50);
 
                 __logs = [];
@@ -180,7 +173,7 @@ describe('The overwritten command `then`', function() {
                 return null;
             });
 
-            it('throws when promise timeout', function(done) {
+            it('throws when promise timeout', function (done) {
                 cy.on('fail', (err) => {
                     const lastLog = __lastLog;
 
@@ -195,14 +188,15 @@ describe('The overwritten command `then`', function() {
                 });
             });
 
-            it('throws when mixing up async + sync return values', function(done) {
+            it('throws when mixing up async + sync return values', function (done) {
                 cy.on('fail', (err) => {
                     const lastLog = __lastLog;
 
                     expect(__logs.length).to.eq(1);
                     expect(lastLog.get('error')).to.eq(err);
                     expect(err.message).to.include(
-                        '`cy.then()` failed because you are mixing up async and sync code.');
+                        '`cy.then()` failed because you are mixing up async and sync code.'
+                    );
                     done();
                 });
 
@@ -212,7 +206,7 @@ describe('The overwritten command `then`', function() {
                 });
             });
 
-            it('unbinds command:enqueued in the case of an error thrown', function(done) {
+            it('unbinds command:enqueued in the case of an error thrown', function (done) {
                 const listeners = [];
 
                 cy.on('fail', () => {
@@ -231,13 +225,13 @@ describe('The overwritten command `then`', function() {
             });
         });
 
-        describe('yields to remote jQuery subject', function() {
+        describe('yields to remote jQuery subject', function () {
             let __remoteWindow;
-            beforeEach(function() {
+            beforeEach(function () {
                 __remoteWindow = cy.state('window');
             });
 
-            it('calls the callback function with the remote jQuery subject', function() {
+            it('calls the callback function with the remote jQuery subject', function () {
                 __remoteWindow.$.fn.foo = () => {};
 
                 cy.get('div:first')
@@ -250,7 +244,7 @@ describe('The overwritten command `then`', function() {
                     });
             });
 
-            it('does not store the remote jQuery object as the subject', function() {
+            it('does not store the remote jQuery object as the subject', function () {
                 cy.get('div:first')
                     .then(($div) => {
                         expect($div).to.be.instanceof(__remoteWindow.$);
@@ -263,45 +257,47 @@ describe('The overwritten command `then`', function() {
         });
     });
 
-    describe('Retryability', function() {
-        before(function() {
+    describe('Retryability', function () {
+        before(function () {
             Cypress.config('defaultCommandTimeout', 1000);
         });
 
-        beforeEach(function() {
+        beforeEach(function () {
             const doc = cy.state('document');
             $(doc.body).empty().html(body);
         });
 
-        it('retries until the upcoming assertion passes', function() {
+        it('retries until the upcoming assertion passes', function () {
             let c = 0;
 
-            cy.then(() => ++c, { retry: true })
-                .should('equal', 5);
+            cy.then(() => ++c, { retry: true }).should('equal', 5);
         });
 
-        it('retries correctly when handling dom elements', function() {
+        it('retries correctly when handling dom elements', function () {
             let initalResult = null;
 
             cy.get('ul#list')
-                .then((list) => {
-                    const result = list.children().length;
-                    if (initalResult === null) {
-                        initalResult = result;
-                    }
-                    return result;
-                }, { retry: true })
+                .then(
+                    (list) => {
+                        const result = list.children().length;
+                        if (initalResult === null) {
+                            initalResult = result;
+                        }
+                        return result;
+                    },
+                    { retry: true }
+                )
                 .should('equal', 3)
                 .then((result) => {
                     expect(initalResult).to.below(result);
                 });
         });
 
-        describe('errors', function() {
+        describe('errors', function () {
             let __logs;
             let __lastLog;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 Cypress.config('defaultCommandTimeout', 50);
                 __logs = [];
 
@@ -311,22 +307,22 @@ describe('The overwritten command `then`', function() {
                 });
             });
 
-            it('throws on timeout', function(done) {
+            it('throws on timeout', function (done) {
                 cy.on('fail', (err) => {
                     const lastLog = __lastLog;
 
                     expect(__logs.length).to.eq(2);
                     expect(err.message).to.contain(lastLog.get('error').message);
-                    expect(err.message)
-                        .to.equal('Timed out retrying after 50ms: expected 5 to equal 4');
+                    expect(err.message).to.equal(
+                        'Timed out retrying after 50ms: expected 5 to equal 4'
+                    );
                     done();
                 });
 
-                cy.then({ retry: true }, () => 5)
-                    .should('equal', 4);
+                cy.then({ retry: true }, () => 5).should('equal', 4);
             });
 
-            it('logs and fails on a thrown error', function(done) {
+            it('logs and fails on a thrown error', function (done) {
                 cy.on('fail', (err) => {
                     const lastLog = __lastLog;
 
@@ -338,8 +334,7 @@ describe('The overwritten command `then`', function() {
 
                 cy.then({ retry: true }, () => {
                     throw new Error('foo');
-                })
-                    .should('equal', 4);
+                }).should('equal', 4);
             });
         });
     });

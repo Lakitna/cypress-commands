@@ -33,6 +33,14 @@ module.exports = {
                 functions: 'never',
             },
         ],
+        'space-before-function-paren': [
+            'error',
+            {
+                anonymous: 'always',
+                named: 'never',
+                asyncArrow: 'always',
+            },
+        ],
     },
     overrides: [
         {

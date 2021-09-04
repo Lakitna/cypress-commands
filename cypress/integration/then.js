@@ -317,7 +317,8 @@ describe('The overwritten command `then`', function() {
 
                     expect(__logs.length).to.eq(2);
                     expect(err.message).to.contain(lastLog.get('error').message);
-                    expect(err.message).to.equal('Timed out retrying: expected 5 to equal 4');
+                    expect(err.message)
+                        .to.equal('Timed out retrying after 50ms: expected 5 to equal 4');
                     done();
                 });
 

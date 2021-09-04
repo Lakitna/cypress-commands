@@ -42,7 +42,7 @@ const config = [
          * have to download the exact same code multiple times, once
          * in this bundle and also as a dependency of another package.
          */
-        external: [...Object.keys(pkg.dependencies), 'path'],
+        external: [...Object.keys(pkg.dependencies || {})],
     },
 ];
 

@@ -2,11 +2,12 @@
 
 This is a command that does not exist as a default command.
 
-----
+---
 
 Cast the subject to another type. Will do nothing if the subject is already of that type.
 
-> **Note:** When using `.to()` you should be aware about how Cypress [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability.html#Only-the-last-command-is-retried).
+> **Note:** When using `.to()` you should be aware about how Cypress
+> [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability.html#Only-the-last-command-is-retried).
 
 ## Syntax
 
@@ -35,24 +36,24 @@ cy.wrap('Dangerous dog').to('number'); // Errors, can't string be casted to numb
 
 ## Arguments
 
-**> type** ***(string)***
+**> type** **_(string)_**
 
 The type you want to cast the subject to. Must be one of `number`, `string` or `array`.
 
-**> options** ***(Object)***
+**> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.to()`.
 
-Option | Default | Description
---- | --- | ---
-`timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.to()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)
-`log` | `false` | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)
+| Option    | Default                                                                                          | Description                                                                                                          |
+| --------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.to()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)     |
+| `log`     | `false`                                                                                          | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log) |
 
 ## Yields
 
-* `.to('array')` yields an array
-* `.to('string')` yields a string or array of strings
-* `.to('number')` yields a number or array of numbers
+- `.to('array')` yields an array
+- `.to('string')` yields a string or array of strings
+- `.to('number')` yields a number or array of numbers
 
 ## Examples
 
@@ -83,7 +84,7 @@ cy.wrap({ foo: 'bar' }).to('string');
 
 ```javascript
 // yields [ '123', '456', '789' ]
-cy.wrap([ 123, 456, 789 ]).to('string');
+cy.wrap([123, 456, 789]).to('string');
 ```
 
 ### Casting an array to an array
@@ -92,38 +93,40 @@ When trying to cast to the type of the subject `.to()` will do nothing.
 
 ```javascript
 // yields [ 'foo' ]
-cy.wrap([ 'foo' ]).to('array');
+cy.wrap(['foo']).to('array');
 ```
 
 ## Notes
 
 ### Ensuring iterability
 
-Some commands, like `.text()`, yield a string when there is only a single subject, but an array when there are multiple subjects. You can use `.to('array')` to ensure you can loop over the results of `.text()` without the risk of an error.
+Some commands, like `.text()`, yield a string when there is only a single subject, but an array when
+there are multiple subjects. You can use `.to('array')` to ensure you can loop over the results of
+`.text()` without the risk of an error.
 
 ```javascript
 cy.get('.maybeOneElement')
-    .text()
-    .to('array')
-    .each((text) => {
-        // ...
-    });
+  .text()
+  .to('array')
+  .each((text) => {
+    // ...
+  });
 ```
 
 ## Rules
 
 ### Requirements
 
-* `.to()` requires being chained off a previous command.
+- `.to()` requires being chained off a previous command.
 
 ### Assertions
 
-* `.to()` will automatically retry itself until the subject can be casted.
-* `.to()` will automatically retry itself until assertions you've chained all pass.
+- `.to()` will automatically retry itself until the subject can be casted.
+- `.to()` will automatically retry itself until assertions you've chained all pass.
 
 ### Timeouts
 
-* `.to()` can time out waiting for a chained assertion to pass.
+- `.to()` can time out waiting for a chained assertion to pass.
 
 ## Command Log
 

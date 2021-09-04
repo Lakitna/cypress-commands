@@ -155,11 +155,11 @@ describe('The added command `text`', function () {
         it('`keep-newline` simplifies all whitespace except newlines', function () {
             cy.get('div.whitespace')
                 .text({ whitespace: 'keep-newline' })
-                .should('equal', 'div\ncontaining some complex whitespace');
+                .should('equal', 'div containing some\ncomplex whitespace');
 
             cy.get('div.formatted')
                 .text({ depth: 9, whitespace: 'keep-newline' })
-                .should('equal', 'Some text with inline formatting applied to it.');
+                .should('equal', 'Some text with inline\nformatting applied to it.');
         });
 
         it('`keep` does not change whitespace at all', function () {
@@ -167,17 +167,18 @@ describe('The added command `text`', function () {
                 .text({ whitespace: 'keep' })
                 .should((text) => {
                     const lines = text.split('\n');
+                    console.log(lines);
 
-                    expect(lines[0]).to.equal('div');
-                    expect(lines[1].trim()).to.equal(
-                        'cont\u200Baining\xa0 \xa0 \t some  complex\twhite\u200Bspace'
-                    );
+                    expect(lines[0]).to.equal('div cont\u200Baining\xa0 \xa0 \t some ');
+                    expect(lines[1]).to.equal('            complex\twhite\u200Bspace');
                 });
 
             cy.get('div.formatted')
                 .text({ depth: 9, whitespace: 'keep' })
                 .should((text) => {
-                    expect(text.trim()).to.equal('Some text with inline formatting applied to it.');
+                    expect(text.trim()).to.equal(
+                        'Some text with inline\n            formatting applied to it.'
+                    );
                 });
         });
     });

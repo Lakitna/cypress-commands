@@ -279,7 +279,7 @@ describe('The added command `attribute`', function () {
             it('`keep` is the default value', function () {
                 cy.get('div.whitespace')
                     .attribute('data-complex')
-                    .should('equal', ' some    \t very\n      complex\twhitespace');
+                    .should('equal', ' some    \t very\n                complex\twhitespace');
             });
 
             it('`simplify` simplifies all whitespace', function () {
@@ -297,7 +297,7 @@ describe('The added command `attribute`', function () {
             it('`keep` does not change whitespace at all', function () {
                 cy.get('div.whitespace')
                     .attribute('data-complex', { whitespace: 'keep' })
-                    .should('equal', ' some    \t very\n      complex\twhitespace');
+                    .should('equal', ' some    \t very\n                complex\twhitespace');
             });
         });
     });

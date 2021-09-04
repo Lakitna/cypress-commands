@@ -4,10 +4,7 @@ setInterval(() => {
         $('#list').append(`<li>li ${count}</li>`);
     }
 
-    const elems = [
-        $('.counter'),
-        $('input'),
-    ];
+    const elems = [$('.counter'), $('input')];
 
     elems.forEach((elem) => {
         const val = +elem.text();

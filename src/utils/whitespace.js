@@ -7,10 +7,7 @@ export default function whitespace(mode) {
 
     if (mode === 'simplify') {
         return (input) => {
-            return input
-                .replace(zeroWidthWhitespace, '')
-                .replace(/\s+/g, ' ')
-                .trim();
+            return input.replace(zeroWidthWhitespace, '').replace(/\s+/g, ' ').trim();
         };
     }
 

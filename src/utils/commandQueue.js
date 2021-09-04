@@ -18,7 +18,6 @@ export function markCurrentCommand(commandName) {
     currentCommand.attributes.invoked = true;
 }
 
-
 /**
  * Find out of the last marked command in the command queue has upcoming
  * assertions that negate existence.
@@ -42,27 +41,28 @@ export function upcomingAssertionNegatesExistence() {
     });
 }
 
-
 /**
  * @return {Command|false}
  */
 function getLastMarkedCommand() {
     const queue = Cypress.cy.queue;
-    const cmd = queue.get()
+    const cmd = queue
+        .get()
         .filter((command) => command.get('invoked'))
         .pop();
 
     if (cmd === undefined) {
-        console.error(`Could not find any marked commands in the queue. `
-            + `Did you forget to mark the command during its invokation?`
-            + `\n\n${notInProduction}`);
+        console.error(
+            `Could not find any marked commands in the queue. ` +
+                `Did you forget to mark the command during its invokation?` +
+                `\n\n${notInProduction}`
+        );
 
         return false;
     }
 
     return cmd;
 }
-
 
 /**
  * Recursively find all direct upcoming assertions

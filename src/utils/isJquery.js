@@ -10,4 +10,4 @@ export default function isJquery(value) {
         return false;
     }
     return !!value.jquery;
-};
+}

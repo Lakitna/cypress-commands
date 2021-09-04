@@ -8,8 +8,11 @@ declare namespace Cypress {
          *
          * @see https://github.com/Lakitna/cypress-commands/blob/master/docs/to.md
          */
-        to(type: 'string'|'number'|'array', options?: {
-            log?: boolean;
-        }): Chainable<Subject>
+        to(
+            type: 'string' | 'number' | 'array',
+            options?: {
+                log?: boolean;
+            }
+        ): Chainable<Subject>;
     }
 }

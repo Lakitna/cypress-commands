@@ -1,62 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>jQuery 3.2.1 Fixture</title>
-    <script type="text/javascript" src="lib/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="index.js"></script>
-    <style>
-      .indent {
-        padding-left: .4em;
-        margin: .3em 0 0 .1em;
-        border-left: 1px solid black;
-      }
-    </style>
-  </head>
-  <body>
-    <span id="foo">foo</span>
-    <div>div</div>
+    <head>
+        <title>jQuery 3.2.1 Fixture</title>
+        <script type="text/javascript" src="lib/jquery-3.2.1.js"></script>
+        <script type="text/javascript" src="index.js"></script>
+        <style>
+            .indent {
+                padding-left: 0.4em;
+                margin: 0.3em 0 0 0.1em;
+                border-left: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <span id="foo">foo</span>
+        <div>div</div>
 
-    <form>
-      <input />
-      <textarea>A filled textarea</textarea>
-      <button>Some button</button>
-    </form>
+        <form>
+            <input />
+            <textarea>A filled textarea</textarea>
+            <button>Some button</button>
+        </form>
 
-    <div class="counter">0</div>
-    <ul id="list">
-    </ul>
-    <a href="#">a</a>
-    <div class="whitespace" data-complex=" some&nbsp; &nbsp; &#x9; very
-      complex&Tab;whitespace">
-      div
-      cont&ZeroWidthSpace;aining&nbsp; &nbsp; &#x9; some<br> complex&Tab;white<wbr>space
-    </div>
-    <div class="formatted">
-      S<i>om</i>e text <b>with </b>inline <span>for<abbr>mat</abbr>ting<br>applied to it.</span>
-    </div>
-    <hr>
-    <div class="parent indent" data-relation="parent" data-foo>
-      parent div top
-      <div class="child indent" data-relation="child">
-        child div
-        <div class="grandchild indent" data-relation="grandchild">
-          grandchild div
-          <div class="great-grandchild indent">
-            great-grandchild div
-            <div class="great-great-grandchild indent" data-foo='bar' data-foo='foo'>
-              great-great-grandchild div
+        <div class="counter">0</div>
+        <ul id="list"></ul>
+        <a href="#">a</a>
+        <div
+            class="whitespace"
+            data-complex=" some&nbsp; &nbsp; &#x9; very
+                complex&Tab;whitespace"
+        >
+            div cont&ZeroWidthSpace;aining&nbsp; &nbsp; &#x9; some<br />
+            complex&Tab;white<wbr />space
+        </div>
+        <div class="formatted">
+            S<i>om</i>e text <b>with </b>inline
+            <span>for<abbr>mat</abbr>ting<br />applied to it.</span>
+        </div>
+        <hr />
+        <div class="parent indent" data-relation="parent" data-foo>
+            parent div top
+            <div class="child indent" data-relation="child">
+                child div
+                <div class="grandchild indent" data-relation="grandchild">
+                    grandchild div
+                    <div class="great-grandchild indent">
+                        great-grandchild div
+                        <div class="great-great-grandchild indent" data-foo="bar" data-foo="foo">
+                            great-great-grandchild div
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            parent div middle
+            <div class="second-child indent" data-relation="child">
+                second-child div
+                <div class="second-grand-child indent">second-grand-child div</div>
+            </div>
+            parent div bottom
         </div>
-      </div>
-      parent div middle
-      <div class="second-child indent" data-relation="child">
-        second-child div
-        <div class="second-grand-child indent">
-          second-grand-child div
-        </div>
-      </div>
-      parent div bottom
-    </div>
-  </body>
+    </body>
 </html>

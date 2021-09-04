@@ -7,8 +7,8 @@ declare namespace Cypress {
          */
         text(options?: {
             log?: boolean;
-            whitespace?: 'simplify'|'keep-newline'|'keep';
+            whitespace?: 'simplify' | 'keep-newline' | 'keep';
             depth?: number;
-        }): Chainable<Subject>
+        }): Chainable<Subject>;
     }
 }

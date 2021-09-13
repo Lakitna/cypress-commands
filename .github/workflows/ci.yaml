@@ -15,8 +15,9 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x, 16.x]
+        node-version: [10.x, 14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        cypress-version: [package.json, 8.2, 7, 6, 5]
 
     steps:
       - uses: actions/checkout@v2
@@ -26,12 +27,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
+      - if: ${{ matrix.cypress-version != package.json }}
+        run: npm install cypress@${{ matrix.cypress-version }}
       - run: npm run lint
       - run: npm run test:source
       - run: npm run bundle
       - run: npm run test:bundle
-# addons:
-#   apt:
-#     packages:
-#       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
-#       - libgconf-2-4

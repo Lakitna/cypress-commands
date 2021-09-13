@@ -35,13 +35,15 @@ require('cypress-commands');
 ### Type definitions
 
 Import typescript definitions by adding them to your `tsconfig.json`. Add the cypress-commands types
-before the Cypress types so intellisense will prefer the cypress-commands versions.
+before the Cypress types so intellisense will prefer the cypress-commands versions of extended
+commands.
 
 ```json
-"types": [
-    "cypress-commands",
-    "cypress"
-]
+{
+  "compilerOptions": {
+    "types": ["cypress-commands", "cypress"]
+  }
+}
 ```
 
 ## Extended commands

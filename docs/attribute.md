@@ -57,6 +57,7 @@ Pass in an options object to change the default behavior of `.attribute()`.
 
 ### An alt attribute
 
+<!-- prettier-ignore -->
 ```html
 <img src="./images/tiger.jpg" alt="Teriffic tiger" />
 ```
@@ -68,8 +69,10 @@ cy.get('img').attribute('alt');
 
 ### Multiple subjects
 
+<!-- prettier-ignore -->
 ```html
-<input type="text" /> <input type="submit" />
+<input type="text" />
+<input type="submit" />
 ```
 
 ```javascript
@@ -84,6 +87,7 @@ cy.get('input').attribute('type');
 
 By default all whitespace will be kept intact.
 
+<!-- prettier-ignore -->
 ```html
 <div
   data-attribute=" Extravagant &nbsp;
@@ -124,8 +128,10 @@ cy.get('div').attribute('data-attribute', { whitespace: 'keep' });
 Strict mode comes into play when using `.attribute()` with multiple subjects. By default strict mode
 is enabled.
 
+<!-- prettier-ignore -->
 ```html
-<a href="#" target="_blank">Amazing armadillo</a> <a href="#">Everlasting eel</a>
+<a href="#" target="_blank">Amazing armadillo</a>
+<a href="#">Everlasting eel</a>
 ```
 
 #### Strict mode `true`
@@ -163,6 +169,7 @@ cy.get('a').attribute('target', { strict: false });
 
 `.attribute()` considers an empty attribute like below as existing, but empty.
 
+<!-- prettier-ignore -->
 ```html
 <p hidden>Catastrophic Cat</p>
 ```

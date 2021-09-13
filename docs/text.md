@@ -87,8 +87,10 @@ cy.get('div').text();
 
 By default all whitespace will be simplified.
 
+<!-- prettier-ignore -->
 ```html
-<div>Extravagant &nbsp; Eagle</div>
+<div> Extravagant &nbsp;
+  Eagle            </div>
 ```
 
 #### Simplify whitespace by default
@@ -124,14 +126,19 @@ cy.get('div').text({ whitespace: 'keep' });
 By default only the text of the subject itself will be yielded. Use this option to also get the text
 of underlying elements.
 
+<!-- prettier-ignore -->
 ```html
 <div class="grandparent">
   Grandma Gazelle
   <div class="parent">
     Mother Meerkat
-    <div class="child">Son Scorpion</div>
+    <div class="child">
+      Son Scorpion
+    </div>
   </div>
-  <div class="parent">Father Fox</div>
+  <div class="parent">
+    Father Fox
+  </div>
 </div>
 ```
 

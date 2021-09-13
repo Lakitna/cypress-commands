@@ -20,7 +20,7 @@ declare namespace Cypress {
      */
     interface Retryable {
         /**
-         * Retry the command when it fails
+         * Retry the command when upcoming assertions fail.
          *
          * @default false
          */

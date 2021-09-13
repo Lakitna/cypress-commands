@@ -89,10 +89,8 @@ By default all whitespace will be kept intact.
 
 <!-- prettier-ignore -->
 ```html
-<div
-  data-attribute=" Extravagant &nbsp;
-  Eagle            "
-></div>
+<div data-attribute=" Extravagant &nbsp;
+  Eagle            "></div>
 ```
 
 #### Simplify whitespace

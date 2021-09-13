@@ -12,9 +12,11 @@ documentation standards.
 
 ## Cypress version
 
-`cypress-commands@2` requires version 8.3.0 or higher.
+`cypress-commands` should work with the latest version of Cypress. If this is not the case, please
+open an issue.
 
-For previous versions of Cypress, use `cypress-commands@1` instead.
+It's tested against multiple versions of Cypress. See the
+[CI definition](./.github/workflows/ci.yaml) for the most up-to-date list.
 
 ## Installation
 

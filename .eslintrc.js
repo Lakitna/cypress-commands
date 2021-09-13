@@ -44,13 +44,6 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['lib/**/*'],
-            rules: {
-                // This is fine as long as you know what you're doing
-                'cypress/no-assigning-return-values': 'warn',
-            },
-        },
-        {
             files: ['cypress/integration/**/*'],
             rules: {
                 'sonarjs/no-identical-functions': 'warn',

@@ -18,7 +18,7 @@ jobs:
       matrix:
         node-version: [10.x, 14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        cypress-version: [package.json, 8.2, 7, 6, 5]
+        cypress-version: [package.json, 8.2, 6]
 
     steps:
       - uses: actions/checkout@v2

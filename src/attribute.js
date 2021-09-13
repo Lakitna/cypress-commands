@@ -72,28 +72,34 @@ Cypress.Commands.add(
          * @return {Promise}
          */
         function resolveAttribute() {
-            let attr = subject.map((i, element) => {
-                return $(element).attr(attribute);
-            });
-
-            if (attr.length === 1) {
-                attr = options._whitespace(attr.get(0));
-            } else if (attr.length > 1) {
+            const attr = subject
+                .map((i, element) => {
+                    return $(element).attr(attribute);
+                })
                 // Deconstruct jQuery object to normal array
-                attr = attr.toArray().map(options._whitespace);
+                .toArray()
+                .map(options._whitespace);
+
+            let result = attr;
+
+            if (options.strict && subject.length > result.length) {
+                const negate = upcomingAssertionNegatesExistence();
+                if (!negate) {
+                    // Empty result to we fail on missing attributes
+                    result = [];
+                }
+            }
+
+            if (result.length === 0) {
+                // Empty JQuery object is Cypress' way of saying that something does not exist
+                result = $();
+            } else if (result.length === 1) {
+                // Only one result, so unwrap the array
+                result = result[0];
             }
 
             if (options.log) {
-                updateLog(attr);
-            }
-
-            let result = attr;
-            if (options.strict && attr.length && subject.length > attr.length) {
-                const negate = upcomingAssertionNegatesExistence();
-
-                if (!negate) {
-                    result = $([]);
-                }
+                updateLog(result);
             }
 
             return cy.verifyUpcomingAssertions(result, options, {
@@ -118,10 +124,11 @@ Cypress.Commands.add(
  * @param {AssertionError} err
  * @param {jQuery} subject
  * @param {string} attribute
- * @param {jQuery} result
+ * @param {string | string[]} result
  */
 function onFail(err, subject, attribute, result) {
     const negate = err.message.includes(' not ');
+    result = _.isArray(result) ? result : [result];
 
     if (err.type === 'existence' && subject.length == 1) {
         const errorMessage = errMsg.existence.single;

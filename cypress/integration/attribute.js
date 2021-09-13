@@ -159,6 +159,21 @@ describe('The added command `attribute`', function () {
                     .attribute('data-relation', {});
             });
 
+            it('throws when only 1 subject has the attribute', function (done) {
+                cy.on('fail', (err) => {
+                    expect(__logs.length).to.eq(2);
+                    expect(err.message).to.include(
+                        'Expected all 4 elements to have attribute ' +
+                            `'data-hello', but never found it on 3 elements.`
+                    );
+                    done();
+                });
+
+                cy.get('.parent > div > div, .parent > div')
+                    // strict: true is default
+                    .attribute('data-hello', {});
+            });
+
             it(
                 'does not throw when not all subjects have the attribute ' + 'and `strict: false`',
                 function () {

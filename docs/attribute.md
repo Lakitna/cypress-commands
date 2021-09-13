@@ -7,7 +7,7 @@ This is a command that does not exist as a default command.
 Enables you to get the value of an elements attributes.
 
 > **Note:** When using `.attribute()` you should be aware about how Cypress
-> [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability.html#Only-the-last-command-is-retried).
+> [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability#Only-the-last-command-is-retried).
 
 ## Syntax
 
@@ -59,7 +59,7 @@ Pass in an options object to change the default behavior of `.attribute()`.
 
 <!-- prettier-ignore -->
 ```html
-<img src="./images/tiger.jpg" alt="Teriffic tiger" />
+<img src="./images/tiger.jpg" alt="Teriffic tiger">
 ```
 
 ```javascript
@@ -71,8 +71,8 @@ cy.get('img').attribute('alt');
 
 <!-- prettier-ignore -->
 ```html
-<input type="text" />
-<input type="submit" />
+<input type="text">
+<input type="submit">
 ```
 
 ```javascript
@@ -130,8 +130,8 @@ is enabled.
 
 <!-- prettier-ignore -->
 ```html
-<a href="#" target="_blank">Amazing armadillo</a>
-<a href="#">Everlasting eel</a>
+<a href="#armadillo" target="_blank">Amazing armadillo</a>
+<a href="#eel">Everlasting eel</a>
 ```
 
 #### Strict mode `true`
@@ -147,16 +147,16 @@ Yields two values because both subjects have the `href` attribute.
 
 ```javascript
 // yields [
-//     "#",
-//     "#"
+//     "#armadillo",
+//     "#eel"
 // ]
 cy.get('a').attribute('href');
 ```
 
 #### Strict mode `false`
 
-Does not throw an error because it is possible to yield a value, even if not all subjects have a
-`target` attribute. Any subject that does not have the `target` attribute is simply ignored.
+Does not throw an error because it's possible to yield a value, even though not all subjects have a
+`target` attribute. Any subject that does not have the `target` attribute is ignored.
 
 ```javascript
 // yields "_blank"

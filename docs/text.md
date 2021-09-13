@@ -9,7 +9,7 @@ Enables you to get the text contents of the subject yielded from the previous co
 `.text()` allows you to be more specific than you can be with `.contains()` or `.should('contain')`.
 
 > **Note:** When using `.text()` you should be aware about how Cypress
-> [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability.html#Only-the-last-command-is-retried).
+> [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability#Only-the-last-command-is-retried).
 
 ## Syntax
 
@@ -23,7 +23,7 @@ Enables you to get the text contents of the subject yielded from the previous co
 ### :heavy_check_mark: Correct Usage
 
 ```javascript
-cy.get('nav').text(); // Yields the text inside `nav`
+cy.get('nav').text(); // Yields the text inside the `nav` element
 ```
 
 ### :x: Incorrect Usage
@@ -57,6 +57,7 @@ Pass in an options object to change the default behavior of `.text()`.
 
 #### Get the text of a div
 
+<!-- prettier-ignore -->
 ```html
 <div>Teriffic Tiger</div>
 ```
@@ -68,6 +69,7 @@ cy.get('div').text();
 
 #### Get the text of multiple divs
 
+<!-- prettier-ignore -->
 ```html
 <div>Catastrophic Cat</div>
 <div>Dramatic Dog</div>
@@ -107,7 +109,7 @@ The default value of `whitespace` is `simplify` so the following yields the same
 cy.get('div').text({ whitespace: 'simplify' });
 ```
 
-#### Simplify whitespace but keep new line characters
+#### Simplify whitespace but keep newline characters
 
 ```javascript
 // yields "Extravagant\nEagle"
@@ -120,6 +122,8 @@ cy.get('div').text({ whitespace: 'keep-newline' });
 // yields "Extravagant  \n  Eagle"
 cy.get('div').text({ whitespace: 'keep' });
 ```
+
+Note that the whitespace at the beginning and end of the string is still removed.
 
 ### Depth of elements
 
@@ -158,8 +162,7 @@ cy.get('.grandparent').text({ depth: 0 });
 
 #### Include the direct children
 
-The text of the child elements are concatenated and yielded as a single string with a space as
-delimiter.
+The text of the child elements are concatenated and yielded as a single string.
 
 ```javascript
 // yields "Grandma Gazelle Mother Meerkat Father Fox"

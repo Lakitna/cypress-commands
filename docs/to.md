@@ -7,7 +7,7 @@ This is a command that does not exist as a default command.
 Cast the subject to another type. Will do nothing if the subject is already of that type.
 
 > **Note:** When using `.to()` you should be aware about how Cypress
-> [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability.html#Only-the-last-command-is-retried).
+> [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability#Only-the-last-command-is-retried).
 
 ## Syntax
 
@@ -31,7 +31,7 @@ cy.wrap('Underwhelming Uakari').to('array'); // Yields ['Underwhelming Uakari']
 
 ```javascript
 cy.to('string'); // Errors, cannot be chained off 'cy'
-cy.wrap('Dangerous dog').to('number'); // Errors, can't string be casted to number
+cy.wrap('Dangerous dog').to('number'); // Errors, string can't be casted to number
 ```
 
 ## Arguments
@@ -47,7 +47,7 @@ Pass in an options object to change the default behavior of `.to()`.
 | Option    | Default                                                                                          | Description                                                                                                          |
 | --------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
 | `timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.to()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)     |
-| `log`     | `false`                                                                                          | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log) |
+| `log`     | `true`                                                                                           | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log) |
 
 ## Yields
 
@@ -61,7 +61,7 @@ Pass in an options object to change the default behavior of `.to()`.
 
 ```javascript
 // yields 42
-cy.wrap('042').to('string');
+cy.wrap('042').to('number');
 ```
 
 ### Casting a sring to an array

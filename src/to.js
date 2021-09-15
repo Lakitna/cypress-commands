@@ -6,7 +6,6 @@ const errMsg = command.to;
 import OptionValidator from './utils/optionValidator';
 const validator = new OptionValidator('to');
 
-
 const types = {
     array: castArray,
     string: castString,
@@ -44,7 +43,6 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
         throw new Error(`${errMsg.cantCast('subject', type)} ${errMsg.expected(_.keys(types))}`);
     }
 
-
     const consoleProps = {
         'Applied to': subject,
     };
@@ -56,7 +54,6 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
         });
     }
 
-
     /**
      * Cast the subject and do the upcoming assertion
      * @return {Promise}
@@ -67,22 +64,19 @@ Cypress.Commands.add('to', { prevSubject: true }, (subject, type, options = {}) 
                 // Retry untill the upcoming assertion passes
                 onRetry: castSubject,
             });
-        }
-        catch (err) {
+        } catch (err) {
             // The casting function threw an error, let's try again
             options.error = err;
             return cy.retry(castSubject, options, options._log);
         }
     }
 
-    return castSubject()
-        .then((result) => {
-            // Everything passed, finish up the log
-            consoleProps.Yielded = result;
-            return result;
-        });
+    return castSubject().then((result) => {
+        // Everything passed, finish up the log
+        consoleProps.Yielded = result;
+        return result;
+    });
 });
-
 
 /**
  * @param {any|any[]} subject
@@ -94,7 +88,6 @@ function castArray(subject) {
     }
     return [subject];
 }
-
 
 /**
  * @param {any|any[]} subject
@@ -110,7 +103,6 @@ function castString(subject) {
     return `${subject}`;
 }
 
-
 /**
  * @param {any|any[]} subject
  * @return {number|number[]}
@@ -118,14 +110,13 @@ function castString(subject) {
 function castNumber(subject) {
     if (_.isArrayLikeObject(subject)) {
         return subject.map(castNumber);
-    }
-    else if (_.isObject(subject)) {
+    } else if (_.isObject(subject)) {
         throw new Error(errMsg.cantCastType('object', 'number'));
     }
 
     const casted = Number(subject);
     if (isNaN(casted)) {
         throw new Error(errMsg.cantCastVal(subject, 'number'));
-    };
+    }
     return casted;
 }

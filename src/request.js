@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'path-browserify';
 const _ = Cypress._;
 
 const methods = [
@@ -39,21 +39,17 @@ Cypress.Commands.overwrite('request', (originalCommand, ...args) => {
 
     if (_.isObject(args[0])) {
         _.extend(options, args[0]);
-    }
-    else if (args.length === 1) {
+    } else if (args.length === 1) {
         options.url = args[0];
-    }
-    else if (args.length === 2) {
+    } else if (args.length === 2) {
         if (methods.includes(args[0].toUpperCase())) {
             options.method = args[0];
             options.url = args[1];
-        }
-        else {
+        } else {
             options.url = args[0];
             options.body = args[1];
         }
-    }
-    else if (args.length === 3) {
+    } else if (args.length === 3) {
         options.method = args[0];
         options.url = args[1];
         options.body = args[2];
@@ -64,16 +60,17 @@ Cypress.Commands.overwrite('request', (originalCommand, ...args) => {
     return originalCommand(options);
 });
 
-
 /**
  * @param {string} url
  * @return {string}
  */
 function parseUrl(url) {
-    if (typeof url === 'string'
-            && !url.includes('://')
-            && !url.startsWith('localhost')
-            && !url.startsWith('www.')) {
+    if (
+        typeof url === 'string' &&
+        !url.includes('://') &&
+        !url.startsWith('localhost') &&
+        !url.startsWith('www.')
+    ) {
         // It's a relative url
         const config = Cypress.config();
         const requestBaseUrl = config.requestBaseUrl;

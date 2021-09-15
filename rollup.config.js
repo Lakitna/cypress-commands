@@ -4,7 +4,6 @@ import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
 import copy from 'rollup-plugin-copy';
 
-
 const config = [
     {
         input: './src/index.js',
@@ -32,9 +31,7 @@ const config = [
 
             // Copy type definitions to target folder
             copy({
-                targets: [
-                    { src: './types/**/*.d.ts', dest: './dist/types' },
-                ],
+                targets: [{ src: './types/**/*.d.ts', dest: './dist/types' }],
             }),
         ],
 
@@ -45,10 +42,7 @@ const config = [
          * have to download the exact same code multiple times, once
          * in this bundle and also as a dependency of another package.
          */
-        external: [
-            ...Object.keys(pkg.dependencies),
-            'path',
-        ],
+        external: [...Object.keys(pkg.dependencies || {})],
     },
 ];
 

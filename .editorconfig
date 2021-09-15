@@ -1,0 +1,30 @@
+# Editor configuration, see https://editorconfig.org
+# Used by various tools. Among which: VS Code, Prettier
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+
+[*.ts]
+quote_type = single
+
+[*.js]
+quote_type = single
+
+[*.md]
+trim_trailing_whitespace = false
+indent_style = space
+indent_size = 2
+
+[*.yaml]
+indent_style = space
+indent_size = 2
+
+[{package.json,package-lock.json}]
+indent_style = space
+indent_size = 2

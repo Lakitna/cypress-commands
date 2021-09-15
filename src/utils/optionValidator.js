@@ -51,8 +51,7 @@ export default class OptionValidator {
                     errMessage.end,
                 ]);
             }
-        }
-        else if (_.isString(expected)) {
+        } else if (_.isString(expected)) {
             if (!eval(`'${actual}' ${expected}`)) {
                 throw new CommandError([
                     errMessage.start,
@@ -61,12 +60,13 @@ export default class OptionValidator {
                     errMessage.end,
                 ]);
             }
-        }
-        else {
-            throw new CommandError(`Not sure how to validate `
-                + `the option "${option}" of the command "${this.command}".\n\n`
-                + `If you see this message in the wild, please create an issue `
-                + `so this error can be resolved.\n${repoUrl}`);
+        } else {
+            throw new CommandError(
+                `Not sure how to validate ` +
+                    `the option "${option}" of the command "${this.command}".\n\n` +
+                    `If you see this message in the wild, please create an issue ` +
+                    `so this error can be resolved.\n${repoUrl}`
+            );
         }
     }
 }

@@ -8,14 +8,15 @@ import { notInProduction } from './errorMessages';
 export function markCurrentCommand(commandName) {
     const queue = Cypress.cy.queue;
     const currentCommand = queue
-        .filter({ name: commandName })
-        .filter((command) => !command.get('invoked'))
+        .get()
+        .filter((command) => {
+            return command.get('name') === commandName && !command.get('invoked');
+        })
         .shift();
 
     // The mark
     currentCommand.attributes.invoked = true;
 }
-
 
 /**
  * Find out of the last marked command in the command queue has upcoming
@@ -40,27 +41,28 @@ export function upcomingAssertionNegatesExistence() {
     });
 }
 
-
 /**
  * @return {Command|false}
  */
 function getLastMarkedCommand() {
     const queue = Cypress.cy.queue;
-    const cmd = queue.get()
+    const cmd = queue
+        .get()
         .filter((command) => command.get('invoked'))
         .pop();
 
     if (cmd === undefined) {
-        console.error(`Could not find any marked commands in the queue. `
-            + `Did you forget to mark the command during its invokation?`
-            + `\n\n${notInProduction}`);
+        console.error(
+            `Could not find any marked commands in the queue. ` +
+                `Did you forget to mark the command during its invokation?` +
+                `\n\n${notInProduction}`
+        );
 
         return false;
     }
 
     return cmd;
 }
-
 
 /**
  * Recursively find all direct upcoming assertions

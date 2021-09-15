@@ -50,7 +50,6 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
         });
     }
 
-
     /**
      * @param {Array.<string>|string} result
      */
@@ -58,8 +57,7 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
         consoleProps.Yielded = result;
         if (_.isArray(result)) {
             options._log.set('message', JSON.stringify(result));
-        }
-        else {
+        } else {
             options._log.set('message', result);
         }
     }
@@ -88,16 +86,14 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
         });
     }
 
-    return resolveText()
-        .then((text) => {
-            // The upcoming assertion passed, finish up the log
-            if (options.log) {
-                options._log.snapshot().end();
-            }
-            return text;
-        });
+    return resolveText().then((text) => {
+        // The upcoming assertion passed, finish up the log
+        if (options.log) {
+            options._log.snapshot().end();
+        }
+        return text;
+    });
 });
-
 
 /**
  * @param {JQuery} element
@@ -106,27 +102,25 @@ Cypress.Commands.add('text', { prevSubject: 'element' }, (element, options = {})
  */
 function getTextOfElement(element, depth) {
     const TAG_REPLACEMENT = {
-        'WBR': '\u200B',
-        'BR': ' ',
+        WBR: '\u200B',
+        BR: ' ',
     };
 
     let text = '';
-    element
-        .contents()
-        .each((i, content) => {
-            if (content.nodeType === Node.TEXT_NODE) {
-                return text += content.data;
+    element.contents().each((i, content) => {
+        if (content.nodeType === Node.TEXT_NODE) {
+            return (text += content.data);
+        }
+        if (content.nodeType === Node.ELEMENT_NODE) {
+            if (_.has(TAG_REPLACEMENT, content.nodeName)) {
+                return (text += TAG_REPLACEMENT[content.nodeName]);
             }
-            if (content.nodeType === Node.ELEMENT_NODE) {
-                if (_.has(TAG_REPLACEMENT, content.nodeName)) {
-                    return text += TAG_REPLACEMENT[content.nodeName];
-                }
 
-                if (depth > 0) {
-                    return text += getTextOfElement($(content), depth - 1);
-                }
+            if (depth > 0) {
+                return (text += getTextOfElement($(content), depth - 1));
             }
-        });
+        }
+    });
 
     return text;
 }

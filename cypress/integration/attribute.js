@@ -2,18 +2,16 @@
 
 const COMMAND_TIMEOUT = 4000;
 
-describe('The added command `attribute`', function() {
-    before(function() {
+describe('The added command `attribute`', function () {
+    before(function () {
         cy.visit('/');
     });
 
-
-    beforeEach(function() {
+    beforeEach(function () {
         Cypress.config('defaultCommandTimeout', COMMAND_TIMEOUT);
     });
 
-
-    it('considers empty attributes to be existing, but empty', function() {
+    it('considers empty attributes to be existing, but empty', function () {
         cy.get('.parent')
             .attribute('data-foo')
             .should('equal', '')
@@ -21,17 +19,15 @@ describe('The added command `attribute`', function() {
             .should('be.empty');
     });
 
-    it('retries', function() {
-        cy.get('form input')
-            .attribute('data-attr')
-            .should('equal', '5');
+    it('retries', function () {
+        cy.get('form input').attribute('data-attr').should('equal', '5');
     });
 
-    describe('handles implicit assertions correctly', function() {
+    describe('handles implicit assertions correctly', function () {
         let __logs;
         let __lastLog;
 
-        beforeEach(function() {
+        beforeEach(function () {
             Cypress.config('defaultCommandTimeout', 50);
 
             __logs = [];
@@ -44,76 +40,67 @@ describe('The added command `attribute`', function() {
             return null;
         });
 
-        describe('implicit assertion `to.exist`', function() {
-            it('throws when the attribute does not exist', function(done) {
+        describe('implicit assertion `to.exist`', function () {
+            it('throws when the attribute does not exist', function (done) {
                 cy.on('fail', (err) => {
                     const lastLog = __lastLog;
 
                     expect(__logs.length).to.eq(2);
                     expect(lastLog.get('error')).to.eq(err);
-                    expect(err.message)
-                        .to.include('Expected element to have attribute \'id\', '
-                            + 'but never found it.');
+                    expect(err.message).to.include(
+                        `Expected element to have attribute 'id', but never found it.`
+                    );
                     done();
                 });
 
-                cy.get('.whitespace')
-                    .attribute('id');
+                cy.get('.whitespace').attribute('id');
             });
 
-            it('does not throw when the attribute does exist', function() {
-                cy.get('.whitespace')
-                    .attribute('class');
+            it('does not throw when the attribute does exist', function () {
+                cy.get('.whitespace').attribute('class');
             });
         });
 
-        describe('Overwriting implicit assertions', function() {
-            it('can explicitly assert existence', function(done) {
+        describe('Overwriting implicit assertions', function () {
+            it('can explicitly assert existence', function (done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(3);
-                    expect(err.message)
-                        .to.include('Expected element to have attribute \'id\', '
-                            + 'but never found it.');
+                    expect(err.message).to.include(
+                        `Expected element to have attribute 'id', but never found it.`
+                    );
                     done();
                 });
 
-                cy.get('.whitespace')
-                    .attribute('id')
-                    .should('exist');
+                cy.get('.whitespace').attribute('id').should('exist');
             });
 
-            it('overwrites implicit assertion when testing for non-existence', function(done) {
+            it('overwrites implicit assertion when testing for non-existence', function (done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(3);
-                    expect(err.message)
-                        .to.include('Expected element to not have attribute \'class\', '
-                            + 'but it was continuously found.');
+                    expect(err.message).to.include(
+                        `Expected element to not have attribute 'class', ` +
+                            'but it was continuously found.'
+                    );
                     done();
                 });
 
-                cy.get('.whitespace')
-                    .attribute('class')
-                    .should('not.exist');
+                cy.get('.whitespace').attribute('class').should('not.exist');
             });
         });
     });
 
-    describe('The attribute of a single element', function() {
-        it('yields a string', function() {
-            cy.get('.whitespace')
-                .attribute('class')
-                .should('equal', 'whitespace');
+    describe('The attribute of a single element', function () {
+        it('yields a string', function () {
+            cy.get('.whitespace').attribute('class').should('equal', 'whitespace');
         });
 
-        it('yields the first when an attribute exists twice', function() {
-            cy.get('.great-great-grandchild')
-                .attribute('data-foo')
-                .should('equal', 'bar');
+        it('yields the first when an attribute exists twice', function () {
+            cy.get('.great-great-grandchild').attribute('data-foo').should('equal', 'bar');
         });
     });
 
-    describe('The attribute of a multiple elements', function() {
-        it('yields an array of strings', function() {
+    describe('The attribute of a multiple elements', function () {
+        it('yields an array of strings', function () {
             cy.get('.parent > div')
                 .attribute('data-relation')
                 .should('have.lengthOf', 2)
@@ -121,11 +108,11 @@ describe('The added command `attribute`', function() {
         });
     });
 
-    describe('options', function() {
+    describe('options', function () {
         let __logs;
         let __lastLog;
 
-        beforeEach(function() {
+        beforeEach(function () {
             Cypress.config('defaultCommandTimeout', 50);
 
             __logs = [];
@@ -138,17 +125,13 @@ describe('The added command `attribute`', function() {
             return null;
         });
 
-        it('does not mind flipping the order of properties', function() {
-            cy.get('.whitespace')
-                .attribute({}, 'class')
-                .should('equal', 'whitespace');
+        it('does not mind flipping the order of properties', function () {
+            cy.get('.whitespace').attribute({}, 'class').should('equal', 'whitespace');
 
-            cy.get('.whitespace')
-                .attribute('class', {})
-                .should('equal', 'whitespace');
+            cy.get('.whitespace').attribute('class', {}).should('equal', 'whitespace');
         });
 
-        it('does not log with `log: false`', function() {
+        it('does not log with `log: false`', function () {
             cy.get('.whitespace')
                 .attribute('class', { log: false })
                 .then(() => {
@@ -160,46 +143,63 @@ describe('The added command `attribute`', function() {
                 .should('equal', 'whitespace');
         });
 
-        describe('strict', function() {
-            it('throws when not all subjects have the attribute', function(done) {
+        describe('strict', function () {
+            it('throws when not all subjects have the attribute', function (done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
-                    expect(err.message)
-                        .to.include('Expected all 4 elements to have attribute '
-                            + '\'data-relation\', but never found it on 1 elements.');
+                    expect(err.message).to.include(
+                        'Expected all 4 elements to have attribute ' +
+                            `'data-relation', but never found it on 1 elements.`
+                    );
                     done();
                 });
 
                 cy.get('.parent > div > div, .parent > div')
-                    .attribute('data-relation', {}); // strict: true is default
+                    // strict: true is default
+                    .attribute('data-relation', {});
             });
 
-            it('does not throw when not all subjects have the attribute '
-                    + 'and `strict: false`', function() {
-                cy.get('.parent div')
-                    .attribute('data-relation', { strict: false });
+            it('throws when only 1 subject has the attribute', function (done) {
+                cy.on('fail', (err) => {
+                    expect(__logs.length).to.eq(2);
+                    expect(err.message).to.include(
+                        'Expected all 4 elements to have attribute ' +
+                            `'data-hello', but never found it on 3 elements.`
+                    );
+                    done();
+                });
+
+                cy.get('.parent > div > div, .parent > div')
+                    // strict: true is default
+                    .attribute('data-hello', {});
             });
 
-            it('only yields the values of elements with the attribute when'
-                    + '`strict: false`', function() {
-                cy.get('.parent div')
-                    .attribute('data-relation', { strict: false })
-                    .should('be.lengthOf', 3)
-                    .and('deep.equal', [
-                        'child',
-                        'grandchild',
-                        'child',
-                    ]);
-            });
+            it(
+                'does not throw when not all subjects have the attribute ' + 'and `strict: false`',
+                function () {
+                    cy.get('.parent div').attribute('data-relation', { strict: false });
+                }
+            );
 
-            context('Upcoming assertions', function() {
-                describe('should exist', function() {
-                    it('throws when not all subjects have the attribute', function(done) {
+            it(
+                'only yields the values of elements with the attribute when' + '`strict: false`',
+                function () {
+                    cy.get('.parent div')
+                        .attribute('data-relation', { strict: false })
+                        .should('be.lengthOf', 3)
+                        .and('deep.equal', ['child', 'grandchild', 'child']);
+                }
+            );
+
+            context('Upcoming assertions', function () {
+                describe('should exist', function () {
+                    it('throws when not all subjects have the attribute', function (done) {
                         cy.on('fail', (err) => {
                             expect(__logs.length).to.eq(3);
-                            expect(err.message)
-                                .to.include('Expected all 4 elements to have attribute '
-                                    + '\'data-relation\', but never found it on 1 elements.');
+                            expect(err.message).to.include(
+                                'Expected all 4 elements to have attribute ' +
+                                    `'data-relation', but never found it on 1 elements.`
+                            );
                             done();
                         });
 
@@ -208,27 +208,28 @@ describe('The added command `attribute`', function() {
                             .should('exist');
                     });
 
-                    it('does not throw when all subjects have the attribute', function() {
+                    it('does not throw when all subjects have the attribute', function () {
                         cy.get('.parent > div')
                             .attribute('data-relation', { strict: true })
                             .should('exist');
                     });
                 });
 
-                describe('should not exist', function() {
-                    it('does not throw when none of the subjects have attribute', function() {
+                describe('should not exist', function () {
+                    it('does not throw when none of the subjects have attribute', function () {
                         cy.get('.parent > div > div, .parent > div')
                             .attribute('data-nonExistent', { strict: true })
                             .should('not.exist');
                     });
 
-                    it('throws when some of the subjects have attribute', function(done) {
+                    it('throws when some of the subjects have attribute', function (done) {
                         cy.on('fail', (err) => {
                             expect(__logs.length).to.eq(3);
-                            expect(err.message)
-                                .to.include('Expected all 4 elements to not have attribute '
-                                    + '\'data-relation\', but it was continuously found on 3 '
-                                    + 'elements.');
+                            expect(err.message).to.include(
+                                'Expected all 4 elements to not have attribute ' +
+                                    `'data-relation', but it was continuously found on 3 ` +
+                                    'elements.'
+                            );
                             done();
                         });
 
@@ -241,70 +242,77 @@ describe('The added command `attribute`', function() {
                      * Initial support for negating existence in strict mode depended on Cypress'
                      * logging framework. This resulted in unexpected behaviour when `log: false`.
                      */
-                    it('throws when some of the subjects have attribute and '
-                            + '`log: false`', function(done) {
-                        cy.on('fail', (err) => {
-                            expect(__logs.length).to.eq(2);
-                            expect(err.message)
-                                .to.include('Expected all 4 elements to not have attribute '
-                                    + '\'data-relation\', but it was continuously found on 3 '
-                                    + 'elements.');
-                            done();
-                        });
+                    it(
+                        'throws when some of the subjects have attribute and ' + '`log: false`',
+                        function (done) {
+                            cy.on('fail', (err) => {
+                                expect(__logs.length).to.eq(2);
+                                expect(err.message).to.include(
+                                    'Expected all 4 elements to not have attribute ' +
+                                        `'data-relation', but it was continuously found on 3 ` +
+                                        'elements.'
+                                );
+                                done();
+                            });
 
-                        cy.get('.parent > div > div, .parent > div')
-                            .attribute('data-relation', { strict: true, log: false })
-                            .should('not.exist');
-                    });
+                            cy.get('.parent > div > div, .parent > div')
+                                .attribute('data-relation', { strict: true, log: false })
+                                .should('not.exist');
+                        }
+                    );
 
                     /**
                      * Bug with checking if the upcoming assertions negate existence
                      */
-                    it('throws when in the second call to attribute some of '
-                            + 'the subjects have attribute', function(done) {
-                        cy.on('fail', (err) => {
-                            expect(__logs.length).to.eq(6);
-                            expect(err.message)
-                                .to.include('Expected all 4 elements to have attribute '
-                                + '\'data-relation\', but never found it on 1 elements');
-                            done();
-                        });
+                    it(
+                        'throws when in the second call to attribute some of ' +
+                            'the subjects have attribute',
+                        function (done) {
+                            cy.on('fail', (err) => {
+                                expect(__logs.length).to.eq(6);
+                                expect(err.message).to.include(
+                                    'Expected all 4 elements to have attribute ' +
+                                        `'data-relation', but never found it on 1 elements`
+                                );
+                                done();
+                            });
 
-                        cy.get('.parent > div > div, .parent > div')
-                            .attribute('data-rel', { strict: true })
-                            .should('not.exist');
+                            cy.get('.parent > div > div, .parent > div')
+                                .attribute('data-rel', { strict: true })
+                                .should('not.exist');
 
-                        cy.get('.parent > div > div, .parent > div')
-                            .attribute('data-relation', { strict: true })
-                            .should('exist');
-                    });
+                            cy.get('.parent > div > div, .parent > div')
+                                .attribute('data-relation', { strict: true })
+                                .should('exist');
+                        }
+                    );
                 });
             });
         });
 
-        describe('whitespace', function() {
-            it('`keep` is the default value', function() {
+        describe('whitespace', function () {
+            it('`keep` is the default value', function () {
                 cy.get('div.whitespace')
                     .attribute('data-complex')
-                    .should('equal', ' some    \t very\n      complex\twhitespace');
+                    .should('equal', ' some    \t very\n                complex\twhitespace');
             });
 
-            it('`simplify` simplifies all whitespace', function() {
+            it('`simplify` simplifies all whitespace', function () {
                 cy.get('div.whitespace')
                     .attribute('data-complex', { whitespace: 'simplify' })
                     .should('equal', 'some very complex whitespace');
             });
 
-            it('`keep-newline` simplifies all whitespace except newlines', function() {
+            it('`keep-newline` simplifies all whitespace except newlines', function () {
                 cy.get('div.whitespace')
                     .attribute('data-complex', { whitespace: 'keep-newline' })
                     .should('equal', 'some very\ncomplex whitespace');
             });
 
-            it('`keep` does not change whitespace at all', function() {
+            it('`keep` does not change whitespace at all', function () {
                 cy.get('div.whitespace')
                     .attribute('data-complex', { whitespace: 'keep' })
-                    .should('equal', ' some    \t very\n      complex\twhitespace');
+                    .should('equal', ' some    \t very\n                complex\twhitespace');
             });
         });
     });

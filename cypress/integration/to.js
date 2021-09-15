@@ -1,19 +1,19 @@
 const COMMAND_TIMEOUT = 4000;
 const COMMAND_TIMEOUT_FAST = 100;
 
-describe('The added command `to`', function() {
-    before(function() {
+describe('The added command `to`', function () {
+    before(function () {
         cy.visit('/');
     });
 
-    beforeEach(function() {
+    beforeEach(function () {
         Cypress.config('defaultCommandTimeout', COMMAND_TIMEOUT);
     });
 
-    context('Input validation', function() {
+    context('Input validation', function () {
         let __logs;
 
-        beforeEach(function() {
+        beforeEach(function () {
             __logs = [];
 
             cy.on('log:added', (_, log) => {
@@ -21,70 +21,62 @@ describe('The added command `to`', function() {
             });
         });
 
-        it('throws when the subject is undefined', function(done) {
+        it('throws when the subject is undefined', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message)
-                    .to.include(`Can't cast subject of type undefined`);
+                expect(err.message).to.include(`Can't cast subject of type undefined`);
                 done();
             });
 
-            cy.wrap(undefined)
-                .to('string');
+            cy.wrap(undefined).to('string');
         });
 
-        it('throws when the subject is null', function(done) {
+        it('throws when the subject is null', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message)
-                    .to.include(`Can't cast subject of type null`);
+                expect(err.message).to.include(`Can't cast subject of type null`);
                 done();
             });
 
-            cy.wrap(null)
-                .to('string');
+            cy.wrap(null).to('string');
         });
 
-        it('throws when the subject is NaN', function(done) {
+        it('throws when the subject is NaN', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message)
-                    .to.include(`Can't cast subject of type NaN`);
+                expect(err.message).to.include(`Can't cast subject of type NaN`);
                 done();
             });
 
-            cy.wrap(NaN)
-                .to('string');
+            cy.wrap(NaN).to('string');
         });
 
-        it('throws when a faulty value is provided for the option `log`', function(done) {
+        it('throws when a faulty value is provided for the option `log`', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message)
-                    .to.include('Bad value for the option "log" of the command "to".');
+                expect(err.message).to.include(
+                    'Bad value for the option "log" of the command "to".'
+                );
                 done();
             });
 
-            cy.wrap(123)
-                .to('string', { log: 'foo' });
+            cy.wrap(123).to('string', { log: 'foo' });
         });
 
-        it('throws when a faulty type is provided', function(done) {
+        it('throws when a faulty type is provided', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message)
-                    .to.include('Can\'t cast subject to type badType.');
+                expect(err.message).to.include(`Can't cast subject to type badType.`);
                 done();
             });
 
             cy.wrap(123).to('badType');
         });
 
-        it('requires types to be case sensitive', function(done) {
+        it('requires types to be case sensitive', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message)
-                    .to.include('Can\'t cast subject to type STRing.');
+                expect(err.message).to.include(`Can't cast subject to type STRing.`);
                 done();
             });
 
@@ -92,12 +84,12 @@ describe('The added command `to`', function() {
         });
     });
 
-    context('String', function() {
-        describe('In isolation', function() {
+    context('String', function () {
+        describe('In isolation', function () {
             /* eslint-disable-next-line sonarjs/no-unused-collection */
             let __logs;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 Cypress.config('defaultCommandTimeout', COMMAND_TIMEOUT_FAST);
                 __logs = [];
 
@@ -106,25 +98,21 @@ describe('The added command `to`', function() {
                 });
             });
 
-            it('casts a number', function() {
-                cy.wrap(123456)
-                    .to('string')
-                    .should('equal', '123456');
+            it('casts a number', function () {
+                cy.wrap(123456).to('string').should('equal', '123456');
             });
 
-            it('passes a string unmodified', function() {
-                cy.wrap('foo bar baz')
-                    .to('string')
-                    .should('equal', 'foo bar baz');
+            it('passes a string unmodified', function () {
+                cy.wrap('foo bar baz').to('string').should('equal', 'foo bar baz');
             });
 
-            it('casts all items in an array', function() {
+            it('casts all items in an array', function () {
                 cy.wrap([132, 7, { foo: 'bar' }])
                     .to('string')
                     .should('deep.equal', ['132', '7', '{"foo":"bar"}']);
             });
 
-            it('casts an object to JSON', function() {
+            it('casts an object to JSON', function () {
                 cy.wrap({ foo: 'bar', baz: true })
                     .to('string')
                     .should('equal', '{"foo":"bar","baz":true}');
@@ -132,11 +120,11 @@ describe('The added command `to`', function() {
         });
     });
 
-    context('Number', function() {
-        describe('In isolation', function() {
+    context('Number', function () {
+        describe('In isolation', function () {
             let __logs;
 
-            beforeEach(function() {
+            beforeEach(function () {
                 Cypress.config('defaultCommandTimeout', COMMAND_TIMEOUT_FAST);
                 __logs = [];
 
@@ -145,97 +133,81 @@ describe('The added command `to`', function() {
                 });
             });
 
-            it('casts a numberlike string', function() {
-                cy.wrap('007')
-                    .to('number')
-                    .should('equal', 7);
+            it('casts a numberlike string', function () {
+                cy.wrap('007').to('number').should('equal', 7);
             });
 
-            it('throws on a non-numberlike string', function(done) {
+            it('throws on a non-numberlike string', function (done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
-                    expect(err.message)
-                        .to.include(`Can't cast 'Five' to type number`);
+                    expect(err.message).to.include(`Can't cast 'Five' to type number`);
                     done();
                 });
 
-                cy.wrap('Five')
-                    .to('number');
+                cy.wrap('Five').to('number');
             });
 
-            it('throws on a non-array object', function(done) {
+            it('throws on a non-array object', function (done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
-                    expect(err.message)
-                        .to.include(`Can't cast subject of type object to type number`);
+                    expect(err.message).to.include(
+                        `Can't cast subject of type object to type number`
+                    );
                     done();
                 });
 
-                cy.wrap({ number: '123' })
-                    .to('number');
+                cy.wrap({ number: '123' }).to('number');
             });
 
-            it('passes a subject of type number without modification', function() {
-                cy.wrap(7)
-                    .to('number')
-                    .should('equal', 7);
+            it('passes a subject of type number without modification', function () {
+                cy.wrap(7).to('number').should('equal', 7);
             });
 
-            it('casts all items in an array of numberlike strings', function() {
+            it('casts all items in an array of numberlike strings', function () {
                 cy.wrap(['1234', '009', '564864'])
                     .to('number')
                     .should('deep.equal', [1234, 9, 564864]);
             });
 
-            it('throws on an array containing a non-numberlike string', function(done) {
+            it('throws on an array containing a non-numberlike string', function (done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
-                    expect(err.message)
-                        .to.include(`Can't cast 'foo' to type number`);
+                    expect(err.message).to.include(`Can't cast 'foo' to type number`);
                     done();
                 });
 
-                cy.wrap(['foo', '1234', '009', 'a125'])
-                    .to('number');
+                cy.wrap(['foo', '1234', '009', 'a125']).to('number');
             });
         });
     });
 
-    context('Array', function() {
-        describe('In isolation', function() {
-            it('does not cast an Array', function() {
-                cy.wrap(['lorum', 'ipsum'])
-                    .to('array')
-                    .should('deep.equal', ['lorum', 'ipsum']);
+    context('Array', function () {
+        describe('In isolation', function () {
+            it('does not cast an Array', function () {
+                cy.wrap(['lorum', 'ipsum']).to('array').should('deep.equal', ['lorum', 'ipsum']);
             });
 
-            it('casts a string', function() {
-                cy.wrap('foo')
-                    .to('array')
-                    .should('deep.equal', ['foo']);
+            it('casts a string', function () {
+                cy.wrap('foo').to('array').should('deep.equal', ['foo']);
             });
 
-            it('casts a number', function() {
-                cy.wrap(123)
-                    .to('array')
-                    .should('deep.equal', [123]);
+            it('casts a number', function () {
+                cy.wrap(123).to('array').should('deep.equal', [123]);
             });
 
-            it('casts an object', function() {
+            it('casts an object', function () {
                 cy.wrap({ foo: 123 })
                     .to('array')
                     .should('deep.equal', [{ foo: 123 }]);
             });
         });
 
-        describe('When interacting with page', function() {
-            beforeEach(function() {
-                cy.get('#list > *')
-                    .as('list')
-                    .should('have.length', 5);
+        describe('When interacting with page', function () {
+            beforeEach(function () {
+                cy.get('#list > *').as('list').should('have.length', 5);
             });
 
-            it('does not cast a single element', function() {
+            it('does not cast a single element', function () {
                 // Elements are jQuery objects, which are iterable.
                 cy.get('@list')
                     .first()
@@ -249,7 +221,7 @@ describe('The added command `to`', function() {
                     });
             });
 
-            it('does not cast multiple elements', function() {
+            it('does not cast multiple elements', function () {
                 // Elements are jQuery objects, which are iterable.
                 cy.get('@list')
                     .to('array')
@@ -262,7 +234,7 @@ describe('The added command `to`', function() {
                     });
             });
 
-            it('does cast the text result of a single element', function() {
+            it('does cast the text result of a single element', function () {
                 cy.get('@list')
                     .first()
                     .text()
@@ -276,7 +248,7 @@ describe('The added command `to`', function() {
                     });
             });
 
-            it('does not cast the text result of multiple elements', function() {
+            it('does not cast the text result of multiple elements', function () {
                 cy.get('@list')
                     .text()
                     .to('array')
@@ -291,4 +263,3 @@ describe('The added command `to`', function() {
         });
     });
 });
-

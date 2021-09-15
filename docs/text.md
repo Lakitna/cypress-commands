@@ -2,13 +2,14 @@
 
 This is a command that does not exist as a default command.
 
-----
+---
 
 Enables you to get the text contents of the subject yielded from the previous command.
 
 `.text()` allows you to be more specific than you can be with `.contains()` or `.should('contain')`.
 
-> **Note:** When using `.text()` you should be aware about how Cypress [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability.html#Only-the-last-command-is-retried).
+> **Note:** When using `.text()` you should be aware about how Cypress
+> [only retries the last command](https://docs.cypress.io/guides/core-concepts/retry-ability#Only-the-last-command-is-retried).
 
 ## Syntax
 
@@ -22,33 +23,33 @@ Enables you to get the text contents of the subject yielded from the previous co
 ### :heavy_check_mark: Correct Usage
 
 ```javascript
-cy.get('nav').text()  // Yields the text inside `nav`
+cy.get('nav').text(); // Yields the text inside the `nav` element
 ```
 
 ### :x: Incorrect Usage
 
 ```javascript
-cy.text()  // Errors, cannot be chained off 'cy'
-cy.location().text()  // Errors, 'location' does not yield DOM element
+cy.text(); // Errors, cannot be chained off 'cy'
+cy.location().text(); // Errors, 'location' does not yield DOM element
 ```
 
 ## Arguments
 
-**> options** ***(Object)***
+**> options** **_(Object)_**
 
 Pass in an options object to change the default behavior of `.text()`.
 
-Option | Default | Description
---- | --- | ---
-`timeout` | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.text()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)
-`log` | `false` | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)
-`whitespace` | `simplify` | Replace complex whitespace with a single regular space.<br> Accepted values: `simplify`, `keep-newline` & `keep`
-`depth` | `0` | Include the text contents of child elements upto `n` levels
+| Option       | Default                                                                                          | Description                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `timeout`    | [`defaultCommandTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `.text()` to resolve before [timing out](https://docs.cypress.io/api/commands/then.html#Timeouts)   |
+| `log`        | `true`                                                                                           | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log) |
+| `whitespace` | `simplify`                                                                                       | Replace complex whitespace with a single regular space.<br> Accepted values: `simplify`, `keep-newline` & `keep`     |
+| `depth`      | `0`                                                                                              | Include the text contents of child elements upto `n` levels                                                          |
 
 ## Yields
 
-* `.text()` yields the text inside the subject.
-* `.text()` yields an array of the texts inside multiple subjects.
+- `.text()` yields the text inside the subject.
+- `.text()` yields an array of the texts inside multiple subjects.
 
 ## Examples
 
@@ -56,6 +57,7 @@ Option | Default | Description
 
 #### Get the text of a div
 
+<!-- prettier-ignore -->
 ```html
 <div>Teriffic Tiger</div>
 ```
@@ -67,6 +69,7 @@ cy.get('div').text();
 
 #### Get the text of multiple divs
 
+<!-- prettier-ignore -->
 ```html
 <div>Catastrophic Cat</div>
 <div>Dramatic Dog</div>
@@ -86,6 +89,7 @@ cy.get('div').text();
 
 By default all whitespace will be simplified.
 
+<!-- prettier-ignore -->
 ```html
 <div> Extravagant &nbsp;
   Eagle            </div>
@@ -105,7 +109,7 @@ The default value of `whitespace` is `simplify` so the following yields the same
 cy.get('div').text({ whitespace: 'simplify' });
 ```
 
-#### Simplify whitespace but keep new line characters
+#### Simplify whitespace but keep newline characters
 
 ```javascript
 // yields "Extravagant\nEagle"
@@ -119,10 +123,14 @@ cy.get('div').text({ whitespace: 'keep-newline' });
 cy.get('div').text({ whitespace: 'keep' });
 ```
 
+Note that the whitespace at the beginning and end of the string is still removed.
+
 ### Depth of elements
 
-By default only the text of the subject itself will be yielded. Use this option to also get the text of underlying elements.
+By default only the text of the subject itself will be yielded. Use this option to also get the text
+of underlying elements.
 
+<!-- prettier-ignore -->
 ```html
 <div class="grandparent">
   Grandma Gazelle
@@ -142,26 +150,23 @@ By default only the text of the subject itself will be yielded. Use this option 
 
 ```javascript
 // yields "Grandma Gazelle"
-cy.get('.grandparent')
-  .text();
+cy.get('.grandparent').text();
 ```
 
 The default value of `depth` is `0` so the following yields the same.
 
 ```javascript
 // yields "Grandma Gazelle"
-cy.get('.grandparent')
-  .text({ depth: 0 });
+cy.get('.grandparent').text({ depth: 0 });
 ```
 
 #### Include the direct children
 
-The text of the child elements are concatenated and yielded as a single string with a space as delimiter.
+The text of the child elements are concatenated and yielded as a single string.
 
 ```javascript
 // yields "Grandma Gazelle Mother Meerkat Father Fox"
-cy.get('.grandparent')
-  .text({ depth: 1 });
+cy.get('.grandparent').text({ depth: 1 });
 ```
 
 #### Multiple elements with depth
@@ -173,8 +178,7 @@ Selecting multiple elements will yield an array of concatenated strings.
 //   "Mother Meerkat Son Scorpion",
 //   "Father Fox"
 // ]
-cy.get('.parent')
-  .text({ depth: 1 });
+cy.get('.parent').text({ depth: 1 });
 ```
 
 #### Remove all depth limitations
@@ -183,8 +187,7 @@ To infinity and beyond!
 
 ```javascript
 // yields "Grandma Gazelle Mother Meerkat Son Scorpion Father Fox"
-cy.get('.grandparent')
-  .text({ depth: Infinity });
+cy.get('.grandparent').text({ depth: Infinity });
 ```
 
 ## Notes
@@ -194,23 +197,22 @@ cy.get('.grandparent')
 `.text()` also gets text from form elements like `input` and `textarea`.
 
 ```javascript
-cy.get('input')
-  .text();
+cy.get('input').text();
 ```
 
 ## Rules
 
 ### Requirements
 
-* `.text()` requires being chained off a command that yields DOM element(s).
+- `.text()` requires being chained off a command that yields DOM element(s).
 
 ### Assertions
 
-* `.text()` will automatically retry itself until assertions you've chained all pass.
+- `.text()` will automatically retry itself until assertions you've chained all pass.
 
 ### Timeouts
 
-* `.text()` can time out waiting for a chained assertion to pass.
+- `.text()` can time out waiting for a chained assertion to pass.
 
 ## Command Log
 
@@ -218,4 +220,4 @@ cy.get('input')
 
 ## See also
 
-* [`.contains()`](https://docs.cypress.io/api/commands/contains.html)
+- [`.contains()`](https://docs.cypress.io/api/commands/contains.html)

@@ -27,7 +27,7 @@ Cypress.Commands.overwrite('then', (originalCommand, subject, fn, options = {}) 
     if (_.isFunction(options)) {
         // Flip the values of `fn` and `options`
         [fn, options] = [options, fn];
-    };
+    }
 
     validator.check('log', options.log, [true, false]);
     validator.check('retry', options.retry, [true, false]);
@@ -54,8 +54,7 @@ Cypress.Commands.overwrite('then', (originalCommand, subject, fn, options = {}) 
             // Link the DOM element to the logger
             options._log.set('$el', $(subject));
             consoleProps['Applied to'] = $(subject);
-        }
-        else {
+        } else {
             consoleProps['Applied to'] = String(subject);
         }
 
@@ -86,14 +85,12 @@ Cypress.Commands.overwrite('then', (originalCommand, subject, fn, options = {}) 
      */
     async function executeFn() {
         // Execute using the original `then` to not reinvent the wheel
-        return await originalCommand(subject, options, fn)
-            .then((value) => {
-                if (options.log) {
-                    consoleProps.Yielded = value;
-                }
-
-                return value;
-            });
+        return await originalCommand(subject, options, fn).then((value) => {
+            if (options.log) {
+                consoleProps.Yielded = value;
+            }
+            return value;
+        });
     }
 
     if (options.retry) {

@@ -338,4 +338,28 @@ describe('The overwritten command `then`', function () {
             });
         });
     });
+
+    describe('Callback context', function () {
+        it('passes aliasses to the callback function (fat-arrow notation)', function () {
+            const outerThis = this;
+
+            cy.wrap('fooBar').as('someAlias');
+
+            cy.then(() => {
+                expect(this.someAlias).to.equal('fooBar');
+                expect(this).to.equal(outerThis);
+            });
+        });
+
+        it('passes aliasses to the callback function (function notation)', function () {
+            const outerThis = this;
+
+            cy.wrap('fooBar').as('someAlias');
+
+            cy.then(function () {
+                expect(this.someAlias).to.equal('fooBar');
+                expect(this).to.equal(outerThis);
+            });
+        });
+    });
 });

@@ -9,7 +9,7 @@ declare namespace Cypress {
          */
         attribute(
             attribute: string,
-            options: Partial<AttributeOptions>
+            options?: Partial<AttributeOptions>
         ): Chainable<string | string[]>;
 
         /**

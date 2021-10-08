@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## 2.0.1 - 2021-10-08
+
+### Fixes
+
+- Type definition for `.attribute()` no longer requires you to pass an `options` object.
+
 ## 2.0.0 - 2021-09-13
 
 ### Breaking changes

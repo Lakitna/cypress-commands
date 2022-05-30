@@ -44,7 +44,7 @@ module.exports = {
     },
     overrides: [
         {
-            files: ['cypress/integration/**/*'],
+            files: ['cypress/e2e/**/*'],
             rules: {
                 'sonarjs/no-identical-functions': 'warn',
                 'sonarjs/no-duplicate-string': ['warn', 5],

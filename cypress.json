@@ -1,5 +1,0 @@
-{
-    "baseUrl": "http://localhost:1337/",
-    "requestBaseUrl": "http://api.localhost:1337",
-    "video": false
-}

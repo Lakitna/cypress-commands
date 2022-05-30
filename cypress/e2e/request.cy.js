@@ -29,9 +29,11 @@ describe('Overwritten command request', function () {
                     timeout: RESPONSE_TIMEOUT,
                     method: 'GET',
                     encoding: 'utf8',
+                    retryIntervals: [0, 100, 200, 200],
                 });
 
                 const options = backend.firstCall.args[1];
+                console.log(options);
 
                 _.each(options, function (value, key) {
                     expect(options[key]).to.deep.eq(opts[key], `failed on property: (${key})`);

@@ -41,6 +41,7 @@ module.exports = {
                 asyncArrow: 'always',
             },
         ],
+        'quotes': ['error', 'single', { avoidEscape: true }],
     },
     overrides: [
         {

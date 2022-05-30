@@ -48,7 +48,7 @@ describe('The added command `attribute`', function () {
                     expect(__logs.length).to.eq(2);
                     expect(lastLog.get('error')).to.eq(err);
                     expect(err.message).to.include(
-                        `Expected element to have attribute 'id', but never found it.`
+                        "Expected element to have attribute 'id', but never found it."
                     );
                     done();
                 });
@@ -66,7 +66,7 @@ describe('The added command `attribute`', function () {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(3);
                     expect(err.message).to.include(
-                        `Expected element to have attribute 'id', but never found it.`
+                        "Expected element to have attribute 'id', but never found it."
                     );
                     done();
                 });
@@ -78,7 +78,7 @@ describe('The added command `attribute`', function () {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(3);
                     expect(err.message).to.include(
-                        `Expected element to not have attribute 'class', ` +
+                        "Expected element to not have attribute 'class', " +
                             'but it was continuously found.'
                     );
                     done();
@@ -149,7 +149,7 @@ describe('The added command `attribute`', function () {
                     expect(__logs.length).to.eq(2);
                     expect(err.message).to.include(
                         'Expected all 4 elements to have attribute ' +
-                            `'data-relation', but never found it on 1 elements.`
+                            "'data-relation', but never found it on 1 elements."
                     );
                     done();
                 });
@@ -164,7 +164,7 @@ describe('The added command `attribute`', function () {
                     expect(__logs.length).to.eq(2);
                     expect(err.message).to.include(
                         'Expected all 4 elements to have attribute ' +
-                            `'data-hello', but never found it on 3 elements.`
+                            "'data-hello', but never found it on 3 elements."
                     );
                     done();
                 });
@@ -198,7 +198,7 @@ describe('The added command `attribute`', function () {
                             expect(__logs.length).to.eq(3);
                             expect(err.message).to.include(
                                 'Expected all 4 elements to have attribute ' +
-                                    `'data-relation', but never found it on 1 elements.`
+                                    "'data-relation', but never found it on 1 elements."
                             );
                             done();
                         });
@@ -227,7 +227,7 @@ describe('The added command `attribute`', function () {
                             expect(__logs.length).to.eq(3);
                             expect(err.message).to.include(
                                 'Expected all 4 elements to not have attribute ' +
-                                    `'data-relation', but it was continuously found on 3 ` +
+                                    "'data-relation', but it was continuously found on 3 " +
                                     'elements.'
                             );
                             done();
@@ -249,7 +249,7 @@ describe('The added command `attribute`', function () {
                                 expect(__logs.length).to.eq(2);
                                 expect(err.message).to.include(
                                     'Expected all 4 elements to not have attribute ' +
-                                        `'data-relation', but it was continuously found on 3 ` +
+                                        "'data-relation', but it was continuously found on 3 " +
                                         'elements.'
                                 );
                                 done();
@@ -272,7 +272,7 @@ describe('The added command `attribute`', function () {
                                 expect(__logs.length).to.eq(6);
                                 expect(err.message).to.include(
                                     'Expected all 4 elements to have attribute ' +
-                                        `'data-relation', but never found it on 1 elements`
+                                        "'data-relation', but never found it on 1 elements"
                                 );
                                 done();
                             });

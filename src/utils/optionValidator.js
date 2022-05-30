@@ -62,9 +62,9 @@ export default class OptionValidator {
             }
         } else {
             throw new CommandError(
-                `Not sure how to validate ` +
+                'Not sure how to validate ' +
                     `the option "${option}" of the command "${this.command}".\n\n` +
-                    `If you see this message in the wild, please create an issue ` +
+                    'If you see this message in the wild, please create an issue ' +
                     `so this error can be resolved.\n${repoUrl}`
             );
         }

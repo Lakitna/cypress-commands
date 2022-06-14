@@ -5,6 +5,9 @@ This command has been extended with:
 - `.request()` uses the global configuration `requestBaseUrl` over `baseUrl`. This allows you to set
   a base url for `.request()` that is ignored by `.visit()`. [See arguments](#arguments)
 
+  > Note:
+  > [It's not possible to use `requestBaseUrl` in `cypress.config.ts` due to a limitation](../README.md#cypressconfigts-limitation).
+
 See [original documentation](https://docs.cypress.io/api/commands/request)
 
 ---

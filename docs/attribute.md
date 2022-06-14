@@ -93,20 +93,6 @@ By default all whitespace will be kept intact.
   Eagle            "></div>
 ```
 
-#### Simplify whitespace
-
-```javascript
-// yields "Extravagant Eagle"
-cy.get('div').attribute('data-attribute', { whitespace: 'simplify' });
-```
-
-#### Simplify whitespace but keep new line characters
-
-```javascript
-// yields "Extravagant\nEagle"
-cy.get('div').attribute('data-attribute', { whitespace: 'keep-newline' });
-```
-
 #### Do not simplify whitespace (default)
 
 ```javascript
@@ -121,6 +107,20 @@ The default value of `whitespace` is `keep` so the following yields the same.
 cy.get('div').attribute('data-attribute', { whitespace: 'keep' });
 ```
 
+#### Simplify whitespace
+
+```javascript
+// yields "Extravagant Eagle"
+cy.get('div').attribute('data-attribute', { whitespace: 'simplify' });
+```
+
+#### Simplify whitespace but keep new line characters
+
+```javascript
+// yields "Extravagant\nEagle"
+cy.get('div').attribute('data-attribute', { whitespace: 'keep-newline' });
+```
+
 ### Strict mode
 
 Strict mode comes into play when using `.attribute()` with multiple subjects. By default strict mode
@@ -132,7 +132,7 @@ is enabled.
 <a href="#eel">Everlasting eel</a>
 ```
 
-#### Strict mode `true`
+#### Strict mode `true` (default)
 
 Throws an error, because some subjects don't have the `target` attribute.
 

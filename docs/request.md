@@ -5,6 +5,9 @@ This command has been extended with:
 - `.request()` uses the global configuration `requestBaseUrl` over `baseUrl`. This allows you to set
   a base url for `.request()` that is ignored by `.visit()`. [See arguments](#arguments)
 
+  > Note:
+  > [It's not possible to use `requestBaseUrl` in `cypress.config.ts` due to a limitation](../README.md#cypressconfigts-limitation).
+
 See [original documentation](https://docs.cypress.io/api/commands/request)
 
 ---
@@ -33,10 +36,10 @@ cy.request('http://dev.local/seed');
 
 **> url** **_(string)_**
 
-The `url` to make the request to.
+The URL to make the request to.
 
 If you provide a non fully qualified domain name (FQDN), Cypress will make its best guess as to
-which host you want `cy.request()` to use in the url.
+which host you want `cy.request()` to use in the URL.
 
 1. If you make a `cy.request()` after visiting a page, Cypress assumes the url used for the
    `cy.visit()` is the host.
@@ -47,13 +50,18 @@ which host you want `cy.request()` to use in the url.
    ```
 
 2. If you make a `cy.request()` prior to visiting a page, Cypress uses the host configured as the
-   `requestBaseUrl` property inside of `cypress.json`.
+   `requestBaseUrl` property inside of your
+   [configuration file](https://docs.cypress.io/guides/references/configuration).
 
    ```javascript
-   // cypress.json
-   {
-     "requestBaseUrl": "http://localhost:1234"
-   }
+   // cypress.config.js
+   const { defineConfig } = require('cypress');
+
+   module.exports = defineConfig({
+     e2e: {
+       requestBaseUrl: 'http://localhost:1234',
+     },
+   });
    ```
 
    ```javascript
@@ -63,11 +71,15 @@ which host you want `cy.request()` to use in the url.
    If the `requestBaseUrl` is empty Cypress will use `baseUrl` instead.
 
    ```javascript
-   // cypress.json
-   {
-     "requestBaseUrl": ""
-     "baseUrl": "http://localhost:1234"
-   }
+   // cypress.config.js
+   const { defineConfig } = require('cypress');
+
+   module.exports = defineConfig({
+     e2e: {
+       requestBaseUrl: '',
+       requestBaseUrl: 'http://localhost:1234',
+     },
+   });
    ```
 
    ```javascript
@@ -119,23 +131,26 @@ Supported methods include:
 
 Pass in an options object to change the default behavior of `cy.request`.
 
-| Option             | Default                                                                                    | Description                                                                                                                |
-| ------------------ | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| `log`              | `true`                                                                                     | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)       |
-| `url`              | `null`                                                                                     | The URL to make the request to                                                                                             |
-| `method`           | `GET`                                                                                      | The HTTP method to use in the request                                                                                      |
-| `auth`             | `null`                                                                                     | Adds Authorization headers. ['Accepts these options.'](https://github.com/request/request#http-authentication)             |
-| `body`             | `null`                                                                                     | Body to send along with the request                                                                                        |
-| `failOnStatusCode` | `true`                                                                                     | Whether to fail on response codes other than `2xx` and `3xx`                                                               |
-| `followRedirect`   | `true`                                                                                     | Whether to automatically follow redirects                                                                                  |
-| `form`             | `false`                                                                                    | Whether to convert the `body` values to url encoded content and set the `x-www-form-urlencoded` header                     |
-| `gzip`             | `true`                                                                                     | Whether to accept the `gzip` encoding                                                                                      |
-| `headers`          | `null`                                                                                     | Additional headers to send; Accepts object literal                                                                         |
-| `qs`               | `null`                                                                                     | Query parameters to append to the `url` of the request                                                                     |
-| `timeout`          | [`responseTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](https://docs.cypress.io/api/commands/request.html#Timeouts) |
+| Option                     | Default                                                                                    | Description                                                                                                                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `log`                      | `true`                                                                                     | Displays the command in the [Command log](https://docs.cypress.io/guides/core-concepts/test-runner.html#Command-Log)                                                                                     |
+| `url`                      | `null`                                                                                     | The URL to make the request to                                                                                                                                                                           |
+| `method`                   | `GET`                                                                                      | The HTTP method to use in the request                                                                                                                                                                    |
+| `auth`                     | `null`                                                                                     | Adds Authorization headers. ['Accepts these options.'](https://github.com/request/request#http-authentication)                                                                                           |
+| `body`                     | `null`                                                                                     | Body to send along with the request                                                                                                                                                                      |
+| `failOnStatusCode`         | `true`                                                                                     | Whether to fail on response codes other than `2xx` and `3xx`                                                                                                                                             |
+| `followRedirect`           | `true`                                                                                     | Whether to automatically follow redirects                                                                                                                                                                |
+| `form`                     | `false`                                                                                    | Whether to convert the `body` values to url encoded content and set the `x-www-form-urlencoded` header                                                                                                   |
+| `encoding`                 | `utf8`                                                                                     | The encoding to be used when serializing the response body. The following encodings are supported: `ascii`, `base64`, `binary`, `hex`, `latin1`, `utf8`, `utf-8`, `ucs2`, `ucs-2`, `utf16le`, `utf-16le` |
+| `gzip`                     | `true`                                                                                     | Whether to accept the `gzip` encoding                                                                                                                                                                    |
+| `headers`                  | `null`                                                                                     | Additional headers to send; Accepts object literal                                                                                                                                                       |
+| `qs`                       | `null`                                                                                     | Query parameters to append to the `url` of the request                                                                                                                                                   |
+| `retryOnStatusCodeFailure` | `false`                                                                                    | Whether Cypress should automatically retry status code errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                         |
+| `retryOnNetworkFailure`    | `true`                                                                                     | Whether Cypress should automatically retry transient network errors under the hood. Cypress will retry a request up to 4 times if this is set to true.                                                   |
+| `timeout`                  | [`responseTimeout`](https://docs.cypress.io/guides/references/configuration.html#Timeouts) | Time to wait for `cy.request()` to resolve before [timing out](https://docs.cypress.io/api/commands/request.html#Timeouts)                                                                               |
 
 You can also set options for `cy.request`'s `requestBaseUrl`, `baseUrl` and `responseTimeout`
-globally in [configuration](https://docs.cypress.io/guides/references/configuration.html).
+globally in the [Cypress configuration](https://docs.cypress.io/guides/references/configuration).
 
 ## Yields
 
@@ -160,7 +175,7 @@ beforeEach(function () {
 });
 ```
 
-#### Issue a simple HTTP request
+#### Issue an HTTP request
 
 Sometimes it's quicker to test the contents of a page rather than
 [`cy.visit()`](https://docs.cypress.io/api/commands/visit.html) and wait for the entire page and all
@@ -208,7 +223,7 @@ cy.request('POST', 'http://localhost:8888/users/admin', { name: 'Jane' }).then((
 To test the redirection behavior of a login without a session, `cy.request` can be used to check the
 `status` and `redirectedToUrl` property.
 
-The `redirectedToUrl` property is a special Cypress property that normalizes the `url` the browser
+The `redirectedToUrl` property is a special Cypress property that normalizes the URL the browser
 would normally follow during a redirect.
 
 ```javascript
@@ -268,7 +283,7 @@ the requests had come from the browser.
 ```javascript
 cy.request({
   method: 'POST',
-  url: '/login_with_form', // baseUrl is prepended to url
+  url: '/login_with_form', // baseUrl is prepend to URL
   form: true, // indicates the body should be form urlencoded and sets Content-Type: application/x-www-form-urlencoded headers
   body: {
     username: 'jane.lane',
@@ -394,11 +409,11 @@ cy.request('https://jsonplaceholder.typicode.com/comments').then((response) => {
 
 The commands above will display in the Command Log as:
 
-![Command Log request](https://docs.cypress.io/_nuxt/img/testing-request-url-and-its-response-body-headers.765a174.png)
+![Command Log request](https://docs.cypress.io/_nuxt/img/testing-request-url-and-its-response-body-headers.84336c4.png)
 
 When clicking on `request` within the command log, the console outputs the following:
 
-![Console log request](https://docs.cypress.io/_nuxt/img/console-log-request-response-body-headers-status-url.de54c8a.png)
+![Console log request](https://docs.cypress.io/_nuxt/img/console-log-request-response-body-headers-status-url.2727bc9.png)
 
 ## History
 

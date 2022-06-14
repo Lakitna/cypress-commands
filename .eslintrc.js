@@ -41,10 +41,11 @@ module.exports = {
                 asyncArrow: 'always',
             },
         ],
+        'quotes': ['error', 'single', { avoidEscape: true }],
     },
     overrides: [
         {
-            files: ['cypress/integration/**/*'],
+            files: ['cypress/e2e/**/*'],
             rules: {
                 'sonarjs/no-identical-functions': 'warn',
                 'sonarjs/no-duplicate-string': ['warn', 5],

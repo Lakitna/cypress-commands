@@ -1,10 +1,12 @@
 const _ = Cypress._;
 const RESPONSE_TIMEOUT = 22222;
 const initialBaseUrl = Cypress.config().baseUrl;
+const initialRequestBaseUrl = Cypress.config().requestBaseUrl;
 
 describe('Overwritten command request', function () {
-    after(function () {
+    afterEach(function () {
         Cypress.config('baseUrl', initialBaseUrl);
+        Cypress.config('requestBaseUrl', initialRequestBaseUrl);
     });
 
     beforeEach(function () {
@@ -29,6 +31,7 @@ describe('Overwritten command request', function () {
                     timeout: RESPONSE_TIMEOUT,
                     method: 'GET',
                     encoding: 'utf8',
+                    retryIntervals: [0, 100, 200, 200],
                 });
 
                 const options = backend.firstCall.args[1];
@@ -41,6 +44,23 @@ describe('Overwritten command request', function () {
                     expect(opts[key]).to.deep.eq(options[key], `failed on property: (${key})`);
                 });
             };
+        });
+
+        it('prefixes with requestBaseUrl set in cypress config, origin url is empty', function () {
+            cy.stub(cy, 'getRemoteLocation').withArgs('origin').returns('');
+
+            // Use requestBaseUrl from Cypress config
+            Cypress.config('baseUrl', 'http://localhost:8080/app');
+
+            cy.request('/foo/bar?cat=1').then(() => {
+                this.expectOptionsToBe({
+                    url: 'http://api.localhost:1337/foo/bar?cat=1',
+                    method: 'GET',
+                    gzip: true,
+                    followRedirect: true,
+                    timeout: RESPONSE_TIMEOUT,
+                });
+            });
         });
 
         it('prefixes with requestBaseUrl when origin url is empty', function () {

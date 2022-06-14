@@ -1,6 +1,6 @@
 {
   "name": "cypress-commands",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "A collection of Cypress commands to extend and complement the default commands",
   "license": "MIT",
   "main": "dist/cypress-commands.js",
@@ -46,21 +46,21 @@
   ],
   "devDependencies": {
     "chai-string": "^1.5.0",
-    "cypress": "^8.3.1",
-    "eslint": "^7.32.0",
+    "cypress": "^10.1.0",
+    "eslint": "^8.17.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-cypress": "^2.11.3",
-    "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-sonarjs": "^0.10.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-sonarjs": "^0.13.0",
     "request": "^2.88.2",
-    "rollup": "^2.56.3",
+    "rollup": "^2.75.6",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-json": "^4.0.0",
     "start-server-and-test": "^1.14.0",
     "static-server": "^2.2.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.7.3"
   },
   "dependencies": {
     "path-browserify": "^1.0.1"

@@ -24,7 +24,7 @@ describe('The added command `to`', function () {
         it('throws when the subject is undefined', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message).to.include(`Can't cast subject of type undefined`);
+                expect(err.message).to.include("Can't cast subject of type undefined");
                 done();
             });
 
@@ -34,7 +34,7 @@ describe('The added command `to`', function () {
         it('throws when the subject is null', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message).to.include(`Can't cast subject of type null`);
+                expect(err.message).to.include("Can't cast subject of type null");
                 done();
             });
 
@@ -44,7 +44,7 @@ describe('The added command `to`', function () {
         it('throws when the subject is NaN', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message).to.include(`Can't cast subject of type NaN`);
+                expect(err.message).to.include("Can't cast subject of type NaN");
                 done();
             });
 
@@ -66,7 +66,7 @@ describe('The added command `to`', function () {
         it('throws when a faulty type is provided', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message).to.include(`Can't cast subject to type badType.`);
+                expect(err.message).to.include("Can't cast subject to type badType.");
                 done();
             });
 
@@ -76,7 +76,7 @@ describe('The added command `to`', function () {
         it('requires types to be case sensitive', function (done) {
             cy.on('fail', (err) => {
                 expect(__logs.length).to.eq(2);
-                expect(err.message).to.include(`Can't cast subject to type STRing.`);
+                expect(err.message).to.include("Can't cast subject to type STRing.");
                 done();
             });
 
@@ -140,7 +140,7 @@ describe('The added command `to`', function () {
             it('throws on a non-numberlike string', function (done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
-                    expect(err.message).to.include(`Can't cast 'Five' to type number`);
+                    expect(err.message).to.include("Can't cast 'Five' to type number");
                     done();
                 });
 
@@ -151,7 +151,7 @@ describe('The added command `to`', function () {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
                     expect(err.message).to.include(
-                        `Can't cast subject of type object to type number`
+                        "Can't cast subject of type object to type number"
                     );
                     done();
                 });
@@ -172,7 +172,7 @@ describe('The added command `to`', function () {
             it('throws on an array containing a non-numberlike string', function (done) {
                 cy.on('fail', (err) => {
                     expect(__logs.length).to.eq(2);
-                    expect(err.message).to.include(`Can't cast 'foo' to type number`);
+                    expect(err.message).to.include("Can't cast 'foo' to type number");
                     done();
                 });
 

@@ -13,5 +13,5 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
-require('./common');
-require('../../src');
+import './common';
+import '../../src';

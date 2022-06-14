@@ -14,6 +14,6 @@ export default class CommandError extends Error {
 
         super(message);
 
-        this.name = `CommandError`;
+        this.name = 'CommandError';
     }
 }

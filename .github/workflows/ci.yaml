@@ -17,10 +17,10 @@ jobs:
       fail-fast: false
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-        node-version: [10.x, 14.x, 16.x]
+        node-version: [16.x, 18.x]
 
         # Runs with `package.json` use the version defined in `~/package.lock.json`.
-        cypress-version: [package.json, 8.2, 6]
+        cypress-version: [package.json]
 
     steps:
       - uses: actions/checkout@v2

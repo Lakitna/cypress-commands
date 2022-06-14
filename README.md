@@ -46,6 +46,17 @@ commands.
 }
 ```
 
+#### Known issue: `cypress.config.ts` limitation
+
+Due to the way Cypress defines its types, it's currently not possible for plugin authors to extend
+the Cypress config types.
+
+Because of this limitation, it's not possible to set the `requestBaseUrl` option in
+`cypress.config.ts`. For the time being, you can work around this limitation by using
+`cypress.config.js` instead.
+
+See https://github.com/cypress-io/cypress/issues/22127 for more details.
+
 ## Extended commands
 
 These commands have been extended to be able to do more than originally intended. For these

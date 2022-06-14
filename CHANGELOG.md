@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## 3.0.0 - 2022-06-06
+
+## Breaking changes
+
+### Dropped support for node@10
+
+Cypress 10 supports node@16 or up, to simplify CI we're no longer testing with Node@10. It should
+still work, but it's no longer guaranteed.
+
+### Dropped support for Cypress@<=9
+
+Cypress 10 introduces a new configuration format. To simplify CI we're no longer testing with
+Cypress@9 or lower. It should still work, but it's no longer guaranteed.
+
+If you're not ready to upgrade to Cypress 10 yet, stick to cypress-commands@2.
+
+## Changes
+
+### Added support for Cypress@10
+
+Cypress 10 introduces breaking changes to the plugin system. None of these breaking changes have
+impact on `cypress-commands`. Changes to ensure support for Cypress@10 are mainly documentation
+changes.
+
 ## 2.0.1 - 2021-10-08
 
 ### Fixes

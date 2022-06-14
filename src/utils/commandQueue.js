@@ -53,8 +53,8 @@ function getLastMarkedCommand() {
 
     if (cmd === undefined) {
         console.error(
-            `Could not find any marked commands in the queue. ` +
-                `Did you forget to mark the command during its invokation?` +
+            'Could not find any marked commands in the queue. ' +
+                'Did you forget to mark the command during its invokation?' +
                 `\n\n${notInProduction}`
         );
 

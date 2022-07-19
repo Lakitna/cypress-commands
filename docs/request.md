@@ -77,7 +77,7 @@ which host you want `cy.request()` to use in the URL.
    module.exports = defineConfig({
      e2e: {
        requestBaseUrl: '',
-       requestBaseUrl: 'http://localhost:1234',
+       baseUrl: 'http://localhost:1234',
      },
    });
    ```
